@@ -1,0 +1,30 @@
+{
+    "IDs": {
+        "ModerationLogs": "1084173518297641020",
+        "ArchiveCategory": "1093192448450232421"
+    },
+
+    "Emojis": {
+        "Success_Emoji": "<:tick:982373146420203520>",
+        "Error_Emoji": "<:error:982373146143387668>"
+    },
+
+    "Colours": {
+        "Default_Colour": "Purple",
+        "Blacklisted_Colour": "Grey"
+    },
+
+    "Links": {
+        "Appeal_Link": "https://dyno.gg/form/b72ba489"
+    },
+
+    "PunishmentTypes": {
+        "Ban": "Ban",
+        "Softban": "Softban",
+        "Unban": "Unban",
+        "Kick": "Kick",
+        "Mute": "Mute",
+        "Unmute": "Unmute",
+        "Warn": "Warn"
+    }
+}
