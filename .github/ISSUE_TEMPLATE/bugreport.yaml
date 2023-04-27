@@ -24,7 +24,15 @@ body:
         - Low
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: what-was-expected
+    attributes:
+      label: What was expected to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened instead?
     validations:
       required: true

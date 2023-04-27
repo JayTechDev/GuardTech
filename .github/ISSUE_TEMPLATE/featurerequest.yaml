@@ -5,14 +5,14 @@ labels: ["feature request"]
 assignees:
   - Not-Jayy
 body:
-  - type: input
+  - type: textarea
     id: contact
     attributes:
       label: Explanation
       description: Explain this new feature you want.
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: benefit
     attributes:
       label: Benefit
