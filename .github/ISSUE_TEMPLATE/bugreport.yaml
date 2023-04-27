@@ -1,0 +1,30 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug"]
+assignees:
+  - Not-Jayy
+body:
+  - type: input
+    id: contact
+    attributes:
+      label: Discord
+      description: This Just incase we need more info.
+      placeholder: wumpus#0001
+    validations:
+      required: true
+  - type: dropdown
+    id: bug-severity
+    attributes:
+      label: How severe is this bug?
+      multiple: true
+      options:
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+  - type: input
+    id: what-was-expected
+    validations:
+      required: true

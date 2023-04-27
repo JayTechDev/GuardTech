@@ -1,0 +1,21 @@
+name: Feature Request
+description: Create a feature request
+title: "[Feature Request]: "
+labels: ["feature request"]
+assignees:
+  - Not-Jayy
+body:
+  - type: input
+    id: contact
+    attributes:
+      label: Explanation
+      description: Explain this new feature you want.
+    validations:
+      required: true
+  - type: input
+    id: benefit
+    attributes:
+      label: Benefit
+      description: How will it benefit the bot overall?
+    validations:
+      required: true
