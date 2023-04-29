@@ -30,7 +30,7 @@ module.exports = {
         await TargetMember.setNickname(`Moderated Nickname - ${ModeratedNickname_ID}`);
 
         interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Moderated nickname to **Moderated Nickname - ${ModeratedNickname_ID}` 
+            content: `${Emojis.Success_Emoji} Moderated nickname to **Moderated Nickname - ${ModeratedNickname_ID}**` 
         });
     },
 };
