@@ -38,7 +38,7 @@ module.exports = {
 
                 TargetMember.roles.add('1101869412010704907');
                 interaction.reply({
-                    content: `${Emojis.Success_Emoji} **${TargetUser.tag}** has been give the key to Jay's Office.`
+                    content: `${Emojis.Success_Emoji} **${TargetUser.tag}** has been given the key to Jay's Office.`
                 });
                 break;
         };
