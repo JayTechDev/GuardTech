@@ -9,11 +9,13 @@ module.exports = {
     .setDMPermission(false)
     .addUserOption(option => option
             .setName('target')
-            .setDescription('User to give the key to.')  
+            .setDescription('User to give the key to.')
+            .setRequired(true)
     )
     .addStringOption(option => option
             .setName('key')
             .setDescription('The key to give.')
+            .setRequired(true)
             .addChoices(
                 { name: 'Jay\'s Office Key', value: 'jays-office-key' }
             )
