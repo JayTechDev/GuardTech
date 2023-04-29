@@ -5,7 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
         .setDescription('Shows a list of commands.')
-        .setDMPermission(true),
+        .setDMPermission(false),
     /**
      * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
@@ -37,7 +37,7 @@ module.exports = {
             },
             {
                 name: '• Util',
-                value: codeBlock('blacklist, customrole, debug, ping, status')
+                value: codeBlock('blacklist, customrole, debug, key, ping, status')
             },
             {
                 name: '• Developer',
