@@ -61,9 +61,9 @@ module.exports = {
         .setDescription(`${ServerDescription}`)
         .setThumbnail(`${TargetUser.displayAvatarURL()}`)
         .setFields(
-            { name: '• Members', value: `${MemberCount}` },
-            { name: '• User', value: `${userMention(TargetUser.id)}` },
-            { name: '• Partner with us', value: '[Requirements](https://support.jayts.xyz/jaycord/partner)' } 
+            { name: '• Members', value: `${MemberCount}`, inline: true },
+            { name: '• User', value: `${userMention(TargetUser.id)}`, inline: true },
+            { name: '• Partner with us', value: '[Requirements](https://support.jayts.xyz/jaycord/partner)', inline: true } 
         )
         .setTimestamp()
 
