@@ -32,6 +32,10 @@ module.exports = {
                 value: codeBlock('archive, avatar, dm, icon, profile, roles, say')
             },
             {
+                name: '• Images',
+                value: codeBlock('capybara')
+            },
+            {
                 name: '• Games',
                 value: codeBlock('8ball')
             },
