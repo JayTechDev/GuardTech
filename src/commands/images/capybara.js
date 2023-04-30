@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const API_URL = 'https://api.capy.lol/v1/capybara?json=true';
+const axios = require('axios');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,15 +11,16 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        fetch(API_URL, { method: 'GET' }).then(response => response.json().then(data => {
+        axios.get(API_URL).then(response => {
+
             const CapyEmbed = new EmbedBuilder()
             .setColor('Random')
-            .setTitle(`${data.data.alt}`)
-            .setImage(`${data.data.url}`)
+            .setTitle(`${response.data.data.alt}`)
+            .setImage(`${response.data.data.url}`)
 
             interaction.reply({
                 embeds: [CapyEmbed]
             });
-        }));
+        });
     },
 };
