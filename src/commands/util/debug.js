@@ -15,11 +15,10 @@ module.exports = {
     async execute(interaction, client) {
         const ping = Math.round(client.ws.ping) + 'ms';
         const uptime = ms(client.uptime);
+        const memusage = Math.floor(process.memoryUsage.rss() / 1024 / 1024) + ' MB'
 
         const DebugEmbed = new EmbedBuilder()
         .setColor(Colours.Default_Colour)
-        .setDescription('Thanks to [Pixelnest](https://pixelnest.gg) for the hosting!')
-        .setImage('https://cdn.discordapp.com/attachments/1097088599406682182/1102294999640592435/2IWWz9gFaYsSPgpG88M5HCGLLTs_Textured_6K.png')
         .setFields(
             {
                 name: '• Ping',
@@ -47,8 +46,8 @@ module.exports = {
                 inline: true
             },
             {
-                name: '• Total Commands',
-                value: codeBlock(client.commands.size),
+                name: '• Memory Usage',
+                value: codeBlock(memusage),
                 inline: true
             }
         )
