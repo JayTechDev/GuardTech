@@ -1,20 +1,11 @@
 console.clear();
 
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const { Assistant } = require('./util/classes/Assistant');
 const { readdirSync } = require('fs');
 const { connect } = require('mongoose');
 require('dotenv/config');
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildModeration,
-        GatewayIntentBits.GuildMembers,
-    ],
-    allowedMentions: { parse: ['users', 'roles'] }
-});
-
-client.commands = new Collection();
+const client = new Assistant();
 
 const handlerFiles = readdirSync('./src/handlers/').filter(file => file.endsWith('.js'));
 for (const file of handlerFiles) require(`./handlers/${file}`)(client);
