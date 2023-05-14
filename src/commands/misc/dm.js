@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, inlineCode } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, inlineCode } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -20,6 +20,7 @@ module.exports = {
     ),
     /**
      * @param {ChatInputCommandInteraction} interaction
+     * @param {Client} client
      */
     async execute(interaction, client) {
         const { guild, options, user } = interaction;
@@ -28,6 +29,8 @@ module.exports = {
         const Message = options.getString('message');
 
         const LogChannel = guild.channels.cache.get('946156222292299807');
+
+        if (TargetUser.id === client.user.id) return;
 
         TargetUser.send({
             content: `**${user.tag}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`
