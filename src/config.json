@@ -26,5 +26,12 @@
         "Mute": "Mute",
         "Unmute": "Unmute",
         "Warn": "Warn"
+    },
+
+    "Requirements": {
+        "Celebrity": {
+            "Required_Count": 1000,
+            "Required_Views": 10000
+        }
     }
 }

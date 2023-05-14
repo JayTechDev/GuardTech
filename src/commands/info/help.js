@@ -21,7 +21,7 @@ module.exports = {
         .setFields(
             {
                 name: '• Info',
-                value: codeBlock('help, membercount, serverinfo, userinfo')
+                value: codeBlock('eligible, help, membercount, serverinfo, userinfo')
             },
             {
                 name: '• Moderation',
