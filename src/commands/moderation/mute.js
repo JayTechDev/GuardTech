@@ -25,10 +25,6 @@ module.exports = {
             .setDescription('The mute reason.')
             .setMaxLength(1000)
             .setMinLength(1)
-    )
-    .addBooleanOption(option => option
-            .setName('notify')
-            .setDescription('Whether or not to notify the target.')
     ),
     /**
      * @param {ChatInputCommandInteraction} interaction
@@ -40,7 +36,6 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const MuteDuration = options.getString('duration');
         const MuteReason = options.getString('reason') || 'No reason provided.';
-        const Notify = options.getBoolean('notify');
 
         const MuteDate = new Date(createdTimestamp).toDateString();
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
@@ -62,15 +57,11 @@ module.exports = {
             { name: 'Appeal', value: `${Links.Appeal_Link}` }
         )
 
-        if (Notify) await TargetUser.send({
+        await TargetUser.send({
             embeds: [DirectMessageEmbed]
         }).catch(console.error);
 
         await TargetMember.timeout(ms(MuteDuration), MuteReason).then(async () => {
-            interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Muted **${TargetUser.tag}** for **${MuteExpiry}** (Case #${CaseId})`
-             });
-
              const mute = await database.create({
                 Type: PunishmentTypes.Mute,
                 CaseID: CaseId,
@@ -89,6 +80,10 @@ module.exports = {
 
              mute.save();
         });
+
+        await interaction.reply({ 
+            content: `${Emojis.Success_Emoji} Muted **${TargetUser.tag}** for **${MuteExpiry}** (Case #${CaseId})`
+         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Yellow')

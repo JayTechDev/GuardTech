@@ -19,10 +19,6 @@ module.exports = {
             .setDescription('The ban reason.')
             .setMaxLength(1000)
             .setMinLength(1)
-    )
-    .addBooleanOption(option => option
-            .setName('notify')
-            .setDescription('Whether or not to notify the target.')
     ),
     /**
      * @param {ChatInputCommandInteraction} interaction
@@ -33,7 +29,6 @@ module.exports = {
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const BanReason = options.getString('reason') || 'No reason provided.';
-        const Notify = options.getBoolean('notify');
 
         const BanDate = new Date(createdTimestamp).toDateString();
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
@@ -51,15 +46,11 @@ module.exports = {
             { name: 'Appeal', value: `${Links.Appeal_Link}` }
         )
 
-        if (Notify) await TargetUser.send({
+        await TargetUser.send({
             embeds: [DirectMessageEmbed]
         }).catch(console.error);
         
         await TargetMember.ban({ deleteMessageSeconds: 86400, reason: BanReason }).then(async () => {
-            interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Banned **${TargetUser.tag}** (Case #${CaseId})`
-             });
-
              const ban = await database.create({
                 Type: PunishmentTypes.Ban,
                 CaseID: CaseId,
@@ -77,6 +68,10 @@ module.exports = {
 
              ban.save();
         });
+
+        await interaction.reply({ 
+            content: `${Emojis.Success_Emoji} Banned **${TargetUser.tag}** (Case #${CaseId})`
+         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')

@@ -19,10 +19,6 @@ module.exports = {
             .setDescription('The kick reason.')
             .setMaxLength(1000)
             .setMinLength(1)
-    )
-    .addBooleanOption(option => option
-            .setName('notify')
-            .setDescription('Whether or not to notify the target.')
     ),
     /**
      * @param {ChatInputCommandInteraction} interaction
@@ -33,7 +29,6 @@ module.exports = {
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const KickReason = options.getString('reason') || 'No reason provided.';
-        const Notify = options.getBoolean('notify');
 
         const KickDate = new Date(createdTimestamp).toDateString();
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
@@ -50,15 +45,11 @@ module.exports = {
             { name: 'Reason', value: `${inlineCode(KickReason)}` },
         )
 
-        if (Notify) await TargetUser.send({
+        await TargetUser.send({
             embeds: [DirectMessageEmbed]
         }).catch(console.error);
 
         await TargetMember.kick(KickReason).then(async () => {
-            interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Kicked **${TargetUser.tag}** (Case #${CaseId})`
-             });
-
              const kick = await database.create({
                 Type: PunishmentTypes.Kick,
                 CaseID: CaseId,
@@ -76,6 +67,10 @@ module.exports = {
 
              kick.save();
         });
+
+        await interaction.reply({ 
+            content: `${Emojis.Success_Emoji} Kicked **${TargetUser.tag}** (Case #${CaseId})`
+         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')
