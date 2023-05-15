@@ -7,16 +7,16 @@ module.exports = {
         .setDescription('Check if you are eligible for a benefit.')
         .setDMPermission(false)
         .addSubcommand(subcmd => subcmd
-            .setName('celebrity')
-            .setDescription('Check if you are eligible for the celebrity role.')
-            .addNumberOption(option => option
-                .setName('value')
-                .setDescription('How many subscribers or followers you have.')
-                .setRequired(true)
+                .setName('celebrity')
+                .setDescription('Check if you are eligible for the celebrity role.')
+                .addNumberOption(option => option
+                        .setName('value')
+                        .setDescription('How many subscribers or followers you have.')
+                        .setRequired(true)
             )
-            .addNumberOption(option => option
-                .setName('views')
-                .setDescription('How many views on YouTube?')
+                .addNumberOption(option => option
+                        .setName('views')
+                        .setDescription('How many views on YouTube?')
             )
         ),
     /**
@@ -49,9 +49,9 @@ module.exports = {
                         });
                     } else {
                         const EligibleEmbed = new EmbedBuilder()
-                            .setColor('Green')
-                            .setTitle('Eligible')
-                            .setDescription(`You are eligible for the celebrity role! Please open a ticket to proceed.`)
+                        .setColor('Green')
+                        .setTitle('Eligible')
+                        .setDescription(`You are eligible for the celebrity role! Please open a ticket to proceed.`)
 
                         interaction.reply({
                             embeds: [EligibleEmbed]
@@ -70,18 +70,18 @@ module.exports = {
 
                     if (Eligible === false) {
                         const NotEligibleEmbed = new EmbedBuilder()
-                            .setColor('Red')
-                            .setTitle('Not Eligible')
-                            .setDescription(`You are not eligible for the celebrity role, issues have been listed below.\n\n${Issues.join('\n')}`)
+                        .setColor('Red')
+                        .setTitle('Not Eligible')
+                        .setDescription(`You are not eligible for the celebrity role, issues have been listed below.\n\n${Issues.join('\n')}`)
 
                         interaction.reply({
                             embeds: [NotEligibleEmbed]
                         });
                     } else {
                         const EligibleEmbed = new EmbedBuilder()
-                            .setColor('Green')
-                            .setTitle('Eligible')
-                            .setDescription(`You are eligible for the celebrity role! Please open a ticket to proceed.`)
+                        .setColor('Green')
+                        .setTitle('Eligible')
+                        .setDescription(`You are eligible for the celebrity role! Please open a ticket to proceed.`)
 
                         interaction.reply({
                             embeds: [EligibleEmbed]
@@ -89,7 +89,6 @@ module.exports = {
                     };
                 };
                 break;
-
         };
     },
 };

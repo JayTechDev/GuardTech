@@ -20,9 +20,10 @@ module.exports = {
         const { options } = interaction;
 
         const AchievementText = options.getString('text');
+        const SafeString = encodeURIComponent(AchievementText);
 
         interaction.reply({
-            content: API_URL + `?text=${AchievementText}`
+            content: API_URL + `?text=${SafeString}`
         });
     },
 };
