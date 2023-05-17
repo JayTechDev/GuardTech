@@ -31,9 +31,8 @@ module.exports = {
         const LogChannel = guild.channels.cache.get('946156222292299807');
 
         if (TargetUser.id === client.user.id) return;
-        if (TargetUser.bot) return;
 
-        await TargetUser.send({
+        TargetUser.send({
             content: `**${user.tag}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`
         }).catch(() => {
             return interaction.reply({
@@ -41,7 +40,7 @@ module.exports = {
             });
         });
 
-        await interaction.reply({
+        interaction.reply({
             content: `${Emojis.Success_Emoji} Sent a message to **${TargetUser.tag}**`,
             ephemeral: true
         });
@@ -54,7 +53,7 @@ module.exports = {
             { name: 'Message', value: `${inlineCode(Message)}` },
         )
 
-        await LogChannel.send({
+        LogChannel.send({
             embeds: [LogEmbed]
         });
     },

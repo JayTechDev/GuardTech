@@ -40,7 +40,6 @@ module.exports = {
         const RoleIcon = options.getAttachment('icon');
 
         const Divider = await guild.roles.fetch('1052436531551412244');
-        if (!Divider) return console.log('No divider role has been found for Custom Roles, this may break things.');
 
         if (!RoleColour.includes('#')) return interaction.reply({ 
             content: `${Emojis.Error_Emoji} Invalid hex colour.`,
