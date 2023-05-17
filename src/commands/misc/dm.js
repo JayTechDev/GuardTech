@@ -31,8 +31,9 @@ module.exports = {
         const LogChannel = guild.channels.cache.get('946156222292299807');
 
         if (TargetUser.id === client.user.id) return;
+        if (TargetUser.bot) return;
 
-        TargetUser.send({
+        await TargetUser.send({
             content: `**${user.tag}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`
         }).catch(() => {
             return interaction.reply({

@@ -134,6 +134,10 @@ module.exports = {
                         value: `${profile.Content[0].Location}`
                     }
                 )
+
+                interaction.reply({
+                    embeds: [ProfileEmbed]
+                });
                 break;
             case 'delete':
                 const UserProfile = await database.findOne({ GuildID: guildId, User: user.id });
