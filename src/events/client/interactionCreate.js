@@ -20,7 +20,7 @@ module.exports = {
                 await command.execute(interaction, client);
             } catch (error) {
                 console.log(error);
-                return await interaction.reply({
+                return interaction.reply({
                     content: '**[BOT ERROR]** Check console for more information.',
                     ephemeral: true
                 });

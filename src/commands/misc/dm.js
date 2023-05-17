@@ -41,7 +41,7 @@ module.exports = {
             });
         });
 
-        interaction.reply({
+        await interaction.reply({
             content: `${Emojis.Success_Emoji} Sent a message to **${TargetUser.tag}**`,
             ephemeral: true
         });
@@ -54,7 +54,7 @@ module.exports = {
             { name: 'Message', value: `${inlineCode(Message)}` },
         )
 
-        LogChannel.send({
+        await LogChannel.send({
             embeds: [LogEmbed]
         });
     },
