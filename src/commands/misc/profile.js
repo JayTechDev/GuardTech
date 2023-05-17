@@ -135,7 +135,7 @@ module.exports = {
                     }
                 )
 
-                interaction.reply({
+                await interaction.reply({
                     embeds: [ProfileEmbed]
                 });
                 break;
