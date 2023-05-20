@@ -19,7 +19,7 @@ module.exports = {
         const ClientUserCount = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
 
         // Internal
-        const MemoryUsage = Math.floor(process.memoryUsage.rss() / 1024 / 1024) + ' MB'
+        const MemoryUsage = Math.floor(process.memoryUsage.rss() / 1024 / 1024) + ' MB';
 
         const InfoEmbed = new EmbedBuilder()
         .setColor(Colours.Default_Colour)
