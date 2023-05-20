@@ -15,7 +15,8 @@
     },
 
     "Links": {
-        "Appeal_Link": "https://dyno.gg/form/b72ba489"
+        "Appeal_Link": "https://dyno.gg/form/b72ba489",
+        "Bot_Source": "https://github.com/JayCordDevelopment/Assistant"
     },
 
     "PunishmentTypes": {
