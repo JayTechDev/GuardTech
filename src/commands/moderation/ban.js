@@ -67,11 +67,11 @@ module.exports = {
              });
 
              ban.save();
-        });
 
-        await interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Banned **${TargetUser.tag}** (Case #${CaseId})`
-         });
+             interaction.reply({ 
+                content: `${Emojis.Success_Emoji} Banned **${TargetUser.tag}** (Case #${CaseId})`
+            });
+        });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')
@@ -80,6 +80,6 @@ module.exports = {
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
-        await LogChannel.send({ embeds: [LogEmbed] });
+        LogChannel.send({ embeds: [LogEmbed] });
     },
 };

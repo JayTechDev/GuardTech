@@ -35,7 +35,7 @@ module.exports = {
         const CaseId = createCaseId();
 
         if (!TargetMember.kickable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to kick this user.`
+            content: `${Emojis.Error_Emoji} Unable to perform action.`
         });
         
         const DirectMessageEmbed = new EmbedBuilder()
@@ -66,11 +66,11 @@ module.exports = {
              });
 
              kick.save();
-        });
 
-        await interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Kicked **${TargetUser.tag}** (Case #${CaseId})`
-         });
+             interaction.reply({ 
+                content: `${Emojis.Success_Emoji} Kicked **${TargetUser.tag}** (Case #${CaseId})`
+            });
+        });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')
@@ -79,6 +79,6 @@ module.exports = {
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
-        await LogChannel.send({ embeds: [LogEmbed] });
+        LogChannel.send({ embeds: [LogEmbed] });
     },
 };

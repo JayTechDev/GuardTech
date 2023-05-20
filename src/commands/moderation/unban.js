@@ -40,10 +40,6 @@ module.exports = {
         });
 
         await guild.bans.remove(TargetID, UnbanReason).then(async () => {
-            interaction.reply({
-                content: `${Emojis.Success_Emoji} Unbanned user sucessfully. (Case #${CaseId})`
-            })
-
             const unban = await database.create({
                 Type: PunishmentTypes.Unban,
                 CaseID: CaseId,
@@ -60,6 +56,10 @@ module.exports = {
              });
 
              unban.save();
+
+             interaction.reply({
+                content: `${Emojis.Success_Emoji} Unbanned user sucessfully. (Case #${CaseId})`
+            });
         });
 
         const LogEmbed = new EmbedBuilder()
@@ -69,6 +69,6 @@ module.exports = {
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
-        await LogChannel.send({ embeds: [LogEmbed] });
+        LogChannel.send({ embeds: [LogEmbed] });
     },
 };

@@ -79,11 +79,11 @@ module.exports = {
              });
 
              mute.save();
-        });
 
-        await interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Muted **${TargetUser.tag}** for **${MuteExpiry}** (Case #${CaseId})`
-         });
+             interaction.reply({ 
+                content: `${Emojis.Success_Emoji} Muted **${TargetUser.tag}** for **${MuteExpiry}** (Case #${CaseId})`
+            });
+        });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Yellow')
@@ -92,6 +92,6 @@ module.exports = {
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
-        await LogChannel.send({ embeds: [LogEmbed] });
+        LogChannel.send({ embeds: [LogEmbed] });
     },
 };

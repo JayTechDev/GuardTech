@@ -65,9 +65,9 @@ module.exports = {
 
          warn.save();
 
-        await interaction.reply({ 
+         interaction.reply({ 
             content: `${Emojis.Success_Emoji} Warned **${TargetUser.tag}** (Case #${CaseId})`
-         });
+        });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Orange')
@@ -76,6 +76,6 @@ module.exports = {
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
-        await LogChannel.send({ embeds: [LogEmbed] });
+        LogChannel.send({ embeds: [LogEmbed] });
     },
 };
