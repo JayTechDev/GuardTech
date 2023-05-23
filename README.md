@@ -19,4 +19,4 @@ Featuring modules such as:
 If you want to contribute towards Jay's Assistant head over to the documentation located __[here](https://support.jayts.xyz/jaycord/for-developers)__
 
 # Authors
-Main Developer & Maintainer: [@ jaytsdev](https://https://github.com/jaytsdev)
+Main Developer & Maintainer: [@ jaytsdev](https://github.com/jaytsdev)
