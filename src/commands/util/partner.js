@@ -56,7 +56,7 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const ServerName = options.getString('name');
         const ServerDescription = options.getString('description');
-		const ServerNotes = options.getString('notes');
+	const ServerNotes = options.getString('notes');
         const InviteLink = options.getString('invite');
         const MemberCount = options.getNumber('members');
 
@@ -72,7 +72,7 @@ module.exports = {
         .setFields(
             { name: '• Members', value: `${MemberCount}`, inline: false },
             { name: '• Partner', value: `${userMention(TargetUser.id)}`, inline: false },
-			{ name: '• Notes', value: `${ServerNotes}`, inline: false },
+	    { name: '• Notes', value: `${ServerNotes}`, inline: false },
         )
         .setTimestamp()
 
