@@ -55,7 +55,7 @@ module.exports = {
             },
             {
                 name: '• Nickname',
-                value: codeBlock(TargetMember.nickname || "None"),
+                value: codeBlock(TargetMember.nickname || 'None'),
                 inline: true
             },
             {
