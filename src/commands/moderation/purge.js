@@ -40,10 +40,10 @@ module.exports = {
             });
 
             await channel.bulkDelete(filtered, true).then(async messages => {
-                const sentMessage = await interaction.reply({ 
+                await interaction.reply({ 
                     content: `${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'} sent by **${Target.tag}**`,
                     ephemeral: true
-                 });
+                });
             });
         }
         else {
@@ -51,7 +51,7 @@ module.exports = {
                 interaction.reply({ 
                     content: `${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'}.`,
                     ephemeral: true
-                 });
+                });
             });
         };
     },
