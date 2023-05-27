@@ -33,25 +33,24 @@ module.exports = {
             .setMinLength(1)
             .setRequired(true)
     )
+    .addNumberOption(option => option
+            .setName('members')
+            .setDescription('The amount of members.')
+            .setRequired(true)
+            .setMinValue(50)
+    )
 	.addStringOption(option => option
             .setName('notes')
             .setDescription('Any extra notes.')
             .setRequired(false)
             .setMaxLength(1000)
             .setMinLength(1)
-            .setRequired(true)
-   )
-    .addNumberOption(option => option
-            .setName('members')
-            .setDescription('The amount of members.')
-            .setRequired(true)
-            .setMinValue(50)
     ),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        const { guild, options, user } = interaction;
+        const { guild, options } = interaction;
 
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
@@ -61,11 +60,11 @@ module.exports = {
         const InviteLink = options.getString('invite');
         const MemberCount = options.getNumber('members');
 
-        const PartnerChannel = guild.channels.cache.get('');
+        const PartnerChannel = guild.channels.cache.get('1084907567471411330');
 
         const PartnerEmbed = new EmbedBuilder()
         .setColor('Aqua')
-		.setAuthor({ name: 'Jay's Assistant', iconURL: 'https://cdn.discordapp.com/avatars/1091308443480096838/f269f573ab58ce2c7a6b63be4d72c9cf.png?size=512', url: 'https://discord.gg/jaycord' })
+        .setAuthor({ name: 'Jay\'s Assistant', iconURL: 'https://cdn.discordapp.com/avatars/1091308443480096838/f269f573ab58ce2c7a6b63be4d72c9cf.png?size=512', url: 'https://discord.gg/jaycord' })
         .setTitle(`:globe_with_meridians: ${ServerName}`)
         .setURL(`${InviteLink}`)
         .setDescription(`${ServerDescription}`)
@@ -78,7 +77,7 @@ module.exports = {
         .setTimestamp()
 
         PartnerChannel.send({ embeds: [PartnerEmbed] }).then(() => {
-            TargetMember.roles.add('');
+            TargetMember.roles.add('1092047589484007474');
             interaction.reply({
                 content: `${Emojis.Success_Emoji} **${TargetUser.tag}** has been partnered with JayCord successfully.`
             });
