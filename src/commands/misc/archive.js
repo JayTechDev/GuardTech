@@ -16,13 +16,13 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        const { guild, options, channel } = interaction;
+        const { guild, guildId, options, channel } = interaction;
 
         const Channel = options.getChannel('channel') || channel;
         const ArchiveCategory = guild.channels.cache.get(IDs.ArchiveCategory);
 
         Channel.permissionOverwrites.edit(guildId, { ViewChannel: false, SendMessages: null });
-        Channel.parent = ArchiveCategory;
+        Channel.setParent(ArchiveCategory);
 
         interaction.reply({
             content: `${Emojis.Success_Emoji} ${channelMention(Channel.id)} has been archived.`
