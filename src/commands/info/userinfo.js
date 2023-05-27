@@ -21,7 +21,7 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
 
         const UserBanner = (await client.users.fetch(TargetUser, { force: true })).bannerURL({ size: 2048 }) || null;
-        const UserRoles = TargetMember.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).join(' ').replace('@everyone, " "');
+        const UserRoles = TargetMember.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).join(' ');
         const RoleSize = TargetMember.roles.cache.size;
 
         const InfoEmbed = new EmbedBuilder()
@@ -55,7 +55,7 @@ module.exports = {
             },
             {
                 name: '• Nickname',
-                value: codeBlock(TargetMember.nickname || "None"),
+                value: codeBlock(TargetMember.nickname || 'None'),
                 inline: true
             },
             {
@@ -65,7 +65,7 @@ module.exports = {
         )
 
         interaction.reply({ 
-            embeds: [InfoEmbed] 
+            embeds: [InfoEmbed]
         });
     },
 };
