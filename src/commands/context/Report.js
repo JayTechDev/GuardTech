@@ -35,7 +35,7 @@ module.exports = {
             `> • **Message Link:** [here](${messageLink(channel.id, targetId)})`
         ].join('\n'))
         .setFields({
-            name: '• Reported Message', value: `${targetMessage.content || images}`
+            name: '• Reported Message', value: `${targetMessage.content || images.join('\n')}`
         })
 
         ReportThread.send({
