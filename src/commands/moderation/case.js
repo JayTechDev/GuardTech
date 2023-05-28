@@ -5,25 +5,25 @@ const database = require('../../database/schemas/PunishmentSchema.js');
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('case')
-    .setDescription('View a punishment case.')
+    .setDescription('View a case.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .setDMPermission(false)
     .addStringOption(option => option
             .setName('id')
-            .setDescription('The id of the punishment.')
+            .setDescription('The id of the case.')
             .setRequired(true)
     ),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        const { guildId, options, channel } = interaction;
+        const { guildId, options } = interaction;
 
-        const PunishmentID = options.getString('id');
-        const data = await database.findOne({ GuildID: guildId, CaseID: PunishmentID });
+        const CaseId = options.getString('id');
+        const data = await database.findOne({ GuildID: guildId, CaseID: CaseId });
 
         if (!data) return interaction.reply({
-            content: `${Emojis.Error_Emoji} No punishment found.`
+            content: `${Emojis.Error_Emoji} No case found.`
         });
         
         const CaseEmbed = new EmbedBuilder()

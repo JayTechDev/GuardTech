@@ -27,8 +27,8 @@ module.exports = {
         });
         
         database.deleteOne({ GuildID: guildId, CaseID: PunishmentID }).then(() => {
-            interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Punishment has been removed.`
+            interaction.reply({
+                content: `${Emojis.Success_Emoji} Punishment has been deleted.`
             });
         }); 
     },

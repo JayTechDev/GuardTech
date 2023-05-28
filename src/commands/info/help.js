@@ -25,7 +25,7 @@ module.exports = {
             },
             {
                 name: '• Moderation',
-                value: codeBlock('ban, block, case, cases, kick, lock, mod, mute, nick, purge, rmpunish, slowmode, softban, unban, unblock, unlock, unmute, warn')
+                value: codeBlock('ban, block, case, cases, kick, lock, mod, mute, nick, purge, reason, rmpunish, slowmode, softban, unban, unblock, unlock, unmute, warn')
             },
             {
                 name: '• Misc',
