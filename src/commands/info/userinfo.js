@@ -21,11 +21,12 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
 
         const UserBanner = (await client.users.fetch(TargetUser, { force: true })).bannerURL({ size: 2048 }) || null;
+        const UserColour = (await client.users.fetch(Target)).hexAccentColor;
         const UserRoles = TargetMember.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).join(' ');
         const RoleSize = TargetMember.roles.cache.size;
 
         const InfoEmbed = new EmbedBuilder()
-        .setColor(Colours.Default_Colour)
+        .setColor(UserColour || Colours.Default_Colour)
         .setAuthor({ name: `${TargetUser.tag}`, iconURL: `${TargetUser.displayAvatarURL()}` })
         .setThumbnail(`${TargetUser.displayAvatarURL()}`)
         .setImage(UserBanner)
