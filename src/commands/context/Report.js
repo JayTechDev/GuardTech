@@ -13,6 +13,11 @@ module.exports = {
 
         const TicketChannel = guild.channels.cache.get('1063796552679829594');
 
+        const images = [];
+        if (targetMessage.attachments.size > 0) targetMessage.attachments.forEach(attachment => {
+            images.push(attachment.url);
+        });
+
         const ReportThread = await TicketChannel.threads.create({
             name: `Message Report - ${user.tag}`,
             type: ChannelType.PrivateThread,
@@ -30,7 +35,7 @@ module.exports = {
             `> • **Message Link:** [here](${messageLink(channel.id, targetId)})`
         ].join('\n'))
         .setFields({
-            name: '• Reported Message', value: `${targetMessage.content}`
+            name: '• Reported Message', value: `${targetMessage.content || images}`
         })
 
         ReportThread.send({
