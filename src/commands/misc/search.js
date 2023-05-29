@@ -9,10 +9,10 @@ const SEARCH_API_KEY = process.env.SEARCH_API_KEY;
 module.exports = ({
 	data: new SlashCommandBuilder()
 	.setName('google')
-	.setDescription('Search the web')
+	.setDescription('Search the web.')
 	.addStringOption(option => option
 		.setName('query')
-		.setDescription('search terms')
+		.setDescription('search terms.')
 		.setRequired(true)
 ),
 
@@ -22,7 +22,7 @@ module.exports = ({
 
 		await interaction.deferReply();
 
-		const response = await axios.get(`https://customsearch.googleapis.com/customsearch/v1?cx=${CX}&num=4&q=${Query}&key=${SEARCH_API_KEY}`).then( response => {
+		const response = await axios.get(`https://customsearch.googleapis.com/customsearch/v1?cx=${CX}&num=4&q=${encodeURI(Query)}&key=${SEARCH_API_KEY}`).then( response => {
 			const titles = [];
 			const links = [];
 			for(element of response.data.items){
