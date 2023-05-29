@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -23,21 +23,22 @@ module.exports = {
 
         const bot = guild.members.me;
         
+        const NickEmbed = new EmbedBuilder()
         if (!Nickname) {
             if (!bot.nickname) {
                 interaction.reply({
-                    content: `${Emojis.Error_Emoji} No nickname to reset.`
+                    embeds: [NickEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} No nickname to reset.`)]
                 });
             } else {
                 bot.setNickname('');
                 interaction.reply({
-                    content: `${Emojis.Success_Emoji} Reset nickname.`
+                    embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been reset.`)]
                 });
             };
         } else {
             bot.setNickname(Nickname);
             interaction.reply({
-                content: `${Emojis.Success_Emoji} Nickname has been set to **${Nickname}**`
+                embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been set to ${inlineCode(Nickname)}`)]
             });
         };
     },

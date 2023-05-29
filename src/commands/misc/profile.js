@@ -34,9 +34,10 @@ module.exports = {
             case 'create':
                 const data = await database.findOne({ GuildID: guildId, User: user.id });
 
+                const AlreadyHaveProfileEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} You already have a profile, use ${inlineCode('/profile view')} to view it.`)
                 if (data) {
                     return interaction.reply({
-                        content: `${Emojis.Error_Emoji} You already have a profile use ${inlineCode('/profile view')} to view it.`
+                        embeds: [AlreadyHaveProfileEmbed]
                     });
                 };
 
@@ -104,9 +105,10 @@ module.exports = {
 
                 const profile = await database.findOne({ GuildID: guildId, User: Target.id });
 
+                const NoProfileEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a profile for this user, do they have one?`)
                 if (!profile) {
                     return interaction.reply({
-                        content: `${Emojis.Error_Emoji} No profile found.`
+                        embeds: [NoProfileEmbed]
                     });
                 };
 
@@ -142,15 +144,16 @@ module.exports = {
             case 'delete':
                 const UserProfile = await database.findOne({ GuildID: guildId, User: user.id });
 
+                const DeleteProfileEmbed = new EmbedBuilder()
                 if (!UserProfile) {
                     return interaction.reply({
-                        content: `${Emojis.Error_Emoji} You do not have a profile.`
+                        embeds: [DeleteProfileEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} You do not have a profile to delete.`)]
                     });
                 };
 
                 database.deleteOne({ GuildID: guildId, User: user.id }).then(() => {
                     interaction.reply({
-                        content: `${Emojis.Success_Emoji} Your profile has been deleted.`
+                        embeds: [DeleteProfileEmbed.setColor('Green').setDescription(`${Emojis.Error_Emoji} Your profile has been deleted.`)]
                     });
                 });
                 break;

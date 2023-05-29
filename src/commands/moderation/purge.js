@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, userMention } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -29,7 +29,9 @@ module.exports = {
 
         const Messages = await channel.messages.fetch();
 
-        if(Target){
+        const PurgeEmbed = new EmbedBuilder()
+
+        if(Target) {
             let i = 0;
             const filtered = [];
             Messages.filter((m) => {
@@ -40,18 +42,18 @@ module.exports = {
             });
 
             await channel.bulkDelete(filtered, true).then(async messages => {
-                const sentMessage = await interaction.reply({ 
-                    content: `${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'} sent by **${Target.tag}**`,
+                await interaction.reply({ 
+                    embeds: [PurgeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'} sent by ${userMention(Target.id)}`)],
                     ephemeral: true
-                 });
+                });
             });
         }
         else {
             await channel.bulkDelete(Amount, true).then(messages => {
                 interaction.reply({ 
-                    content: `${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'}.`,
+                    embeds: [PurgeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'}`)],
                     ephemeral: true
-                 });
+                });
             });
         };
     },

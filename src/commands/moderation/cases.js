@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, userMention } = require('discord.js');
 const { Emojis, Colours } = require('../../config.json');
 const database = require('../../database/schemas/PunishmentSchema.js');
 
@@ -21,8 +21,10 @@ module.exports = {
         const Target = options.getUser('target');
 
         const data = await database.find({ UserID: Target.id });
+        
+        const NoCasesEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} There are no cases for ${userMention(Target.id)}`)
         if (data.length < 1) return interaction.reply({
-            content: `${Emojis.Error_Emoji} No cases found for **${Target.tag}**`
+            embeds: [NoCasesEmbed]
         });
 
         const fields = [];

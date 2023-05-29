@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, inlineCode } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, inlineCode, userMention } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -30,13 +30,13 @@ module.exports = {
 
         const LogChannel = guild.channels.cache.get('946156222292299807');
 
-        if (TargetUser.id === client.user.id) return;
+        if (TargetUser.id === client.user.id || TargetUser.bot) return;
 
         TargetUser.send({
             content: `**${user.tag}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`
         }).catch(() => {
             return interaction.reply({
-                content: `**${TargetUser.tag}** has their dms off :(`,
+                content: 'The user you specified has their dms off :(',
             });
         });
 
@@ -48,7 +48,7 @@ module.exports = {
         const LogEmbed = new EmbedBuilder()
         .setColor('White')
         .setTitle('DM Message Sent')
-        .setDescription(`**User**: <@${TargetUser.id}> | \`${TargetUser.id}\`\n**By**: <@${user.id}> | \`${user.id}\``)
+        .setDescription(`**User**: ${userMention(TargetUser.id)} | ${inlineCode(TargetUser.id)}\n**By**: ${userMention(user.id)} | ${inlineCode(user.id)}`)
         .setFields(
             { name: 'Message', value: `${inlineCode(Message)}` },
         )
