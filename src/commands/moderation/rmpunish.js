@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const database = require('../../database/schemas/PunishmentSchema.js');
 

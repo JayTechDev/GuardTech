@@ -22,8 +22,9 @@ module.exports = {
         const CaseId = options.getString('id');
         const data = await database.findOne({ GuildID: guildId, CaseID: CaseId });
 
+        const NoCaseEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} No case found.`)
         if (!data) return interaction.reply({
-            content: `${Emojis.Error_Emoji} No case found.`
+            embeds: [NoCaseEmbed]
         });
         
         const CaseEmbed = new EmbedBuilder()
