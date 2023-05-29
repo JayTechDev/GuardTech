@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const database = require('../../database/schemas/PunishmentSchema.js');
 
@@ -22,13 +22,15 @@ module.exports = {
         const PunishmentID = options.getString('id');
         const data = await database.findOne({ GuildID: guildId, CaseID: PunishmentID });
 
+        const NoPunishmentEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a punishment with ID ${inlineCode(PunishmentID)}`)
         if (!data) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} No punishment found.`
+            embeds: [NoPunishmentEmbed]
         });
         
+        const PunishmentDeletedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Punishment has been sucessfully deleted.`)
         database.deleteOne({ GuildID: guildId, CaseID: PunishmentID }).then(() => {
-            interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Punishment has been removed.`
+            interaction.reply({
+                embeds: [PunishmentDeletedEmbed]
             });
         }); 
     },

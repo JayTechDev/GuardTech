@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
@@ -33,8 +33,9 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
 
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
         if (TargetUser.id === user.id || TargetUser.id === guild.ownerId) return interaction.reply({ 
-            content: `${Error_Emoji} Unable to perform action.`
+            embeds: [CannotDoActionEmbed]
         });
         
         const DirectMessageEmbed = new EmbedBuilder()
@@ -61,18 +62,19 @@ module.exports = {
                     Reason: WarnReason
                 }
             ],
-         });
+        });
 
-         warn.save();
+        warn.save();
 
-         interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Warned **${TargetUser.tag}** (Case #${CaseId})`
+        const WarnSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been warned | ${inlineCode(CaseId)}`)
+        interaction.reply({ 
+            embeds: [WarnSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Orange')
         .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: <@${TargetUser.id}> | \`${TargetUser.id}\`\n**Type**: Warn\n**Reason**: ${WarnReason}`)
+        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Warn\n**Reason**: ${WarnReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
@@ -34,8 +34,9 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
 
-        if (!TargetMember.kickable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.kickable) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
         });
         
         const DirectMessageEmbed = new EmbedBuilder()
@@ -50,7 +51,7 @@ module.exports = {
         }).catch(console.error);
 
         await TargetMember.kick(KickReason).then(async () => {
-             const kick = await database.create({
+            const kick = await database.create({
                 Type: PunishmentTypes.Kick,
                 CaseID: CaseId,
                 GuildID: guildId,
@@ -63,19 +64,20 @@ module.exports = {
                         Reason: KickReason
                     }
                 ],
-             });
+            });
 
-             kick.save();
+            kick.save();
 
-             interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Kicked **${TargetUser.tag}** (Case #${CaseId})`
+            const KickSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been kicked | ${inlineCode(CaseId)}`)
+            interaction.reply({ 
+                embeds: [KickSuccessEmbed]
             });
         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')
         .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: <@${TargetUser.id}> | \`${TargetUser.id}\`\n**Type**: Kick\n**Reason**: ${KickReason}`)
+        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Kick\n**Reason**: ${KickReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

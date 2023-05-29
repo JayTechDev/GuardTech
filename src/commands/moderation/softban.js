@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
@@ -34,8 +34,9 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
 
-        if (!TargetMember.bannable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.bannable) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
         });
 
         const DirectMessageEmbed = new EmbedBuilder()
@@ -50,7 +51,7 @@ module.exports = {
         }).catch(console.error);
         
         await TargetMember.ban({ deleteMessageSeconds: 86400, reason: BanReason }).then(async () => {
-             const softban = await database.create({
+            const softban = await database.create({
                 Type: PunishmentTypes.Softban,
                 CaseID: CaseId,
                 GuildID: guildId,
@@ -63,27 +64,28 @@ module.exports = {
                         Reason: BanReason,
                     }
                 ],
-             });
+            });
 
-             softban.save();
+            softban.save();
 
-             setTimeout(async () => {
+            setTimeout(async () => {
                 await guild.bans.fetch().then(ban => {
                     if (ban.find(user => user.user.id === TargetUser.id)) {
                         guild.bans.remove(TargetUser.id, 'Softban.');
                     };
                 });
-             }, 1000);
+            }, 1000);
 
-             interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Soft Banned **${TargetUser.tag}** (Case #${CaseId})`
-             });
+            const SoftBanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been softbanned | ${inlineCode(CaseId)}`)
+            interaction.reply({ 
+                embeds: [SoftBanSuccessEmbed]
+            });
         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')
         .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: <@${TargetUser.id}> | \`${TargetUser.id}\`\n**Type**: Softban\n**Reason**: ${BanReason}`)
+        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Softban\n**Reason**: ${BanReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

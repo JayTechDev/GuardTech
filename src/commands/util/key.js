@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, userMention } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -32,13 +32,16 @@ module.exports = {
 
         switch (Key) {
             case 'jays-office-key':
+                const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
                 if (TargetMember.roles.cache.has('1101869412010704907') || !TargetMember.manageable) return interaction.reply({
-                    content: `${Emojis.Error_Emoji} Unable to perform action.`
+                    embeds: [CannotDoActionEmbed]
                 });
 
                 TargetMember.roles.add('1101869412010704907');
+
+                const KeyGivenEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Error_Emoji} ${userMention(TargetUser.id)} has been given the key to Jay's Office.`)
                 interaction.reply({
-                    content: `${Emojis.Success_Emoji} **${TargetUser.tag}** has been given the key to Jay's Office.`
+                    embeds: [KeyGivenEmbed]
                 });
                 break;
         };

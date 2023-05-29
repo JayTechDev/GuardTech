@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const randomstring = require('randomstring');
 
@@ -22,15 +22,17 @@ module.exports = {
         const TargetUser = options.getUser('target') || user;
         const TargetMember = await guild.members.fetch(TargetUser.id);
 
-        if (!TargetMember.moderatable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.manageable) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
         });
 
         const ModeratedNickname_ID = randomstring.generate({ length: 5, charset: 'alphanumeric' });
         await TargetMember.setNickname(`Moderated Nickname - ${ModeratedNickname_ID}`);
 
+        const ModSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} Nickname moderated to ${inlineCode(`Moderated Nickname - ${ModeratedNickname_ID}`)}`)
         interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Moderated nickname to **Moderated Nickname - ${ModeratedNickname_ID}**` 
+            embeds: [ModSuccessEmbed]
         });
     },
 };

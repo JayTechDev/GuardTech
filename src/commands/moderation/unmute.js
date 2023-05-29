@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
@@ -34,18 +34,18 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
         
-        if (!TargetMember.moderatable || !TargetMember.isCommunicationDisabled() == true) {
-            return interaction.reply({
-                content: `${Emojis.Error_Emoji} Unable to perform action.`
-            });
-        };
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.moderatable || !TargetMember.isCommunicationDisabled() == true) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
+        });
 
         await TargetMember.timeout(null).then(async () => {
+            const UnmuteSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been unmuted | ${inlineCode(CaseId)}`)
             interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Unmuted **${TargetUser.tag}** (Case #${CaseId})`
-             });
+                embeds: [UnmuteSuccessEmbed]
+            });
 
-             const unmute = await database.create({
+            const unmute = await database.create({
                 Type: PunishmentTypes.Unmute,
                 CaseID: CaseId,
                 GuildID: guildId,
@@ -58,15 +58,15 @@ module.exports = {
                         Reason: UnmuteReason
                     }
                 ],
-             });
+            });
 
-             unmute.save();
+            unmute.save();
         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Green')
         .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: <@${TargetUser.id}> | \`${TargetUser.id}\`\n**Type**: Unmute\n**Reason**: ${UnmuteReason}`)
+        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Unmute\n**Reason**: ${UnmuteReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

@@ -70,16 +70,18 @@ module.exports = {
         .setDescription(`${ServerDescription}`)
         .setThumbnail(`${TargetUser.displayAvatarURL()}`)
         .setFields(
-            { name: '• Members', value: `${MemberCount}`, inline: false },
-            { name: '• Partner', value: `${userMention(TargetUser.id)}`, inline: false },
-	    { name: '• Notes', value: `${ServerNotes}`, inline: false },
+            { name: '• Members', value: `${MemberCount}` },
+            { name: '• Partner', value: `${userMention(TargetUser.id)}` },
+	    { name: '• Notes', value: `${ServerNotes}` },
         )
         .setTimestamp()
 
         PartnerChannel.send({ embeds: [PartnerEmbed] }).then(() => {
             TargetMember.roles.add('1092047589484007474');
+
+            const PartnerSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been partnered with JayCord successfully.`)
             interaction.reply({
-                content: `${Emojis.Success_Emoji} **${TargetUser.tag}** has been partnered with JayCord successfully.`
+                embeds: [PartnerSuccessEmbed]
             });
         });
     },

@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, inlineCode } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const ms = require('ms');
 
@@ -44,14 +44,16 @@ module.exports = {
             }
         });
 
+        const SlowmodeEmbed = new EmbedBuilder()
+
         if(!error) {
             channel.setRateLimitPerUser(Total);
             await interaction.reply({
-                content: `${Emojis.Success_Emoji} Slowmode set to **${ms(ms(SlowmodeDuration), { long: true })}**`
+                embeds: [SlowmodeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Slowmode set to ${inlineCode(ms(ms(SlowmodeDuration), { long: true }))}`)]
             });
         } else {
             await interaction.reply({
-                content: `${Emojis.Error_Emoji} Unable to set slowmode.`
+                embeds: [SlowmodeEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to set slowmode.`)]
             });
         }
     },
