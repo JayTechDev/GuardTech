@@ -105,7 +105,7 @@ module.exports = {
 
                 const profile = await database.findOne({ GuildID: guildId, User: Target.id });
 
-                const NoProfileEmbed = new EmbedBuilder('Red').setDescription(`${Emojis.Error_Emoji} Could not find a profile for this user, do they have one?`)
+                const NoProfileEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a profile for this user, do they have one?`)
                 if (!profile) {
                     return interaction.reply({
                         embeds: [NoProfileEmbed]
