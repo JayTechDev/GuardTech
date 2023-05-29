@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, Client, PermissionFlagsBits, ActivityType } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, PermissionFlagsBits, ActivityType } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -50,8 +50,9 @@ module.exports = {
 
         client.user.setActivity({ name: `${StatusText}`, type: ChosenType });
 
+        const StatusChangedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Status changed to **${StatusText}** with type **${ChosenType}**`)
         interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Status changed to **${StatusText}** with type **${ChosenType}**`
+            embeds: [StatusChangedEmbed]
         });
     },
 };

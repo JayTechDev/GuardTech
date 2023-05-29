@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, ChannelType, channelMention } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ChannelType, channelMention } = require('discord.js');
 const { Emojis, IDs } = require('../../config.json');
 
 module.exports = {
@@ -24,8 +24,9 @@ module.exports = {
         Channel.permissionOverwrites.edit(guildId, { ViewChannel: false, SendMessages: null });
         Channel.setParent(ArchiveCategory);
 
+        const ArchiveSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${channelMention(Channel.id)} has been archived.`)
         interaction.reply({
-            content: `${Emojis.Success_Emoji} ${channelMention(Channel.id)} has been archived.`
+            embeds: [ArchiveSuccessEmbed]
         })
     },
 };

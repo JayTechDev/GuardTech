@@ -35,8 +35,10 @@ module.exports = {
         const Bans = await guild.bans.fetch();
 
         let bannedId = Bans.find(ban => ban.user.id == TargetID);
+
+        const NoBanEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a ban for this user, are you sure they are banned?`)
         if (!bannedId) return interaction.reply({
-            content: `${Emojis.Error_Emoji} Could not find a ban for this user.`
+            embeds: [NoBanEmbed]
         });
 
         await guild.bans.remove(TargetID, UnbanReason).then(async () => {
@@ -53,19 +55,20 @@ module.exports = {
                         Reason: UnbanReason
                     }
                 ],
-             });
+            });
 
-             unban.save();
+            unban.save();
 
-             interaction.reply({
-                content: `${Emojis.Success_Emoji} Unbanned user sucessfully. (Case #${CaseId})`
+            const UnbanSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetID)} has been unbanned | ${inlineCode(CaseId)}`)
+            interaction.reply({
+                embeds: [UnbanSuccessEmbed]
             });
         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Green')
         .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: <@${TargetID}> | \`${TargetID}\`\n**Type**: Unban\n**Reason**: ${UnbanReason}`)
+        .setDescription(`**Member**: ${userMention(TargetID)} | \`${TargetID}\`\n**Type**: Unban\n**Reason**: ${UnbanReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

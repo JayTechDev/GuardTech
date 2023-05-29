@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, inlineCode } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +12,7 @@ module.exports = {
         const { guild } = interaction;
 
         interaction.reply({
-            content: `Current members: **${guild.memberCount}**`
+            content: `Current members: ${inlineCode(guild.memberCount)}`
         });
     },
 };

@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, userMention } = require('discord.js');
 const { Emojis, Colours, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/BlacklistSchema.js');
@@ -33,28 +33,30 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
 
-        if (!TargetMember.manageable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.manageable) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
         });
     
+        const BlacklistSuccessEmbed = new EmbedBuilder().setColor('Orange').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been blacklisted | ${inlineCode(CaseId)}`)
         interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Blacklisted **${TargetUser.tag}** (Case #${CaseId})`
-         });
+            embeds: [BlacklistSuccessEmbed]
+        });
 
-         const blacklist = await database.create({
+        const blacklist = await database.create({
             CaseID: CaseId,
             GuildID: guildId,
             UserID: TargetUser.id,
             UserTag: TargetUser.tag,
             Reason: BlacklistReason
-         });
+        });
 
-         blacklist.save();
+        blacklist.save();
 
         const LogEmbed = new EmbedBuilder()
         .setColor(Colours.Blacklisted_Colour)
         .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: <@${TargetUser.id}> | \`${TargetUser.id}\`\n**Type**: Blacklist\n**Reason**: ${BlacklistReason}`)
+        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Blacklist\n**Reason**: ${BlacklistReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

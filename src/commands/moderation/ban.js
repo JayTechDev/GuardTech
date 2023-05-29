@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, Links, PunishmentTypes, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
@@ -34,8 +34,9 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
 
-        if (!TargetMember.bannable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.bannable) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
         });
 
         const DirectMessageEmbed = new EmbedBuilder()
@@ -64,19 +65,20 @@ module.exports = {
                         Reason: BanReason,
                     }
                 ],
-             });
+            });
 
-             ban.save();
+            ban.save();
 
-             interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Banned **${TargetUser.tag}** (Case #${CaseId})`
+            const BanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been banned | ${inlineCode(CaseId)}`)
+            interaction.reply({ 
+                embeds: [BanSuccessEmbed]
             });
         });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')
         .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: <@${TargetUser.id}> | \`${TargetUser.id}\`\n**Type**: Ban\n**Reason**: ${BanReason}`)
+        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Ban\n**Reason**: ${BanReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

@@ -37,7 +37,7 @@ module.exports = {
         if (LockChannel.permissionsFor(guildId).has('SendMessages') === false) return interaction.reply({ 
             content: `${Emojis.Error_Emoji} Channel is already locked.`,
             ephemeral: true
-         });
+        });
 
         LockChannel.permissionOverwrites.edit(guildId, { SendMessages: false }).then(() => {
             interaction.reply({ 

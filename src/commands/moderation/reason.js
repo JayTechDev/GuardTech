@@ -22,20 +22,22 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        const { guild, guildId, options } = interaction;
+        const { guildId, options } = interaction;
 
         const CaseId = options.getString('id');
         const NewReason = options.getString('reason');
 
         const data = await database.findOne({ GuildID: guildId, CaseID: CaseId });
         
+        const NoCaseEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a case with ID ${inlineCode(CaseId)}`)
         if (!data) return interaction.reply({
-            content: `${Emojis.Error_Emoji} No case found.`
+            embeds: [NoCaseEmbed]
         });
         
         await database.findOneAndUpdate({ GuildID: guildId, CaseID: CaseId }, { $set: { "Content.0.Reason": NewReason } }).then(async () => {
+            const CaseUpdatedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Case ${inlineCode(CaseId)} has been updated with reason ${inlineCode(NewReason)}`)
             interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Case ${inlineCode(CaseId)} has been updated with reason ${inlineCode(NewReason)}`
+                embeds: [CaseUpdatedEmbed]
             });
         });
     },

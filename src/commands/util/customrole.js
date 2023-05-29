@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, userMention } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -41,12 +41,14 @@ module.exports = {
 
         const Divider = await guild.roles.fetch('1052436531551412244');
 
+        const ErrorEmbed = new EmbedBuilder().setColor('Red')
+
         if (!RoleColour.includes('#')) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Invalid hex colour.`,
+            embeds: [ErrorEmbed.setDescription(`${Emojis.Error_Emoji} Invalid hex colour provided, make sure it includes a #`)],
         });
 
         if (!TargetMember.manageable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`,
+            embeds: [ErrorEmbed.setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)],
         });
 
         const CustomRole = await guild.roles.create({
@@ -59,8 +61,9 @@ module.exports = {
 
         TargetMember.roles.add(CustomRole);
 
+        const CRSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Role has been created and given to ${userMention(TargetUser.id)}`)
         interaction.reply({ 
-            content: `${Emojis.Success_Emoji} Role created and given to **${TargetUser.tag}**`
+            embeds: [CRSuccessEmbed]
         });
     },
 };

@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, inlineCode, userMention } = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -28,21 +28,23 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const Nickname = options.getString('nickname');
 
-        if (!TargetMember.moderatable) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.manageable) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
         });
 
+        const NickEmbed = new EmbedBuilder()
         if (!Nickname) {
             if (!TargetMember.nickname) {
-                return interaction.reply({ content: `${Error_Emoji} User has no nickname set.` });
+                return interaction.reply({ embeds: [NickEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} ${userMention(TargetUser.id)} has no nickname set.`)] });
             } else {
                 await TargetMember.setNickname('');
-                return interaction.reply({ content: `${Success_Emoji} Nickname has been reset.` });
+                return interaction.reply({ embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} Nickname has been reset.`)] });
             };
         } else {
             await TargetMember.setNickname(Nickname);
             return interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Nickname has been set to **${Nickname}**` 
+                embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been set to ${inlineCode(Nickname)}`)]
             });
         };
     },

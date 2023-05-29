@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, ChannelType, channelMention } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, ChannelType, userMention } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const database = require('../../database/schemas/BlockSchema.js');
 
@@ -35,13 +35,15 @@ module.exports = {
         const BlockChannel = options.getChannel('channel') || channel;
         const BlockReason = options.getString('reason') || 'No reason provided.';
 
-        if (!TargetMember.moderatable || await database.findOne({ GuildID: guildId, UserID: TargetUser.id })) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Unable to perform action.`
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
+        if (!TargetMember.moderatable || await database.findOne({ GuildID: guildId, UserID: TargetUser.id })) return interaction.reply({
+            embeds: [CannotDoActionEmbed]
         });
 
         BlockChannel.permissionOverwrites.edit(TargetUser.id, { SendMessages: false, CreatePublicThreads: false, CreatePrivateThreads: false }).then(async () => {
+            const BlockSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been blocked | ${inlineCode(BlockReason)}`)
             interaction.reply({ 
-                content: `${Emojis.Success_Emoji} **${TargetUser.tag}** has been blocked. **${BlockReason}**`,
+                embeds: [BlockSuccessEmbed]
             });
 
             const block = await database.create({
@@ -54,9 +56,9 @@ module.exports = {
                         Reason: BlockReason
                     }
                 ]
-             });
+            });
     
-             block.save();
+            block.save();
         });
     },
 };
