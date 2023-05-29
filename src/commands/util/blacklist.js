@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, userMention } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, Colours, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/BlacklistSchema.js');
