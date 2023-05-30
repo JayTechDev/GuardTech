@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const axios = require('axios');
-
 require('dotenv/config');
 
 const CX = process.env.CX;
@@ -25,7 +24,7 @@ module.exports = ({
 		const response = await axios.get(`https://customsearch.googleapis.com/customsearch/v1?cx=${CX}&num=4&q=${encodeURI(Query)}&key=${SEARCH_API_KEY}`).then( response => {
 			const titles = [];
 			const links = [];
-			for(element of response.data.items){
+			for(element of response.data.items) {
 				titles.push(element.title);
 				links.push(element.link)}
 			

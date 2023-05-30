@@ -29,7 +29,7 @@ module.exports = {
             },
             {
                 name: '• Misc',
-                value: codeBlock('archive, avatar, dm, icon, impersonate, profile, roles, say')
+                value: codeBlock('archive, avatar, dm, icon, impersonate, profile, roles, say, search')
             },
             {
                 name: '• Images',
