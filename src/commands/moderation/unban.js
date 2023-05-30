@@ -46,8 +46,7 @@ module.exports = {
                 Type: PunishmentTypes.Unban,
                 CaseID: CaseId,
                 GuildID: guildId,
-                UserID: TargetUser.id,
-                UserTag: TargetUser.tag,
+                UserID: TargetID,
                 Content: [
                     {
                         Moderator: user.tag,
