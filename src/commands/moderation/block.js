@@ -41,11 +41,6 @@ module.exports = {
         });
 
         BlockChannel.permissionOverwrites.edit(TargetUser.id, { SendMessages: false, CreatePublicThreads: false, CreatePrivateThreads: false }).then(async () => {
-            const BlockSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been blocked | ${inlineCode(BlockReason)}`)
-            interaction.reply({ 
-                embeds: [BlockSuccessEmbed]
-            });
-
             const block = await database.create({
                 GuildID: guildId,
                 UserID: TargetUser.id,
@@ -59,6 +54,11 @@ module.exports = {
             });
     
             block.save();
+        });
+
+        const BlockSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been blocked | ${inlineCode(BlockReason)}`)
+        interaction.reply({ 
+            embeds: [BlockSuccessEmbed]
         });
     },
 };

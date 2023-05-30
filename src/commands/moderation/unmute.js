@@ -40,11 +40,6 @@ module.exports = {
         });
 
         await TargetMember.timeout(null).then(async () => {
-            const UnmuteSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been unmuted | ${inlineCode(CaseId)}`)
-            interaction.reply({ 
-                embeds: [UnmuteSuccessEmbed]
-            });
-
             const unmute = await database.create({
                 Type: PunishmentTypes.Unmute,
                 CaseID: CaseId,
@@ -61,6 +56,11 @@ module.exports = {
             });
 
             unmute.save();
+        });
+
+        const UnmuteSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been unmuted | ${inlineCode(CaseId)}`)
+        interaction.reply({ 
+            embeds: [UnmuteSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()

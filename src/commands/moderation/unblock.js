@@ -41,12 +41,12 @@ module.exports = {
         });
 
         UnblockChannel.permissionOverwrites.delete(TargetUser.id).then(async () => {
-            const UnblockSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been unblocked | ${inlineCode(UnblockReason)}`)
-            interaction.reply({ 
-                embeds: [UnblockSuccessEmbed]
-            });
-
             await database.deleteOne({ GuildID: guildId, UserID: TargetUser.id });
+        });
+
+        const UnblockSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been unblocked | ${inlineCode(UnblockReason)}`)
+        interaction.reply({ 
+            embeds: [UnblockSuccessEmbed]
         });
     },
 };

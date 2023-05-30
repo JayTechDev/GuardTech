@@ -68,11 +68,11 @@ module.exports = {
             });
 
             ban.save();
+        });
 
-            const BanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been banned | ${inlineCode(CaseId)}`)
-            interaction.reply({ 
-                embeds: [BanSuccessEmbed]
-            });
+        const BanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been banned | ${inlineCode(CaseId)}`)
+        interaction.reply({ 
+            embeds: [BanSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()

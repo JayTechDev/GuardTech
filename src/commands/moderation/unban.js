@@ -58,11 +58,11 @@ module.exports = {
             });
 
             unban.save();
+        });
 
-            const UnbanSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetID)} has been unbanned | ${inlineCode(CaseId)}`)
-            interaction.reply({
-                embeds: [UnbanSuccessEmbed]
-            });
+        const UnbanSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetID)} has been unbanned | ${inlineCode(CaseId)}`)
+        interaction.reply({
+            embeds: [UnbanSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()
