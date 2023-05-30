@@ -1,4 +1,19 @@
-const { MessageContextMenuCommandInteraction, ContextMenuCommandBuilder, EmbedBuilder, ApplicationCommandType, ThreadAutoArchiveDuration, ChannelType, inlineCode, channelMention, userMention, roleMention, messageLink } = require('discord.js');
+const { MessageContextMenuCommandInteraction, 
+    ContextMenuCommandBuilder, 
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    ApplicationCommandType, 
+    ThreadAutoArchiveDuration, 
+    ChannelType,
+    ComponentType, 
+    inlineCode, 
+    channelMention, 
+    userMention, 
+    roleMention, 
+    messageLink,
+} = require('discord.js');
 const { Emojis } = require('../../config.json');
 
 module.exports = {
@@ -22,6 +37,7 @@ module.exports = {
             name: `Message Report - ${user.tag}`,
             type: ChannelType.PrivateThread,
             autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+            invitable: false
         });
 
         await ReportThread.join();
@@ -38,9 +54,35 @@ module.exports = {
             name: '• Reported Message', value: `${targetMessage.content || images.join('\n')}`
         })
 
+        const ReportButtons = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId('close-report').setLabel('Close').setStyle(ButtonStyle.Danger),
+        )
+
         ReportThread.send({
-            content: roleMention('929382693916008478'),
-            embeds: [ReportEmbed]
+            content: roleMention('1113045236088852552'),
+            embeds: [ReportEmbed],
+            components: [ReportButtons]
+        }).then((sentMessage) => {
+            sentMessage.pin();
+            sentMessage.createMessageComponentCollector({ componentType: ComponentType.Button }).on('collect', async (button) => {
+                if (!button.member.permissions.has('ManageMessages')) return interaction.reply({
+                    content: 'You cannot use this.',
+                    ephemeral: true
+                });
+
+                switch (button.customId) {
+                    case 'close-report':
+                        ReportThread.setLocked(true);
+                        button.reply({
+                            content: 'This report is being closed, please wait a few seconds.'
+                        });
+
+                        setTimeout(() => {
+                            ReportThread.delete();
+                        }, 5000);
+                        break;
+                };
+            });
         });
 
         interaction.reply({
