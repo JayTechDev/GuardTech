@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const axios = require('axios');
-
 require('dotenv/config');
 
 const CX = process.env.CX;

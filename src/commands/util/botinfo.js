@@ -1,5 +1,6 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, version, codeBlock } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, PermissionFlagsBits, version, codeBlock } = require('discord.js');
 const { Colours, Links } = require('../../config.json');
+const mongoose = require('mongoose');
 const ms = require('ms');
 
 module.exports = {
@@ -13,6 +14,8 @@ module.exports = {
      * @param {Client} client
      */
     async execute(interaction, client) {
+        const { user } = interaction;
+
         // Client
         const ClientPing = Math.round(client.ws.ping) + 'ms';
         const ClientUptime = ms(client.uptime, { long: true });
@@ -59,12 +62,43 @@ module.exports = {
         .setFooter({ text: `Uptime: ${ClientUptime}` })
 
         const Buttons = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setLabel('Source').setStyle(ButtonStyle.Link).setURL(Links.Bot_Source)
+            new ButtonBuilder().setLabel('Source').setStyle(ButtonStyle.Link).setURL(Links.Bot_Source),
+            new ButtonBuilder().setCustomId('bot-stats').setLabel('Bot Stats').setStyle(ButtonStyle.Primary)
         )
 
         interaction.reply({ 
             embeds: [InfoEmbed], 
-            components: [Buttons]
+            components: [Buttons],
+        }).then((sentMessage) => {
+            sentMessage.createMessageComponentCollector({ componentType: ComponentType.Button }).on('collect', async (button) => {
+                if (!button.customId == 'bot-stats') return;
+                if (!button.member.permissions.has('ManageGuild')) return button.reply({
+                    content: 'You cannot use this.',
+                    ephemeral: true
+                });
+
+                const BotStatsEmbed = new EmbedBuilder()
+                .setColor(Colours.Default_Colour)
+                .setAuthor({ name: `${client.user.tag}'s Stats`, iconURL: `${client.user.displayAvatarURL()}` })
+                .setThumbnail(`${client.user.displayAvatarURL()}`)
+                .setDescription([
+                    `**Status**`,
+                    `> **Discord Status:** ${client.isReady() ? 'Connected' : 'Disconnected'}`,
+                    `> **Database Status:** ${mongoose.connection.readyState ? 'Connected' : 'Disconnected' || 'Connecting' }`,
+                    `> **Process ID:** ${process.pid}`,
+                    `> **Node Version:** ${process.version}`,
+                    `> **Platform:** ${process.platform}`,
+                    `**Bot**`,
+                    `> **Users:** ${ClientUserCount}`,
+                    `> **Ping:** ${ClientPing}`,
+                    `> **Memory Usage:** ${MemoryUsage}`,
+                    `> **Uptime:** ${ClientUptime}`
+                ].join('\n'))
+
+                button.update({
+                    embeds: [BotStatsEmbed]
+                });
+            });
         });
     },
 };
