@@ -8,11 +8,11 @@ const SEARCH_API_KEY = process.env.SEARCH_API_KEY;
 
 module.exports = ({
 	data: new SlashCommandBuilder()
-	.setName('google')
+	.setName('search')
 	.setDescription('Search the web.')
 	.addStringOption(option => option
 			.setName('query')
-			.setDescription('search terms.')
+			.setDescription('Search terms.')
 			.setRequired(true)
 	),
 	/**
