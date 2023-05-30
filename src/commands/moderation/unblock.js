@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, ChannelType, userMention } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ChannelType, inlineCode, userMention } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const database = require('../../database/schemas/BlockSchema.js');
 
