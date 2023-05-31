@@ -65,7 +65,7 @@ module.exports = {
         }).then((sentMessage) => {
             sentMessage.pin();
             sentMessage.createMessageComponentCollector({ componentType: ComponentType.Button }).on('collect', async (button) => {
-                if (!button.member.permissions.has('ManageMessages')) return interaction.reply({
+                if (!button.member.permissions.has('ManageMessages')) return button.reply({
                     content: 'You cannot use this.',
                     ephemeral: true
                 });
