@@ -67,11 +67,11 @@ module.exports = {
             });
 
             kick.save();
+        });
 
-            const KickSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been kicked | ${inlineCode(CaseId)}`)
-            interaction.reply({ 
-                embeds: [KickSuccessEmbed]
-            });
+        const KickSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been kicked | ${inlineCode(CaseId)}`)
+        interaction.reply({ 
+            embeds: [KickSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()

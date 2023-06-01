@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
@@ -46,8 +46,7 @@ module.exports = {
                 Type: PunishmentTypes.Unban,
                 CaseID: CaseId,
                 GuildID: guildId,
-                UserID: TargetUser.id,
-                UserTag: TargetUser.tag,
+                UserID: TargetID,
                 Content: [
                     {
                         Moderator: user.tag,
@@ -58,11 +57,11 @@ module.exports = {
             });
 
             unban.save();
+        });
 
-            const UnbanSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetID)} has been unbanned | ${inlineCode(CaseId)}`)
-            interaction.reply({
-                embeds: [UnbanSuccessEmbed]
-            });
+        const UnbanSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetID)} has been unbanned | ${inlineCode(CaseId)}`)
+        interaction.reply({
+            embeds: [UnbanSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()

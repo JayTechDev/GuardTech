@@ -33,28 +33,26 @@ module.exports = {
         if (TargetUser.id === client.user.id || TargetUser.bot) return;
 
         TargetUser.send({
-            content: `**${user.tag}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`
-        }).catch(() => {
-            return interaction.reply({
-                content: 'The user you specified has their dms off :(',
+            content: `**${user.tag}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`,
+        }).then(() => { 
+            const LogEmbed = new EmbedBuilder()
+            .setColor('White')
+            .setTitle('DM Message Sent')
+            .setDescription(`**User**: ${userMention(TargetUser.id)} | ${inlineCode(TargetUser.id)}\n**By**: ${userMention(user.id)} | ${inlineCode(user.id)}`)
+            .setFields(
+                { name: 'Message', value: `${inlineCode(Message)}` },
+            )
+    
+            LogChannel.send({
+                embeds: [LogEmbed]
             });
-        });
 
-        interaction.reply({
-            content: `${Emojis.Success_Emoji} Sent a message to **${TargetUser.tag}**`,
-            ephemeral: true
-        });
-
-        const LogEmbed = new EmbedBuilder()
-        .setColor('White')
-        .setTitle('DM Message Sent')
-        .setDescription(`**User**: ${userMention(TargetUser.id)} | ${inlineCode(TargetUser.id)}\n**By**: ${userMention(user.id)} | ${inlineCode(user.id)}`)
-        .setFields(
-            { name: 'Message', value: `${inlineCode(Message)}` },
-        )
-
-        LogChannel.send({
-            embeds: [LogEmbed]
+            interaction.reply({ 
+                content: `${Emojis.Success_Emoji} Message has been sent to **${TargetUser.tag}**`, 
+                ephemeral: true 
+            }); 
+        }).catch(() => {
+            return interaction.reply({ content: 'The user you specified has their DMs off :(', ephemeral: true });
         });
     },
 };

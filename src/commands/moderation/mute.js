@@ -79,11 +79,11 @@ module.exports = {
              });
 
             mute.save();
+        });
 
-            const MuteSuccessEmbed = new EmbedBuilder().setColor('Yellow').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been muted for **${MuteExpiry}** | ${inlineCode(CaseId)}`)
-            interaction.reply({ 
-                embeds: [MuteSuccessEmbed]
-            });
+        const MuteSuccessEmbed = new EmbedBuilder().setColor('Yellow').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been muted for **${MuteExpiry}** | ${inlineCode(CaseId)}`)
+        interaction.reply({ 
+            embeds: [MuteSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()

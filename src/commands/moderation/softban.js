@@ -75,11 +75,11 @@ module.exports = {
                     };
                 });
             }, 1000);
+        });
 
-            const SoftBanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been softbanned | ${inlineCode(CaseId)}`)
-            interaction.reply({ 
-                embeds: [SoftBanSuccessEmbed]
-            });
+        const SoftBanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been softbanned | ${inlineCode(CaseId)}`)
+        interaction.reply({ 
+            embeds: [SoftBanSuccessEmbed]
         });
 
         const LogEmbed = new EmbedBuilder()

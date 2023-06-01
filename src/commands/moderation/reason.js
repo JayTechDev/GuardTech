@@ -34,7 +34,7 @@ module.exports = {
             embeds: [NoCaseEmbed]
         });
         
-        await database.findOneAndUpdate({ GuildID: guildId, CaseID: CaseId }, { $set: { "Content.0.Reason": NewReason } }).then(async () => {
+        await database.findOneAndUpdate({ GuildID: guildId, CaseID: CaseId }, { $set: { 'Content.0.Reason': NewReason } }).then(async () => {
             const CaseUpdatedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Case ${inlineCode(CaseId)} has been updated with reason ${inlineCode(NewReason)}`)
             interaction.reply({ 
                 embeds: [CaseUpdatedEmbed]
