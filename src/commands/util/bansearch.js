@@ -1,5 +1,5 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
-const { Emojis, Colours } = require('../../config.json');
+const { Emojis } = require('../../config.json');
 const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
