@@ -66,11 +66,11 @@ module.exports = {
             },
             {
                 name: '• Permissions',
-                value: inlineCode(UserPermissions)
+                value: inlineCode(UserPermissions || 'None')
             },
             {
                 name: '• Flags',
-                value: inlineCode(UserFlags)
+                value: inlineCode(UserFlags || 'None')
             }
         )
         
