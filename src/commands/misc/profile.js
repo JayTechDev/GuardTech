@@ -153,7 +153,7 @@ module.exports = {
 
                 database.deleteOne({ GuildID: guildId, User: user.id }).then(() => {
                     interaction.reply({
-                        embeds: [DeleteProfileEmbed.setColor('Green').setDescription(`${Emojis.Error_Emoji} Your profile has been deleted.`)]
+                        embeds: [DeleteProfileEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Your profile has been deleted.`)]
                     });
                 });
                 break;
