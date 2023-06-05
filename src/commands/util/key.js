@@ -39,7 +39,7 @@ module.exports = {
 
                 TargetMember.roles.add('1101869412010704907');
 
-                const KeyGivenEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Error_Emoji} ${userMention(TargetUser.id)} has been given the key to Jay's Office.`)
+                const KeyGivenEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been given the key to Jay's Office.`)
                 interaction.reply({
                     embeds: [KeyGivenEmbed]
                 });
