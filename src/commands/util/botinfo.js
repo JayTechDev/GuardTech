@@ -20,6 +20,7 @@ module.exports = {
         const ClientPing = Math.round(client.ws.ping) + 'ms';
         const ClientUptime = ms(client.uptime, { long: true });
         const ClientUserCount = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+        const ClientApplication = await client.application.fetch();
 
         // Internal
         const MemoryUsage = Math.floor(process.memoryUsage.rss() / 1024 / 1024) + ' MB';
@@ -87,12 +88,18 @@ module.exports = {
                     `> **Database Status:** ${mongoose.connection.readyState ? 'Connected' : 'Disconnected' || 'Connecting' }`,
                     `> **Process ID:** ${process.pid}`,
                     `> **Node Version:** ${process.version}`,
-                    `> **Platform:** ${process.platform}`,
+                    `> **Platform:** ${process.platform ? 'Linux' : 'Windows' || 'Something Else'}`,
                     `**Bot**`,
                     `> **Users:** ${ClientUserCount}`,
                     `> **Ping:** ${ClientPing}`,
                     `> **Memory Usage:** ${MemoryUsage}`,
-                    `> **Uptime:** ${ClientUptime}`
+                    `> **Uptime:** ${ClientUptime}`,
+                    `**Application Details**`,
+                    `> **ID:** ${ClientApplication.id}`,
+                    `> **Name:** ${ClientApplication.name}`,
+                    `> **Description:** ${ClientApplication.description}`,
+                    `> **Created:** <t:${parseInt(ClientApplication.createdTimestamp/ 1000)}:R>`,
+                    `> **Owner:** ${ClientApplication.owner}`
                 ].join('\n'))
 
                 button.update({
