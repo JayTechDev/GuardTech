@@ -12,9 +12,8 @@ module.exports = {
     async execute(interaction, client) {
         const { guild, guildId } = interaction;
 
-        const ServerOwner = (await guild.fetchOwner()).user.tag;
         const ServerBanner = guild.bannerURL({ size: 2048 }) || null;
-        const ServerFeatures = guild.features.join('\n> -') || 'None';
+        const ServerFeatures = guild.features.join('\n> - ') || 'None';
 
         const InfoEmbed = new EmbedBuilder()
         .setColor(Colours.Default_Colour)
@@ -26,17 +25,16 @@ module.exports = {
             `> **Description:** ${guild.description}`,
             `> **ID:** ${guildId}`,
             `> **Creation:** <t:${parseInt(guild.createdTimestamp / 1000)}:R>`,
-            `> **Owner:** ${ServerOwner}`
             `**Statistics**`,
             `> **Members:** ${guild.memberCount}`,
             `> **Boost Level:** ${guild.premiumTier}`,
-            `> **Moderation:** ${guild.verificationLevel}`,
+            `> **Moderation Level:** ${guild.verificationLevel}`,
             `**Counts**`,
             `> **Roles:** ${guild.roles.cache.size}`,
             `> **Channels:** ${guild.channels.cache.size}`,
             `> **Emojis:** ${guild.emojis.cache.size}`,
             `**Features**`,
-            `${ServerFeatures}`,
+            `> - ${ServerFeatures}`,
         ].join('\n'))
 
         interaction.reply({ 
