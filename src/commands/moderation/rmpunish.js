@@ -27,7 +27,7 @@ module.exports = {
             embeds: [NoPunishmentEmbed]
         });
         
-        const PunishmentDeletedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Punishment has been sucessfully deleted.`)
+        const PunishmentDeletedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Punishment has been successfully deleted.`)
         database.deleteOne({ GuildID: guildId, CaseID: PunishmentID }).then(() => {
             interaction.reply({
                 embeds: [PunishmentDeletedEmbed]
