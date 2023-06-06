@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, inlineCode, codeBlock } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder } = require('discord.js');
 const { Colours } = require('../../config.json');
 
 module.exports = {
@@ -21,58 +21,26 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
 
         const UserBanner = (await client.users.fetch(TargetUser, { force: true })).bannerURL({ size: 2048 }) || null;
-        const UserRoles = TargetMember.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).join(' ');
-        const UserPermissions = TargetMember.permissions.toArray().join(', ');
-        const UserFlags = (await TargetUser.fetchFlags()).toArray().join(', ');
-        const RoleSize = TargetMember.roles.cache.size;
+        const UserColour = (await client.users.fetch(TargetUser)).hexAccentColor;
+        const UserRoles = TargetMember.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).join(' ').replace('@everyone', ' ');
 
         const InfoEmbed = new EmbedBuilder()
-        .setColor(TargetMember.roles.highest.color || Colours.Default_Colour)
+        .setColor(UserColour || Colours.Default_Colour)
         .setAuthor({ name: `${TargetUser.tag}`, iconURL: `${TargetUser.displayAvatarURL()}` })
         .setThumbnail(`${TargetUser.displayAvatarURL()}`)
         .setImage(UserBanner)
-        .setFields(
-            {
-                name: 'Username',
-                value: codeBlock(TargetUser.tag),
-                inline: true
-            },
-            {
-                name: 'ID',
-                value: codeBlock(TargetUser.id),
-                inline: true
-            },
-            {
-                name: 'Creation',
-                value: `<t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`
-            },
-            {
-                name: 'Joined Server',
-                value: `<t:${parseInt(TargetMember.joinedTimestamp / 1000)}:R>`
-            },
-            {
-                name: 'Type',
-                value: codeBlock(TargetUser.bot ? 'Bot' : 'User'),
-                inline: true
-            },
-            {
-                name: 'Nickname',
-                value: codeBlock(TargetMember.nickname || 'None'),
-                inline: true
-            },
-            {
-                name: `Roles [${RoleSize}]`,
-                value: UserRoles
-            },
-            {
-                name: 'Permissions',
-                value: inlineCode(UserPermissions || 'None')
-            },
-            {
-                name: 'Flags',
-                value: inlineCode(UserFlags || 'None')
-            }
-        )
+        .setDescription([
+            `**User Information**`,
+            `> **Username:** ${TargetUser.tag}`,
+            `> **ID:** ${TargetUser.id}`,
+            `> **Creation:** <t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`,
+            `> **Type:** ${TargetUser.bot ? 'Bot' : 'User'}`,
+            `**Member Information**`,
+            `> **Joined:** <t:${parseInt(TargetMember.joinedTimestamp / 1000)}:R>`,
+            `> **Nickname:** ${TargetMember.nickname || 'None'}`,
+            `> **Pending:** ${TargetMember.pending ? 'Yes' : 'No'}`,
+        ].join('\n'))
+        .setFields({ name: 'Roles', value: `${UserRoles}` })
         
         interaction.reply({ 
             embeds: [InfoEmbed]
