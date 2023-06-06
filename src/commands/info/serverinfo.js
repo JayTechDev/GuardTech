@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, userMention } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { Colours } = require('../../config.json');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     async execute(interaction, client) {
         const { guild, guildId } = interaction;
 
-        const ServerOwner = (await guild.fetchOwner()).user.id;
+        const ServerOwner = (await guild.fetchOwner()).user.tag;
         const ServerBanner = guild.bannerURL({ size: 2048 }) || null;
         const ServerFeatures = guild.features.join('\n> -') || 'None';
 
@@ -26,7 +26,7 @@ module.exports = {
             `> **Description:** ${guild.description}`,
             `> **ID:** ${guildId}`,
             `> **Creation:** <t:${parseInt(guild.createdTimestamp / 1000)}:R>`,
-            `> **Owner:** ${userMention(ServerOwner)}`
+            `> **Owner:** ${ServerOwner}`
             `**Statistics**`,
             `> **Members:** ${guild.memberCount}`,
             `> **Boost Level:** ${guild.premiumTier}`,
