@@ -32,7 +32,7 @@ module.exports = {
                 `> ** Scanned On:** ${response.scan_date}`,
             ].join('\n'))
             .setFields({
-                name: '• Results', value: `[View results](${response.permalink})`
+                name: 'Results', value: `[View results](${response.permalink})`
             })
 
             interaction.reply({

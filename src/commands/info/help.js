@@ -20,31 +20,31 @@ module.exports = {
         .setThumbnail(client.user.avatarURL())
         .setFields(
             {
-                name: '• Info',
+                name: '📜 Info',
                 value: codeBlock('eligible, help, membercount, serverinfo, userinfo, virustotal')
             },
             {
-                name: '• Moderation',
+                name: '🔧 Moderation',
                 value: codeBlock('ban, block, case, cases, kick, lock, mod, mute, nick, purge, reason, rmpunish, slowmode, softban, unban, unblock, unlock, unmute, warn')
             },
             {
-                name: '• Misc',
+                name: '📌 Misc',
                 value: codeBlock('archive, avatar, dm, icon, impersonate, profile, roles, say, search')
             },
             {
-                name: '• Images',
+                name: '🎨 Images',
                 value: codeBlock('achievement, capybara')
             },
             {
-                name: '• Games',
+                name: '🎮 Games',
                 value: codeBlock('8ball')
             },
             {
-                name: '• Util',
+                name: '🔎 Util',
                 value: codeBlock('bansearch, blacklist, botinfo, customrole, key, partner, ping, status')
             },
             {
-                name: '• Developer',
+                name: '⛔ Developer',
                 value: codeBlock('botnick, eval, invite')
             }
         )

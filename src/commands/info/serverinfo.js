@@ -23,52 +23,52 @@ module.exports = {
         .setImage(ServerBanner)
         .setFields(
             {
-                name: '• Description',
+                name: 'Description',
                 value: codeBlock(guild.description)
             },
             {
-                name: '• Creation',
+                name: 'Creation',
                 value: `<t:${parseInt(guild.createdTimestamp / 1000)}:R>`
             },
             {
-                name: '• Members',
+                name: 'Members',
                 value: codeBlock(guild.memberCount)
             },
             {
-                name: '• ID',
+                name: 'ID',
                 value: codeBlock(guildId)
             },
             {
-                name: '• Moderation',
+                name: 'Moderation',
                 value: codeBlock(guild.verificationLevel),
                 inline: true
             },
             {
-                name: '• Boost Level',
+                name: 'Boost Level',
                 value: codeBlock(guild.premiumTier),
                 inline: true
             },
             {
-                name: '• Owner',
+                name: 'Owner',
                 value: codeBlock(ServerOwner)
             },
             {
-                name: '• Roles',
+                name: 'Roles',
                 value: codeBlock(guild.roles.cache.size),
                 inline: true
             },
             {
-                name: '• Emojis',
+                name: 'Emojis',
                 value: codeBlock(guild.emojis.cache.size),
                 inline: true
             },
             {
-                name: '• Channels',
+                name: 'Channels',
                 value: codeBlock(guild.channels.cache.size),
                 inline: true
             },
             {
-                name: '• Features',
+                name: 'Features',
                 value: codeBlock(ServerFeatures),
             },
         )

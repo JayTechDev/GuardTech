@@ -47,11 +47,11 @@ module.exports = {
         .setColor('Red')
         .setAuthor({ name: `${user.tag}'s Report`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription([
-            `> • **Reporter:** ${userMention(user.id)} (${inlineCode(user.id)})`,
-            `> • **Message Link:** [here](${messageLink(channel.id, targetId)})`
+            `> **Reporter:** ${userMention(user.id)} (${inlineCode(user.id)})`,
+            `> **Message Link:** [here](${messageLink(channel.id, targetId)})`
         ].join('\n'))
         .setFields({
-            name: '• Reported Message', value: `${targetMessage.content || images.join('\n')}`
+            name: 'Reported Message', value: `${targetMessage.content || images.join('\n')}`
         })
 
         const ReportButtons = new ActionRowBuilder().addComponents(

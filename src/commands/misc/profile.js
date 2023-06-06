@@ -120,19 +120,19 @@ module.exports = {
                 .setImage(UserBanner)
                 .setFields(
                     {
-                        name: '• Age',
+                        name: 'Age',
                         value: `${profile.Content[0].Age}`
                     },
                     {
-                        name: '• Birthday',
+                        name: 'Birthday',
                         value: `${profile.Content[0].Birthday}`
                     },
                     {
-                        name: '• Gender',
+                        name: 'Gender',
                         value: `${profile.Content[0].Gender}`
                     },
                     {
-                        name: '• Location',
+                        name: 'Location',
                         value: `${profile.Content[0].Location}`
                     }
                 )

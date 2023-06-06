@@ -30,32 +30,32 @@ module.exports = {
         .setThumbnail(client.user.avatarURL())
         .setFields(
             {
-                name: '• Ping',
+                name: 'Ping',
                 value: codeBlock(ClientPing),
                 inline: true
             },
             {
-                name: '• Users',
+                name: 'Users',
                 value: codeBlock(ClientUserCount),
                 inline: true
             },
             {
-                name: '• Memory Usage',
+                name: 'Memory Usage',
                 value: codeBlock(MemoryUsage),
                 inline: true
             },
             {
-                name: '• Discord.js Version',
+                name: 'Discord.js Version',
                 value: codeBlock(version),
                 inline: true
             },
             {
-                name: '• Node.js Version',
+                name: 'Node.js Version',
                 value: codeBlock(process.version),
                 inline: true
             },
             {
-                name: '• Commands',
+                name: 'Commands',
                 value: codeBlock(client.commands.size + '/100'),
                 inline: true
             },

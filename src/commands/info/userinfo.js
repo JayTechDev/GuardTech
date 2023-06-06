@@ -33,43 +33,43 @@ module.exports = {
         .setImage(UserBanner)
         .setFields(
             {
-                name: '• Username',
+                name: 'Username',
                 value: codeBlock(TargetUser.tag),
                 inline: true
             },
             {
-                name: '• ID',
+                name: 'ID',
                 value: codeBlock(TargetUser.id),
                 inline: true
             },
             {
-                name: '• Creation',
+                name: 'Creation',
                 value: `<t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`
             },
             {
-                name: '• Joined Server',
+                name: 'Joined Server',
                 value: `<t:${parseInt(TargetMember.joinedTimestamp / 1000)}:R>`
             },
             {
-                name: '• Type',
+                name: 'Type',
                 value: codeBlock(TargetUser.bot ? 'Bot' : 'User'),
                 inline: true
             },
             {
-                name: '• Nickname',
+                name: 'Nickname',
                 value: codeBlock(TargetMember.nickname || 'None'),
                 inline: true
             },
             {
-                name: `• Roles [${RoleSize}]`,
+                name: `Roles [${RoleSize}]`,
                 value: UserRoles
             },
             {
-                name: '• Permissions',
+                name: 'Permissions',
                 value: inlineCode(UserPermissions || 'None')
             },
             {
-                name: '• Flags',
+                name: 'Flags',
                 value: inlineCode(UserFlags || 'None')
             }
         )

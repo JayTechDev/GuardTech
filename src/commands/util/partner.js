@@ -70,9 +70,9 @@ module.exports = {
         .setDescription(`${ServerDescription}`)
         .setThumbnail(`${TargetUser.displayAvatarURL()}`)
         .setFields(
-            { name: '• Members', value: `${MemberCount}` },
-            { name: '• Partner', value: `${userMention(TargetUser.id)}` },
-    	    { name: '• Notes', value: `${ServerNotes}` },
+            { name: 'Members', value: `${MemberCount}` },
+            { name: 'Partner', value: `${userMention(TargetUser.id)}` },
+    	    { name: 'Notes', value: `${ServerNotes}` },
         )
         .setTimestamp()
 
