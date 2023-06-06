@@ -31,7 +31,7 @@ module.exports = {
             `> **Members:** ${guild.memberCount}`,
             `> **Boost Level:** ${guild.premiumTier}`,
             `> **Moderation:** ${guild.verificationLevel}`,
-            `**Counts**`
+            `**Counts**`,
             `> **Roles:** ${guild.roles.cache.size}`,
             `> **Channels:** ${guild.channels.cache.size}`,
             `> **Emojis:** ${guild.emojis.cache.size}`,
