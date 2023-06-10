@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const randomstring = require('randomstring');
 
@@ -30,7 +30,7 @@ module.exports = {
         const ModeratedNickname_ID = randomstring.generate({ length: 5, charset: 'alphanumeric' });
         await TargetMember.setNickname(`Moderated Nickname - ${ModeratedNickname_ID}`);
 
-        const ModSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} Nickname moderated to ${inlineCode(`Moderated Nickname - ${ModeratedNickname_ID}`)}`)
+        const ModSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname moderated to ${inlineCode(`Moderated Nickname - ${ModeratedNickname_ID}`)}`)
         interaction.reply({ 
             embeds: [ModSuccessEmbed]
         });

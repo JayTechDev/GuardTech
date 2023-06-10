@@ -14,7 +14,7 @@ Power is a private moderation and utility bot for JayCord mostly used for modera
 Made with [discord.js](https://discordjs.dev)
 
 ## Links
-- [JayCord](https://discord.gg/jaycord)
+- [JayCord](https://discord.gg/47fWbK5QYB)
 - [Contributing Guide](https://support.jayts.xyz/jaycord/for-developers)
 - [License](https://github.com/JayCordDevelopment/Assistant/blob/main/LICENSE)
 
