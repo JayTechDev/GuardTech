@@ -26,12 +26,12 @@ module.exports = {
 
         const InfoEmbed = new EmbedBuilder()
         .setColor(UserColour || Colours.Default_Colour)
-        .setAuthor({ name: `${TargetUser.tag}`, iconURL: `${TargetUser.displayAvatarURL()}` })
+        .setAuthor({ name: `${TargetUser.username}`, iconURL: `${TargetUser.displayAvatarURL()}` })
         .setThumbnail(`${TargetUser.displayAvatarURL()}`)
         .setImage(UserBanner)
         .setDescription([
             `**User Information**`,
-            `> **Username:** ${TargetUser.tag}`,
+            `> **Username:** ${TargetUser.username}`,
             `> **ID:** ${TargetUser.id}`,
             `> **Creation:** <t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`,
             `> **Type:** ${TargetUser.bot ? 'Bot' : 'User'}`,

@@ -34,7 +34,7 @@ module.exports = {
         });
 
         const ReportThread = await TicketChannel.threads.create({
-            name: `Message Report - ${user.tag}`,
+            name: `Message Report - ${user.username}`,
             type: ChannelType.PrivateThread,
             autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
             invitable: false
@@ -45,7 +45,7 @@ module.exports = {
 
         const ReportEmbed = new EmbedBuilder()
         .setColor('Red')
-        .setAuthor({ name: `${user.tag}'s Report`, iconURL: `${user.displayAvatarURL()}` })
+        .setAuthor({ name: `${user.username}'s Report`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription([
             `> **Reporter:** ${userMention(user.id)} (${inlineCode(user.id)})`,
             `> **Message Link:** [here](${messageLink(channel.id, targetId)})`
@@ -77,9 +77,7 @@ module.exports = {
                             content: 'This report is being closed, please wait a few seconds.'
                         });
 
-                        setTimeout(() => {
-                            ReportThread.delete();
-                        }, 5000);
+                        setTimeout(() => { ReportThread.delete() }, 5000);
                         break;
                 };
             });

@@ -80,7 +80,7 @@ module.exports = {
 
                 const BotStatsEmbed = new EmbedBuilder()
                 .setColor(Colours.Default_Colour)
-                .setAuthor({ name: `${client.user.tag}'s Stats`, iconURL: `${client.user.displayAvatarURL()}` })
+                .setAuthor({ name: `${client.user.username}'s Stats`, iconURL: `${client.user.displayAvatarURL()}` })
                 .setThumbnail(`${client.user.displayAvatarURL()}`)
                 .setDescription([
                     `**Status**`,

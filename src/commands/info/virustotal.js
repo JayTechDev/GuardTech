@@ -25,7 +25,7 @@ module.exports = {
         VirusTotal.urlScan(URL).then((response) => {
             const VirusTotalEmbed = new EmbedBuilder()
             .setColor('Blue')
-            .setAuthor({ name: `${user.tag}'s Scan`, iconURL: `${user.displayAvatarURL()}` })
+            .setAuthor({ name: `${user.username}'s Scan`, iconURL: `${user.displayAvatarURL()}` })
             .setDescription([
                 `> **URL:** ${URL}`,
                 `> **Scan ID:** ${response.scan_id}`,

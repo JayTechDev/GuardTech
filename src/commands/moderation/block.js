@@ -44,7 +44,7 @@ module.exports = {
             const block = await database.create({
                 GuildID: guildId,
                 UserID: TargetUser.id,
-                UserTag: TargetUser.tag,
+                UserTag: TargetUser.username,
                 Content: [
                     {
                         Channel: BlockChannel.id,

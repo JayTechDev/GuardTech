@@ -54,10 +54,10 @@ module.exports = {
             CaseID: CaseId,
             GuildID: guildId,
             UserID: TargetUser.id,
-            UserTag: TargetUser.tag,
+            UserTag: TargetUser.username,
             Content: [
                 {
-                    Moderator: user.tag,
+                    Moderator: user.username,
                     PunishmentDate: WarnDate,
                     Reason: WarnReason
                 }
@@ -73,7 +73,7 @@ module.exports = {
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Orange')
-        .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
+        .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Warn\n**Reason**: ${WarnReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()

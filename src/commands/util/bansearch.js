@@ -33,7 +33,7 @@ module.exports = {
 
         await wait(1000);
         interaction.editReply({
-            content: inlineCode(`${UserBan.user.tag} (${UserBan.user.id}) | ${UserBan.reason} `)
+            content: inlineCode(`${UserBan.user.username} (${UserBan.user.id}) | ${UserBan.reason} `)
         });
     },
 };

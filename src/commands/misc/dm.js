@@ -33,7 +33,7 @@ module.exports = {
         if (TargetUser.id === client.user.id || TargetUser.bot) return;
 
         TargetUser.send({
-            content: `**${user.tag}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`,
+            content: `**${user.username}** has sent you a message!\n\nMessage: ${inlineCode(Message)}`,
         }).then(() => { 
             const LogEmbed = new EmbedBuilder()
             .setColor('White')
@@ -48,7 +48,7 @@ module.exports = {
             });
 
             interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Message has been sent to **${TargetUser.tag}**`, 
+                content: `${Emojis.Success_Emoji} Message has been sent to **${TargetUser.username}**`, 
                 ephemeral: true 
             }); 
         }).catch(() => {

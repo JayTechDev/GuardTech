@@ -47,7 +47,7 @@ module.exports = {
             CaseID: CaseId,
             GuildID: guildId,
             UserID: TargetUser.id,
-            UserTag: TargetUser.tag,
+            UserTag: TargetUser.username,
             Reason: BlacklistReason
         });
 
@@ -55,7 +55,7 @@ module.exports = {
 
         const LogEmbed = new EmbedBuilder()
         .setColor(Colours.Blacklisted_Colour)
-        .setAuthor({ name: `${user.tag}`, iconURL: `${user.displayAvatarURL()}` })
+        .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Blacklist\n**Reason**: ${BlacklistReason}`)
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
