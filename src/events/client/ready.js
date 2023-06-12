@@ -13,8 +13,7 @@ module.exports = {
         client.channels.fetch('929378716902117471').then(channel => {
             const OnlineEmbed = new EmbedBuilder()
             .setColor(Colours.Default_Colour)
-            .setTitle('Online')
-            .setDescription(`<:online:1100886580169822218> ${userMention(client.user.id)} is now online, if something breaks blame Jay.`)
+            .setDescription(`${userMention(client.user.id)} is now online, if something breaks blame Jay or Celyrian.`)
 
             channel.send({ embeds: [OnlineEmbed] })
         });
