@@ -114,7 +114,7 @@ module.exports = {
 
                 const ProfileEmbed = new EmbedBuilder()
                 .setColor(UserColour || Colours.Default_Colour)
-                .setAuthor({ name: `${Target.tag}`, iconURL: `${Target.displayAvatarURL()}` })
+                .setAuthor({ name: `${Target.username}`, iconURL: `${Target.displayAvatarURL()}` })
                 .setDescription(`${profile.Content[0].Bio}`)
                 .setThumbnail(`${Target.displayAvatarURL()}`)
                 .setImage(UserBanner)
