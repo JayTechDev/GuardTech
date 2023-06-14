@@ -14,6 +14,11 @@ module.exports = {
             .setDescription('User to warn.')
             .setRequired(true)
     )
+    .addAttachmentOption(option => option
+            .setName('evidence')
+            .setDescription('Evidence for this action.')
+            .setRequired(true)
+    )
     .addStringOption(option => option
             .setName('reason')
             .setDescription('The warn reason.')
@@ -27,6 +32,7 @@ module.exports = {
         const { guild, guildId, options, user, createdTimestamp } = interaction;
 
         const TargetUser = options.getUser('target');
+        const WarnEvidence = options.getAttachment('evidence');
         const WarnReason = options.getString('reason') || 'No reason provided.';
 
         const WarnDate = new Date(createdTimestamp).toDateString();
@@ -34,7 +40,7 @@ module.exports = {
         const CaseId = createCaseId();
 
         const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
-        if (TargetUser.id === user.id || TargetUser.id === guild.ownerId) return interaction.reply({ 
+        if (TargetUser.id === user.id || TargetUser.id === guild.ownerId || TargetUser.bot) return interaction.reply({ 
             embeds: [CannotDoActionEmbed]
         });
         
@@ -43,6 +49,7 @@ module.exports = {
         .setDescription(`You have received a warning in **${guild.name}**`)
         .setFields(
             { name: 'Reason', value: `${inlineCode(WarnReason)}` },
+            { name: 'Evidence', value: `${WarnEvidence.url}` }
         )
 
         await TargetUser.send({
@@ -59,7 +66,8 @@ module.exports = {
                 {
                     Moderator: user.username,
                     PunishmentDate: WarnDate,
-                    Reason: WarnReason
+                    Reason: WarnReason,
+                    Evidence: WarnEvidence.url
                 }
             ],
         });
@@ -75,6 +83,7 @@ module.exports = {
         .setColor('Orange')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Warn\n**Reason**: ${WarnReason}`)
+        .setFields({ name: 'Evidence', value: `${WarnEvidence.url}` })
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

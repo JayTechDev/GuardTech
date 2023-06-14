@@ -14,6 +14,11 @@ module.exports = {
             .setDescription('User to ban.')
             .setRequired(true)
     )
+    .addAttachmentOption(option => option
+            .setName('evidence')
+            .setDescription('Evidence for this action.')
+            .setRequired(true)
+    )
     .addStringOption(option => option
             .setName('reason')
             .setDescription('The ban reason.')
@@ -28,6 +33,7 @@ module.exports = {
 
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
+        const BanEvidence = options.getAttachment('evidence');
         const BanReason = options.getString('reason') || 'No reason provided.';
 
         const BanDate = new Date(createdTimestamp).toDateString();
@@ -44,6 +50,7 @@ module.exports = {
         .setDescription(`You have received a ban in **${guild.name}**`)
         .setFields(
             { name: 'Reason', value: `${inlineCode(BanReason)}` },
+            { name: 'Evidence', value: `${BanEvidence.url}` },
             { name: 'Appeal', value: `${Links.Appeal_Link}` }
         )
 
@@ -63,6 +70,7 @@ module.exports = {
                         Moderator: user.username,
                         PunishmentDate: BanDate,
                         Reason: BanReason,
+                        Evidence: BanEvidence.url
                     }
                 ],
             });
@@ -79,6 +87,7 @@ module.exports = {
         .setColor('Red')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Ban\n**Reason**: ${BanReason}`)
+        .setFields({ name: 'Evidence', value: `${BanEvidence.url}` })
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

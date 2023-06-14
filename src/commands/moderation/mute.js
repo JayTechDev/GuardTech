@@ -20,6 +20,11 @@ module.exports = {
             .setDescription('The mute duration (1d, 10m, 6h).')
             .setRequired(true)
     )
+    .addAttachmentOption(option => option
+            .setName('evidence')
+            .setDescription('Evidence for this action.')
+            .setRequired(true)
+    )
     .addStringOption(option => option
             .setName('reason')
             .setDescription('The mute reason.')
@@ -35,6 +40,7 @@ module.exports = {
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const MuteDuration = options.getString('duration');
+        const MuteEvidence = options.getAttachment('evidence');
         const MuteReason = options.getString('reason') || 'No reason provided.';
 
         const MuteDate = new Date(createdTimestamp).toDateString();
@@ -42,9 +48,10 @@ module.exports = {
         const CaseId = createCaseId();
         const MuteExpiry = ms(ms(MuteDuration), { long: true });
         
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
         if (!TargetMember.moderatable || !TargetMember.isCommunicationDisabled() == false) {
             return interaction.reply({
-                content: `${Emojis.Error_Emoji} Unable to perform action.`
+                embeds: [CannotDoActionEmbed]
             });
         };
         
@@ -53,6 +60,7 @@ module.exports = {
         .setDescription(`You have received a mute in **${guild.name}**`)
         .setFields(
             { name: 'Reason', value: `${inlineCode(MuteReason)}` },
+            { name: 'Evidence', value: `${MuteEvidence.url}` },
             { name: 'Expiry', value: `${MuteExpiry}` },
             { name: 'Appeal', value: `${Links.Appeal_Link}` }
         )
@@ -73,7 +81,8 @@ module.exports = {
                         Moderator: user.username,
                         PunishmentDate: MuteDate,
                         Reason: MuteReason,
-                        Duration: MuteDuration
+                        Duration: MuteDuration,
+                        Evidence: MuteEvidence.url
                     }
                 ],
              });
@@ -90,6 +99,7 @@ module.exports = {
         .setColor('Yellow')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Mute\n**Expires**: ${MuteExpiry}\n**Reason**: ${MuteReason}`)
+        .setFields({ name: 'Evidence', value: `${MuteEvidence.url}` })
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

@@ -14,6 +14,11 @@ module.exports = {
             .setDescription('User to kick.')
             .setRequired(true)
     )
+    .addAttachmentOption(option => option
+            .setName('evidence')
+            .setDescription('Evidence for this action.')
+            .setRequired(true)
+    )
     .addStringOption(option => option
             .setName('reason')
             .setDescription('The kick reason.')
@@ -28,6 +33,7 @@ module.exports = {
 
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
+        const KickEvidence = options.getAttachment('evidence');
         const KickReason = options.getString('reason') || 'No reason provided.';
 
         const KickDate = new Date(createdTimestamp).toDateString();
@@ -44,6 +50,7 @@ module.exports = {
         .setDescription(`You have received a kick in **${guild.name}**`)
         .setFields(
             { name: 'Reason', value: `${inlineCode(KickReason)}` },
+            { name: 'Evidence', value: `${KickEvidence.url}` },
         )
 
         await TargetUser.send({
@@ -61,7 +68,8 @@ module.exports = {
                     {
                         Moderator: user.username,
                         PunishmentDate: KickDate,
-                        Reason: KickReason
+                        Reason: KickReason,
+                        Evidence: KickEvidence.url
                     }
                 ],
             });
@@ -78,6 +86,7 @@ module.exports = {
         .setColor('Red')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Kick\n**Reason**: ${KickReason}`)
+        .setFields({ name: 'Evidence', value: `${KickEvidence.url}` })
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
