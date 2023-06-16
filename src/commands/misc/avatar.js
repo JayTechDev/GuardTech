@@ -20,7 +20,7 @@ module.exports = {
 
         const AvatarEmbed = new EmbedBuilder()
         .setColor(Colours.Default_Colour)
-        .setAuthor({ name: `${Target.tag}'s Avatar`, iconURL: `${Target.displayAvatarURL()}` })
+        .setAuthor({ name: `${Target.username}'s Avatar`, iconURL: `${Target.displayAvatarURL()}` })
         .setImage(`${Target.displayAvatarURL({ size: 512, extension: 'png' })}`)
 
         interaction.reply({ 
