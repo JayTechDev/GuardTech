@@ -2,6 +2,7 @@ const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, 
 const { Colours, Links } = require('../../config.json');
 const mongoose = require('mongoose');
 const ms = require('ms');
+const os = require('os');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,8 +15,6 @@ module.exports = {
      * @param {Client} client
      */
     async execute(interaction, client) {
-        const { user } = interaction;
-
         // Client
         const ClientPing = Math.round(client.ws.ping) + 'ms';
         const ClientUptime = ms(client.uptime, { long: true });
@@ -23,6 +22,7 @@ module.exports = {
         const ClientApplication = await client.application.fetch();
 
         // Internal
+        const CpuModel = os.cpus()[0].model;
         const MemoryUsage = Math.floor(process.memoryUsage.rss() / 1024 / 1024) + ' MB';
 
         const InfoEmbed = new EmbedBuilder()
@@ -92,6 +92,7 @@ module.exports = {
                     `**Bot**`,
                     `> **Users:** ${ClientUserCount}`,
                     `> **Ping:** ${ClientPing}`,
+                    `> **CPU:** ${CpuModel}`,
                     `> **Memory Usage:** ${MemoryUsage}`,
                     `> **Uptime:** ${ClientUptime}`,
                     `**Application Details**`,
