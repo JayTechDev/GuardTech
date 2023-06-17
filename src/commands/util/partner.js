@@ -64,15 +64,14 @@ module.exports = {
 
         const PartnerEmbed = new EmbedBuilder()
         .setColor('Aqua')
-        .setAuthor({ name: 'Jay\'s Assistant', iconURL: 'https://cdn.discordapp.com/avatars/1091308443480096838/f269f573ab58ce2c7a6b63be4d72c9cf.png?size=512', url: 'https://discord.gg/jaycord' })
         .setTitle(`:globe_with_meridians: ${ServerName}`)
         .setURL(`${InviteLink}`)
         .setDescription(`${ServerDescription}`)
         .setThumbnail(`${TargetUser.displayAvatarURL()}`)
         .setFields(
-            { name: 'Members', value: `${MemberCount}` },
-            { name: 'Partner', value: `${userMention(TargetUser.id)}` },
-    	    { name: 'Notes', value: `${ServerNotes}` },
+            { name: 'Members', value: `${MemberCount}`, inline: true },
+            { name: 'Partner', value: `${userMention(TargetUser.id)}`, inline: true },
+    	    { name: 'Notes', value: `${ServerNotes}`, inline: true },
         )
         .setTimestamp()
 
