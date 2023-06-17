@@ -1,5 +1,5 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, roleMention } = require('discord.js');
-const { Emojis, Colours } = require('../../config.json');
+const { Colours } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
