@@ -56,7 +56,7 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const ServerName = options.getString('name');
         const ServerDescription = options.getString('description');
-    	const ServerNotes = options.getString('notes');
+    	const ServerNotes = options.getString('notes') || 'None';
         const InviteLink = options.getString('invite');
         const MemberCount = options.getNumber('members');
 
@@ -76,7 +76,7 @@ module.exports = {
         .setTimestamp()
 
         PartnerChannel.send({ embeds: [PartnerEmbed] }).then(() => {
-            TargetMember.roles.add('1092047589484007474');
+            TargetMember.roles.add('1077662462263963678');
 
             const PartnerSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been partnered with JayCord successfully.`)
             interaction.reply({
