@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, codeBlock} = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, codeBlock } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
