@@ -56,7 +56,7 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const ServerName = options.getString('name');
         const ServerDescription = options.getString('description');
-    	const ServerNotes = options.getString('notes');
+    	const ServerNotes = options.getString('notes') || 'None';
         const InviteLink = options.getString('invite');
         const MemberCount = options.getNumber('members');
 
