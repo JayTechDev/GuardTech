@@ -35,7 +35,7 @@ module.exports = {
 
         const CasesEmbed = new EmbedBuilder()
         .setColor(Colours.Default_Colour)
-        .setAuthor({ name: `${Target.tag}'s Cases`, iconURL: `${Target.displayAvatarURL()}` })
+        .setAuthor({ name: `${Target.username}'s Cases`, iconURL: `${Target.displayAvatarURL()}` })
         .setFields(fields);
 
         interaction.reply({
