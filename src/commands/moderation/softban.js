@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
+const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
 
@@ -14,11 +15,6 @@ module.exports = {
             .setDescription('User to ban.')
             .setRequired(true)
     )
-    .addAttachmentOption(option => option
-            .setName('evidence')
-            .setDescription('Evidence for this action.')
-            .setRequired(true)
-    )   
     .addStringOption(option => option
             .setName('reason')
             .setDescription('The ban reason.')
@@ -33,7 +29,6 @@ module.exports = {
 
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
-        const BanEvidence = options.getAttachment('evidence');
         const BanReason = options.getString('reason') || 'No reason provided.';
 
         const BanDate = new Date(createdTimestamp).toDateString();
@@ -45,12 +40,13 @@ module.exports = {
             embeds: [CannotDoActionEmbed]
         });
 
+        interaction.deferReply();
+
         const DirectMessageEmbed = new EmbedBuilder()
         .setColor('Grey')
         .setDescription(`You have received a soft ban in **${guild.name}**`)
         .setFields(
             { name: 'Reason', value: `${inlineCode(BanReason)}` },
-            { name: 'Evidence', value: `${BanEvidence.url}` }
         )
 
         await TargetUser.send({
@@ -69,7 +65,6 @@ module.exports = {
                         Moderator: user.username,
                         PunishmentDate: BanDate,
                         Reason: BanReason,
-                        Evidence: BanEvidence.url
                     }
                 ],
             });
@@ -85,8 +80,9 @@ module.exports = {
             }, 1000);
         });
 
+        await wait(1000);
         const SoftBanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been softbanned | ${inlineCode(CaseId)}`)
-        interaction.reply({ 
+        interaction.editReply({ 
             embeds: [SoftBanSuccessEmbed]
         });
 
@@ -94,7 +90,6 @@ module.exports = {
         .setColor('Red')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Softban\n**Reason**: ${BanReason}`)
-        .setFields({ name: 'Evidence', value: `${BanEvidence.url}` })
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

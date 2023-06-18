@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
+const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
 
@@ -41,6 +42,8 @@ module.exports = {
             embeds: [NoBanEmbed]
         });
 
+        interaction.deferReply();
+
         await guild.bans.remove(TargetID, UnbanReason).then(async () => {
             const unban = await database.create({
                 Type: PunishmentTypes.Unban,
@@ -59,8 +62,9 @@ module.exports = {
             unban.save();
         });
 
+        await wait(1000);
         const UnbanSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetID)} has been unbanned | ${inlineCode(CaseId)}`)
-        interaction.reply({
+        interaction.editReply({
             embeds: [UnbanSuccessEmbed]
         });
 

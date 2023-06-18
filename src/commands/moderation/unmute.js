@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
+const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
 
@@ -39,6 +40,8 @@ module.exports = {
             embeds: [CannotDoActionEmbed]
         });
 
+        interaction.deferReply();
+
         await TargetMember.timeout(null).then(async () => {
             const unmute = await database.create({
                 Type: PunishmentTypes.Unmute,
@@ -58,8 +61,9 @@ module.exports = {
             unmute.save();
         });
 
+        await wait(1000);
         const UnmuteSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been unmuted | ${inlineCode(CaseId)}`)
-        interaction.reply({ 
+        interaction.editReply({ 
             embeds: [UnmuteSuccessEmbed]
         });
 

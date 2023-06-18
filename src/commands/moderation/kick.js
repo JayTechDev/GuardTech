@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
+const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
 
@@ -12,11 +13,6 @@ module.exports = {
     .addUserOption(option => option
             .setName('target')
             .setDescription('User to kick.')
-            .setRequired(true)
-    )
-    .addAttachmentOption(option => option
-            .setName('evidence')
-            .setDescription('Evidence for this action.')
             .setRequired(true)
     )
     .addStringOption(option => option
@@ -33,9 +29,8 @@ module.exports = {
 
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
-        const KickEvidence = options.getAttachment('evidence');
         const KickReason = options.getString('reason') || 'No reason provided.';
-
+        
         const KickDate = new Date(createdTimestamp).toDateString();
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
@@ -44,13 +39,14 @@ module.exports = {
         if (!TargetMember.kickable) return interaction.reply({
             embeds: [CannotDoActionEmbed]
         });
+
+        interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
         .setColor('Grey')
         .setDescription(`You have received a kick in **${guild.name}**`)
         .setFields(
             { name: 'Reason', value: `${inlineCode(KickReason)}` },
-            { name: 'Evidence', value: `${KickEvidence.url}` },
         )
 
         await TargetUser.send({
@@ -69,7 +65,6 @@ module.exports = {
                         Moderator: user.username,
                         PunishmentDate: KickDate,
                         Reason: KickReason,
-                        Evidence: KickEvidence.url
                     }
                 ],
             });
@@ -77,8 +72,9 @@ module.exports = {
             kick.save();
         });
 
+        await wait(1000);
         const KickSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been kicked | ${inlineCode(CaseId)}`)
-        interaction.reply({ 
+        interaction.editReply({ 
             embeds: [KickSuccessEmbed]
         });
 
@@ -86,7 +82,6 @@ module.exports = {
         .setColor('Red')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Kick\n**Reason**: ${KickReason}`)
-        .setFields({ name: 'Evidence', value: `${KickEvidence.url}` })
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

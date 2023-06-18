@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, Links, PunishmentTypes, IDs } = require('../../config.json');
+const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
 const ms = require('ms');
@@ -20,11 +21,6 @@ module.exports = {
             .setDescription('The mute duration (1d, 10m, 6h).')
             .setRequired(true)
     )
-    .addAttachmentOption(option => option
-            .setName('evidence')
-            .setDescription('Evidence for this action.')
-            .setRequired(true)
-    )
     .addStringOption(option => option
             .setName('reason')
             .setDescription('The mute reason.')
@@ -40,7 +36,6 @@ module.exports = {
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const MuteDuration = options.getString('duration');
-        const MuteEvidence = options.getAttachment('evidence');
         const MuteReason = options.getString('reason') || 'No reason provided.';
 
         const MuteDate = new Date(createdTimestamp).toDateString();
@@ -54,13 +49,14 @@ module.exports = {
                 embeds: [CannotDoActionEmbed]
             });
         };
+
+        interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
         .setColor('Grey')
         .setDescription(`You have received a mute in **${guild.name}**`)
         .setFields(
             { name: 'Reason', value: `${inlineCode(MuteReason)}` },
-            { name: 'Evidence', value: `${MuteEvidence.url}` },
             { name: 'Expiry', value: `${MuteExpiry}` },
             { name: 'Appeal', value: `${Links.Appeal_Link}` }
         )
@@ -82,7 +78,6 @@ module.exports = {
                         PunishmentDate: MuteDate,
                         Reason: MuteReason,
                         Duration: MuteDuration,
-                        Evidence: MuteEvidence.url
                     }
                 ],
              });
@@ -90,8 +85,9 @@ module.exports = {
             mute.save();
         });
 
+        await wait(1000);
         const MuteSuccessEmbed = new EmbedBuilder().setColor('Yellow').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been muted for **${MuteExpiry}** | ${inlineCode(CaseId)}`)
-        await interaction.reply({ 
+        await interaction.editReply({ 
             embeds: [MuteSuccessEmbed]
         });
 
@@ -99,7 +95,6 @@ module.exports = {
         .setColor('Yellow')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
         .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Mute\n**Expires**: ${MuteExpiry}\n**Reason**: ${MuteReason}`)
-        .setFields({ name: 'Evidence', value: `${MuteEvidence.url}` })
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
