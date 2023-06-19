@@ -38,14 +38,13 @@ module.exports = ({
 		
 		let OPENAI_PROMPT;
 
-		if(Personality === 'power'){
+		if (Personality === 'power') {
 			OPENAI_PROMPT = POWER_PROMPT;	
-		}else if(Personality === 'jenny'){
+		} else if(Personality === 'jenny') {
 			OPENAI_PROMPT = JENNY_PROMPT;
 		};
 
 		await interaction.deferReply();
-		
 		const response = await openai.createChatCompletion({ model: 'gpt-3.5-turbo', messages: [{ role: 'user', content: `${OPENAI_PROMPT} ${Message}` }] });
 
 		await wait(5000);
