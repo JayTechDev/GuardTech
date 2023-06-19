@@ -19,8 +19,8 @@ module.exports = {
         ServerRoles.forEach(role => { Roles.push(`${roleMention(role.id)}`) });
 
         const RolesEmbed = new EmbedBuilder()
-            .setColor(Colours.Default_Colour)
-            .setDescription(Roles.join('\n'))
+        .setColor(Colours.Default_Colour)
+        .setDescription(Roles.join('\n'))
 
         interaction.reply({
             embeds: [RolesEmbed]
