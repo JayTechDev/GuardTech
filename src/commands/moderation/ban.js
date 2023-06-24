@@ -15,6 +15,10 @@ module.exports = {
             .setDescription('User to ban.')
             .setRequired(true)
     )
+    .addBooleanOption(option => option
+            .setName('appeal')
+            .setDescription('Whether or not the user can appeal this ban.')
+    )
     .addStringOption(option => option
             .setName('reason')
             .setDescription('The ban reason.')
@@ -29,6 +33,7 @@ module.exports = {
 
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
+        const Appealable = options.getBoolean('appeal');
         const BanReason = options.getString('reason') || 'No reason provided.';
         const BanDate = new Date(createdTimestamp).toDateString();
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
@@ -40,18 +45,29 @@ module.exports = {
         });
 
         interaction.deferReply();
+        
+        const DirectMessageEmbed = new EmbedBuilder().setColor('Grey').setDescription(`You have received a ban in **${guild.name}**`)
 
-        const DirectMessageEmbed = new EmbedBuilder()
-        .setColor('Grey')
-        .setDescription(`You have received a ban in **${guild.name}**`)
-        .setFields(
-            { name: 'Reason', value: `${inlineCode(BanReason)}` },
-            { name: 'Appeal', value: `${Links.Appeal_Link}` }
-        )
-
-        await TargetUser.send({
-            embeds: [DirectMessageEmbed]
-        }).catch(console.error);
+        if (Appealable) {
+            DirectMessageEmbed
+            .setFields(
+                { name: 'Reason', value: `${inlineCode(BanReason)}` },
+                { name: 'Appeal', value: `${Links.Appeal_Link}` }
+            )
+    
+            await TargetUser.send({
+                embeds: [DirectMessageEmbed]
+            }).catch(console.error);
+        } else {
+            DirectMessageEmbed
+            .setFields(
+                { name: 'Reason', value: `${inlineCode(BanReason)}` },
+            )
+    
+            await TargetUser.send({
+                embeds: [DirectMessageEmbed]
+            }).catch(console.error);
+        }
         
         await TargetMember.ban({ deleteMessageSeconds: 86400, reason: BanReason }).then(async () => {
              const ban = await database.create({
