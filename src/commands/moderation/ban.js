@@ -18,6 +18,7 @@ module.exports = {
     .addBooleanOption(option => option
             .setName('appeal')
             .setDescription('Whether or not the user can appeal this ban.')
+            .setRequired(true)
     )
     .addStringOption(option => option
             .setName('reason')
