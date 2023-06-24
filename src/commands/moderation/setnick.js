@@ -3,7 +3,7 @@ const { Emojis } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('nick')
+    .setName('setnick')
     .setDescription('Change or reset a member\'s nickname.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames)
     .setDMPermission(false)
