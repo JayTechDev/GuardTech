@@ -21,7 +21,7 @@ module.exports = {
         .setFields(
             {
                 name: 'Info',
-                value: codeBlock('help, membercount, roleinfo, serverinfo, userinfo, virustotal')
+                value: codeBlock('help, membercount, channelinfo, roleinfo, serverinfo, userinfo, virustotal')
             },
             {
                 name: 'Moderation',
@@ -29,7 +29,7 @@ module.exports = {
             },
             {
                 name: 'Misc',
-                value: codeBlock('avatar, icon, profile, reminder, roles, say')
+                value: codeBlock('avatar, banner, icon, profile, reminder, roles, say')
             },
             {
                 name: 'Images',

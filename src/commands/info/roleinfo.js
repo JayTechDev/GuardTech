@@ -29,6 +29,7 @@ module.exports = {
             `> **Mentionable:** ${Role.mentionable ? 'Yes' : 'No'}`,
             `> **Created:** <t:${parseInt(Role.createdTimestamp / 1000)}:R>`
         ].join('\n'))
+        .setThumbnail(Role.iconURL() || null)
 
         interaction.reply({ 
             embeds: [InfoEmbed] 
