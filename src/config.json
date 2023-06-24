@@ -1,7 +1,6 @@
 {
     "IDs": {
-        "ModerationLogs": "1084173518297641020",
-        "ArchiveCategory": "1093192448450232421"
+        "ModerationLogs": "1084173518297641020"
     },
 
     "Emojis": {
@@ -10,7 +9,7 @@
     },
 
     "Colours": {
-        "Default_Colour": "Purple",
+        "Default_Colour": "#fcddb3",
         "Blacklisted_Colour": "Grey"
     },
 
@@ -27,12 +26,5 @@
         "Mute": "Mute",
         "Unmute": "Unmute",
         "Warn": "Warn"
-    },
-
-    "Requirements": {
-        "Celebrity": {
-            "Required_Count": 1000,
-            "Required_Views": 10000
-        }
     }
 }
