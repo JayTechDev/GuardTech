@@ -101,7 +101,7 @@ module.exports = {
                 const Target = options.getUser('target') || user;
 
                 const UserBanner = (await client.users.fetch(Target, { force: true })).bannerURL({ size: 2048 }) || null;
-                const UserColour = (await client.users.fetch(Target)).hexAccentColor;
+                const UserColour = (await client.users.fetch(Target, { force: true })).hexAccentColor;
 
                 const profile = await database.findOne({ GuildID: guildId, User: Target.id });
 
