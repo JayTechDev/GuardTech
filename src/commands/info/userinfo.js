@@ -17,6 +17,7 @@ module.exports = {
         const TargetUser = options.getUser('target') || user;
         const TargetMember = await guild.members.fetch(TargetUser.id);
 
+        const UserFlags = (await TargetUser.fetchFlags()).toArray().join(', ');
         const UserBanner = (await client.users.fetch(TargetUser, { force: true })).bannerURL({ size: 2048 }) || null;
         const UserColour = (await client.users.fetch(TargetUser, { force: true })).hexAccentColor;
         const UserRoles = TargetMember.roles.cache.sort((a, b) => b.position - a.position).map((r) => r).join(' ').replace('@everyone', ' ');
@@ -32,6 +33,7 @@ module.exports = {
             `> **ID:** ${TargetUser.id}`,
             `> **Creation:** <t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`,
             `> **Type:** ${TargetUser.bot ? 'Bot' : 'User'}`,
+            `> **Flags:** ${UserFlags}`,
             `**Member Information**`,
             `> **Joined:** <t:${parseInt(TargetMember.joinedTimestamp / 1000)}:R>`,
             `> **Nickname:** ${TargetMember.nickname || 'None'}`,
