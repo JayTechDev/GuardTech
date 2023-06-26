@@ -16,30 +16,17 @@ module.exports = {
             const GenderField = interaction.fields.getTextInputValue('profile-gender');
             const LocationField = interaction.fields.getTextInputValue('profile-location');
     
-            const profile = await profileDB.create({
+            await profileDB.create({
                 GuildID: guildId,
                 User: user.id,
-                Content: [
-                    {
-                        Bio: BioField,
-                        Age: AgeField,
-                        Birthday: BirthdayField,
-                        Gender: GenderField,
-                        Location: LocationField,
-                    }  
-                ],
+                Content: [{ Bio: BioField, Age: AgeField, Birthday: BirthdayField, Gender: GenderField, Location: LocationField }]
             });
-    
-            profile.save();
     
             const ProfileMadeEmbed = new EmbedBuilder()
             .setColor('Green')
             .setDescription(`Your profile has been created, use ${inlineCode('/profile view')} to view it.`)
-            .setFooter({ text: 'TO MAKE CHANGES NOTIFY jay.ts#1337' })
     
-            interaction.reply({
-                embeds: [ProfileMadeEmbed],
-            });
+            interaction.reply({ embeds: [ProfileMadeEmbed], ephemeral: true });
         };
     },
 };

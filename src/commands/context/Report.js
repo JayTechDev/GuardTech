@@ -50,9 +50,7 @@ module.exports = {
             `> **Reporter:** ${userMention(user.id)} (${inlineCode(user.id)})`,
             `> **Message Link:** [here](${messageLink(channel.id, targetId)})`
         ].join('\n'))
-        .setFields({
-            name: 'Reported Message', value: `${targetMessage.content || images.join('\n')}`
-        })
+        .setFields({ name: 'Reported Message', value: `${targetMessage.content || images.join('\n')}` })
 
         const ReportButtons = new ActionRowBuilder().addComponents(
             new ButtonBuilder().setCustomId('close-report').setLabel('Close').setStyle(ButtonStyle.Danger),
@@ -65,10 +63,7 @@ module.exports = {
         }).then((sentMessage) => {
             sentMessage.pin();
             sentMessage.createMessageComponentCollector({ componentType: ComponentType.Button }).on('collect', async (button) => {
-                if (!button.member.permissions.has('ManageMessages')) return button.reply({
-                    content: 'You cannot use this.',
-                    ephemeral: true
-                });
+                if (!button.member.permissions.has('ManageMessages')) return button.reply({ content: 'You cannot use this.', ephemeral: true });
 
                 switch (button.customId) {
                     case 'close-report':
@@ -83,9 +78,6 @@ module.exports = {
             });
         });
 
-        interaction.reply({
-            content: `Your report has been submitted in ${channelMention(ReportThread.id)}`,
-            ephemeral: true
-        });
+        interaction.reply({ content: `Your report has been submitted in ${channelMention(ReportThread.id)}`, ephemeral: true });
     },
 };

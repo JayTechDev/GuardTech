@@ -4,9 +4,9 @@ const axios = require('axios');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('capybara')
-        .setDescription('Gets an image of a capybara.')
-        .setDMPermission(false),
+    .setName('capybara')
+    .setDescription('Gets an image of a capybara.')
+    .setDMPermission(false),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -18,9 +18,7 @@ module.exports = {
             .setTitle(`${response.data.data.alt}`)
             .setImage(`${response.data.data.url}`)
 
-            interaction.reply({
-                embeds: [CapyEmbed]
-            });
+            interaction.reply({ embeds: [CapyEmbed] });
         });
     },
 };

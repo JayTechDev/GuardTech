@@ -10,17 +10,8 @@ module.exports = {
     .setDescription('Unmutes a user.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('User to unmute.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('reason')
-            .setDescription('The unmute reason.')
-            .setMaxLength(1000)
-            .setMinLength(1)
-    ),
+    .addUserOption(option => option.setName('target').setDescription('User to unmute.').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('The unmute reason.').setMaxLength(1000).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -35,37 +26,25 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
         
-        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
-        if (!TargetMember.moderatable || !TargetMember.isCommunicationDisabled() == true) return interaction.reply({
-            embeds: [CannotDoActionEmbed]
-        });
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} I cannot unmute this user OR they aren't muted.`)
+        if (!TargetMember.moderatable || !TargetMember.isCommunicationDisabled() == true) return interaction.reply({ embeds: [CannotDoActionEmbed] });
 
         interaction.deferReply();
 
         await TargetMember.timeout(null).then(async () => {
-            const unmute = await database.create({
+            await database.create({
                 Type: PunishmentTypes.Unmute,
                 CaseID: CaseId,
                 GuildID: guildId,
                 UserID: TargetUser.id,
                 UserTag: TargetUser.username,
-                Content: [
-                    {
-                        Moderator: user.username,
-                        PunishmentDate: UnmuteDate,
-                        Reason: UnmuteReason
-                    }
-                ],
+                Content: [{ Moderator: user.username, PunishmentDate: UnmuteDate, Reason: UnmuteReason }]
             });
-
-            unmute.save();
         });
 
         await wait(1000);
         const UnmuteSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been unmuted | ${inlineCode(CaseId)}`)
-        interaction.editReply({ 
-            embeds: [UnmuteSuccessEmbed]
-        });
+        interaction.editReply({ embeds: [UnmuteSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Green')

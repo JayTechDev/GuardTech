@@ -8,11 +8,7 @@ module.exports = {
     .setDescription('View a case.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('id')
-            .setDescription('The id of the case.')
-            .setRequired(true)
-    ),
+    .addStringOption(option => option.setName('id').setDescription('The id of the case.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -23,9 +19,7 @@ module.exports = {
         const data = await database.findOne({ GuildID: guildId, CaseID: CaseId });
 
         const NoCaseEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} No case found.`)
-        if (!data) return interaction.reply({
-            embeds: [NoCaseEmbed]
-        });
+        if (!data) return interaction.reply({ embeds: [NoCaseEmbed] });
         
         const CaseEmbed = new EmbedBuilder()
         .setColor('Orange')
@@ -60,19 +54,15 @@ module.exports = {
                 break;
         };
 
-        try {
-            if (data.Content[0].Duration) {
-                CaseEmbed.setFields(
-                    { name: 'User', value: `${data.UserTag} (<@${data.UserID}>)`, inline: true },
-                    { name: 'Moderator', value: `${data.Content[0].Moderator}`, inline: true },
-                    { name: 'Duration', value: `${data.Content[0].Duration}`, inline: true },
-                    { name: `${data.Content[0].PunishmentDate}:`, value: `${data.Content[0].Reason}` }
-                )
-            };
-        } catch (error) {};
+        if (data.Content[0].Duration) {
+            CaseEmbed.setFields(
+                { name: 'User', value: `${data.UserTag} (<@${data.UserID}>)`, inline: true },
+                { name: 'Moderator', value: `${data.Content[0].Moderator}`, inline: true },
+                { name: 'Duration', value: `${data.Content[0].Duration}`, inline: true },
+                { name: `${data.Content[0].PunishmentDate}:`, value: `${data.Content[0].Reason}` }
+            )
+        };
 
-        interaction.reply({
-            embeds: [CaseEmbed],
-        });
+        interaction.reply({ embeds: [CaseEmbed] });
     },
 };

@@ -9,17 +9,8 @@ module.exports = {
     .setDescription('Blacklist a user from using the bot.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('User to blacklist.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('reason')
-            .setDescription('The blacklist reason.')
-            .setMaxLength(1000)
-            .setMinLength(1)
-    ),
+    .addUserOption(option => option.setName('target').setDescription('User to blacklist.').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('The blacklist reason.').setMaxLength(1000).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -33,25 +24,19 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
 
-        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
-        if (!TargetMember.manageable) return interaction.reply({
-            embeds: [CannotDoActionEmbed]
-        });
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} I cannot blacklist this user OR they are already blacklisted.`)
+        if (!TargetMember.manageable || await database.findOne({ GuildID: guildId, UserID: TargetUser.id })) return interaction.reply({ embeds: [CannotDoActionEmbed] });
     
         const BlacklistSuccessEmbed = new EmbedBuilder().setColor('Orange').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been blacklisted | ${inlineCode(CaseId)}`)
-        interaction.reply({ 
-            embeds: [BlacklistSuccessEmbed]
-        });
+        interaction.reply({ embeds: [BlacklistSuccessEmbed] });
 
-        const blacklist = await database.create({
+        await database.create({
             CaseID: CaseId,
             GuildID: guildId,
             UserID: TargetUser.id,
             UserTag: TargetUser.username,
             Reason: BlacklistReason
         });
-
-        blacklist.save();
 
         const LogEmbed = new EmbedBuilder()
         .setColor(Colours.Blacklisted_Colour)

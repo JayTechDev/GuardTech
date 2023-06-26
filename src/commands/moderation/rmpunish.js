@@ -8,11 +8,7 @@ module.exports = {
     .setDescription('Remove a punishment.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('id')
-            .setDescription('Punishment ID.')
-            .setRequired(true)
-    ),
+    .addStringOption(option => option.setName('id').setDescription('Punishment ID.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -23,15 +19,11 @@ module.exports = {
         const data = await database.findOne({ GuildID: guildId, CaseID: PunishmentID });
 
         const NoPunishmentEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a punishment with ID ${inlineCode(PunishmentID)}`)
-        if (!data) return interaction.reply({ 
-            embeds: [NoPunishmentEmbed]
-        });
+        if (!data) return interaction.reply({ embeds: [NoPunishmentEmbed] });
         
         const PunishmentDeletedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Punishment has been successfully deleted.`)
         database.deleteOne({ GuildID: guildId, CaseID: PunishmentID }).then(() => {
-            interaction.reply({
-                embeds: [PunishmentDeletedEmbed]
-            });
+            interaction.reply({ embeds: [PunishmentDeletedEmbed] });
         }); 
     },
 };

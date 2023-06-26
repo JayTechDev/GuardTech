@@ -8,11 +8,7 @@ module.exports = {
     .setDescription('Search for a ban.')
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('target')
-            .setDescription('User to search for (ID).')
-            .setRequired(true)
-    ),
+    .addStringOption(option => option.setName('target').setDescription('User to search for (ID).').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -27,13 +23,9 @@ module.exports = {
         const UserBan = Bans.find(ban => ban.user.id == Target);
 
         const NoBanEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} No ban matching ${inlineCode(Target)}`)
-        if (!UserBan) return interaction.editReply({
-            embeds: [NoBanEmbed]
-        });
+        if (!UserBan) return interaction.editReply({ embeds: [NoBanEmbed] });
 
         await wait(1000);
-        interaction.editReply({
-            content: inlineCode(`${UserBan.user.username} (${UserBan.user.id}) | ${UserBan.reason} `)
-        });
+        interaction.editReply({ content: inlineCode(`${UserBan.user.username} (${UserBan.user.id}) | ${UserBan.reason} `) });
     },
 };

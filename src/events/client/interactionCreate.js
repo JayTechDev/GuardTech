@@ -25,9 +25,7 @@ module.exports = {
                 .setTitle('Error')
                 .setDescription(codeBlock(error))
 
-                await interaction.reply({
-                    embeds: [ErrorEmbed]
-                });
+                await interaction.reply({ embeds: [ErrorEmbed] });
             };
         };
     },

@@ -6,10 +6,7 @@ module.exports = {
     .setName('avatar')
     .setDescription('Gets a user\'s avatar.')
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('The user whose avatar you want to fetch.')
-    ),
+    .addUserOption(option => option.setName('target').setDescription('The user whose avatar you want to fetch.')),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -23,8 +20,6 @@ module.exports = {
         .setAuthor({ name: `${Target.username}'s Avatar`, iconURL: `${Target.displayAvatarURL()}` })
         .setImage(`${Target.displayAvatarURL({ size: 512, extension: 'png' })}`)
 
-        interaction.reply({ 
-            embeds: [AvatarEmbed] 
-        });
+        interaction.reply({ embeds: [AvatarEmbed] });
     },
 };

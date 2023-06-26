@@ -8,11 +8,7 @@ module.exports = {
     .setDescription('Sets a channel\'s slowmode.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('duration')
-            .setDescription('Slowmode duration.')
-            .setRequired(true)
-    ),
+    .addStringOption(option => option.setName('duration').setDescription('Slowmode duration.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -48,13 +44,9 @@ module.exports = {
 
         if(!error) {
             channel.setRateLimitPerUser(Total);
-            await interaction.reply({
-                embeds: [SlowmodeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Slowmode set to ${inlineCode(ms(ms(SlowmodeDuration), { long: true }))}`)]
-            });
+            await interaction.reply({ embeds: [SlowmodeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Slowmode set to ${inlineCode(ms(ms(SlowmodeDuration), { long: true }))}`)] });
         } else {
-            await interaction.reply({
-                embeds: [SlowmodeEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to set slowmode.`)]
-            });
+            await interaction.reply({ embeds: [SlowmodeEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to set slowmode.`)] });
         }
     },
 };

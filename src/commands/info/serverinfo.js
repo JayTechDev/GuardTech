@@ -37,8 +37,6 @@ module.exports = {
             `> - ${ServerFeatures}`,
         ].join('\n'))
 
-        interaction.reply({ 
-            embeds: [InfoEmbed] 
-        });
+        interaction.reply({ embeds: [InfoEmbed] });
     },
 };

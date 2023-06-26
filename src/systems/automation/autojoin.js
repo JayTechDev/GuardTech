@@ -3,7 +3,5 @@
 const { Events } = require('discord.js');
 
 module.exports = (client) => {
-    client.on(Events.ThreadCreate, async (thread) => {
-        thread.join();
-    });
+    client.on(Events.ThreadCreate, (thread) => { thread.join() });
 };

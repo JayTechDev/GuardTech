@@ -5,11 +5,7 @@ module.exports = {
     .setName('roleinfo')
     .setDescription('Gets information on a role.')
     .setDMPermission(false)
-    .addRoleOption(option => option
-            .setName('role')
-            .setDescription('Role to get information about.')
-            .setRequired(true)    
-    ),
+    .addRoleOption(option => option.setName('role').setDescription('Role to get information about.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -31,8 +27,6 @@ module.exports = {
         ].join('\n'))
         .setThumbnail(Role.iconURL() || null)
 
-        interaction.reply({ 
-            embeds: [InfoEmbed] 
-        });
+        interaction.reply({ embeds: [InfoEmbed] });
     },
 };

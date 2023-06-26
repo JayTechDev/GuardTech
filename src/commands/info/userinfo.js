@@ -6,10 +6,7 @@ module.exports = {
     .setName('userinfo')
     .setDescription('Gets information on a user.')
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('The user.')
-    ),
+    .addUserOption(option => option.setName('target').setDescription('The user.')),
     /**
      * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
@@ -42,8 +39,6 @@ module.exports = {
         ].join('\n'))
         .setFields({ name: 'Roles', value: `${UserRoles}` })
         
-        interaction.reply({ 
-            embeds: [InfoEmbed]
-        });
+        interaction.reply({ embeds: [InfoEmbed] });
     },
 };

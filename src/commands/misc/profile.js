@@ -7,22 +7,9 @@ module.exports = {
     .setName('profile')
     .setDescription('User profiles.')
     .setDMPermission(false)
-    .addSubcommand(subcmd => subcmd
-            .setName('create')
-            .setDescription('Create a profile if you don\'t have one already.')
-    )
-    .addSubcommand(subcmd => subcmd
-            .setName('delete')
-            .setDescription('Delete your profile.')
-    )
-    .addSubcommand(subcmd => subcmd
-            .setName('view')
-            .setDescription('View a user\'s profile.')
-            .addUserOption(option => option
-                    .setName('target')
-                    .setDescription('Target to get a profile of.')
-            )
-    ),
+    .addSubcommand(subcmd => subcmd.setName('create').setDescription('Create a profile if you don\'t have one already.'))
+    .addSubcommand(subcmd => subcmd.setName('delete').setDescription('Delete your profile.'))
+    .addSubcommand(subcmd => subcmd.setName('view').setDescription('View a user\'s profile.').addUserOption(option => option.setName('target').setDescription('Target to get a profile of.'))),
     /**
      * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
@@ -35,11 +22,7 @@ module.exports = {
                 const data = await database.findOne({ GuildID: guildId, User: user.id });
 
                 const AlreadyHaveProfileEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} You already have a profile, use ${inlineCode('/profile view')} to view it.`)
-                if (data) {
-                    return interaction.reply({
-                        embeds: [AlreadyHaveProfileEmbed]
-                    });
-                };
+                if (data) return interaction.reply({ embeds: [AlreadyHaveProfileEmbed] });
 
                 const ProfileModal = new ModalBuilder()
                 .setCustomId('profile-modal')
@@ -106,11 +89,7 @@ module.exports = {
                 const profile = await database.findOne({ GuildID: guildId, User: Target.id });
 
                 const NoProfileEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a profile for this user, do they have one?`)
-                if (!profile) {
-                    return interaction.reply({
-                        embeds: [NoProfileEmbed]
-                    });
-                };
+                if (!profile) return interaction.reply({ embeds: [NoProfileEmbed] });
 
                 const ProfileEmbed = new EmbedBuilder()
                 .setColor(UserColour || Colours.Default_Colour)
@@ -137,24 +116,16 @@ module.exports = {
                     }
                 )
 
-                await interaction.reply({
-                    embeds: [ProfileEmbed]
-                });
+                await interaction.reply({ embeds: [ProfileEmbed] });
                 break;
             case 'delete':
                 const UserProfile = await database.findOne({ GuildID: guildId, User: user.id });
 
                 const DeleteProfileEmbed = new EmbedBuilder()
-                if (!UserProfile) {
-                    return interaction.reply({
-                        embeds: [DeleteProfileEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} You do not have a profile to delete.`)]
-                    });
-                };
+                if (!UserProfile) return interaction.reply({ embeds: [DeleteProfileEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} You do not have a profile to delete.`)] });
 
                 database.deleteOne({ GuildID: guildId, User: user.id }).then(() => {
-                    interaction.reply({
-                        embeds: [DeleteProfileEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Your profile has been deleted.`)]
-                    });
+                    interaction.reply({ embeds: [DeleteProfileEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Your profile has been deleted.`)] });
                 });
                 break;
         }

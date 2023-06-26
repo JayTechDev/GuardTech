@@ -17,10 +17,6 @@ module.exports = (client) => {
             new ButtonBuilder().setLabel('Introductions').setStyle(ButtonStyle.Link).setURL('https://ptb.discord.com/channels/929378716902117468/1094064060233945240')
         )
         
-        await member.guild.channels.cache.get('929378716902117471').send({
-            content: `${userMention(member.user.id)} | ${roleMention('959451229501677649')}`,
-            embeds: [WelcomeEmbed],
-            components: [Buttons]
-        });
+        await member.guild.channels.cache.get('929378716902117471').send({ content: `${userMention(member.user.id)} | ${roleMention('959451229501677649')}`, embeds: [WelcomeEmbed], components: [Buttons] });
     });
 };

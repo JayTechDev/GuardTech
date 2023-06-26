@@ -7,17 +7,8 @@ module.exports = {
     .setDescription('Change or reset a member\'s nickname.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames)
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('User to change.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('nickname')
-            .setDescription('New nickname.')
-            .setMaxLength(32)
-            .setMinLength(1)
-    ),
+    .addUserOption(option => option.setName('target').setDescription('User to change.').setRequired(true))
+    .addStringOption(option => option.setName('nickname').setDescription('New nickname.').setMaxLength(32).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -28,10 +19,8 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const Nickname = options.getString('nickname');
 
-        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
-        if (!TargetMember.manageable) return interaction.reply({
-            embeds: [CannotDoActionEmbed]
-        });
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} I cannot change this user's nickname.`)
+        if (!TargetMember.manageable) return interaction.reply({ embeds: [CannotDoActionEmbed] });
 
         const NickEmbed = new EmbedBuilder()
         if (!Nickname) {
@@ -43,9 +32,7 @@ module.exports = {
             };
         } else {
             await TargetMember.setNickname(Nickname);
-            return interaction.reply({ 
-                embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been set to ${inlineCode(Nickname)}`)]
-            });
+            return interaction.reply({ embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been set to ${inlineCode(Nickname)}`)] });
         };
     },
 };

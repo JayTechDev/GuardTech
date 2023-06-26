@@ -7,24 +7,9 @@ module.exports = {
     .setName('reminder')
     .setDescription('Set a reminder.')
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('message')
-            .setDescription('Reminder message.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('time')
-            .setDescription('Time until you are reminded.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('where')
-            .setDescription('Where you would like to be reminded.')
-            .setRequired(true)
-            .setChoices(
-                { name: 'Channel', value: 'remind-channel' },
-            )
-    ),
+    .addStringOption(option => option.setName('message').setDescription('Reminder message.').setRequired(true))
+    .addStringOption(option => option.setName('time').setDescription('Time until you are reminded.').setRequired(true))
+    .addStringOption(option => option.setName('where').setDescription('Where you would like to be reminded.').setRequired(true).setChoices({ name: 'Channel', value: 'remind-channel' })),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -42,16 +27,8 @@ module.exports = {
 
         switch (WhereToRemind) {
             case 'remind-channel':
-                interaction.reply({
-                    content: `Reminder has been set.`
-                });
-
-                setTimeout(() => {
-                    channel.send({
-                        content: `${userMention(user.id)}`,
-                        embeds: [ReminderEmbed]
-                    });
-                }, ms(ReminderTime));
+                interaction.reply({ content: `Reminder has been set.` });
+                setTimeout(() => { channel.send({ content: `${userMention(user.id)}`, embeds: [ReminderEmbed] }) }, ms(ReminderTime));
                 break;
         };
     },

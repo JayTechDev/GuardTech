@@ -3,14 +3,10 @@ const { Colours } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('8ball')
-        .setDescription('Ask the magic 8ball a question.')
-        .setDMPermission(false)
-        .addStringOption(option => option
-                .setName('question')
-                .setDescription('The question you would like to ask the 8ball.')
-                .setRequired(true)
-    ),
+    .setName('8ball')
+    .setDescription('Ask the magic 8ball a question.')
+    .setDMPermission(false)
+    .addStringOption(option => option.setName('question').setDescription('The question you would like to ask the 8ball.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -56,8 +52,6 @@ module.exports = {
         let index = (Math.floor(Math.random() * Math.floor(Answers.length)));
         const finalAnswer = Answers[index];
 
-        interaction.reply({ 
-            content: `Your question:\n${codeBlock(Question)}\nMy answer:\n${codeBlock(finalAnswer)}`
-         });
+        interaction.reply({ content: `Your question:\n${codeBlock(Question)}\nMy answer:\n${codeBlock(finalAnswer)}` });
     },
 };

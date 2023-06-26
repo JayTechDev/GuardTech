@@ -67,16 +67,10 @@ module.exports = {
             new ButtonBuilder().setCustomId('bot-stats').setLabel('Bot Stats').setStyle(ButtonStyle.Primary)
         )
 
-        interaction.reply({ 
-            embeds: [InfoEmbed], 
-            components: [Buttons],
-        }).then((sentMessage) => {
+        interaction.reply({ embeds: [InfoEmbed], components: [Buttons] }).then((sentMessage) => {
             sentMessage.createMessageComponentCollector({ componentType: ComponentType.Button }).on('collect', async (button) => {
                 if (!button.customId == 'bot-stats') return;
-                if (!button.member.permissions.has('ManageGuild')) return button.reply({
-                    content: 'You cannot use this.',
-                    ephemeral: true
-                });
+                if (!button.member.permissions.has('ManageGuild')) return button.reply({ content: 'You cannot use this.', ephemeral: true });
 
                 const BotStatsEmbed = new EmbedBuilder()
                 .setColor(Colours.Default_Colour)
@@ -103,9 +97,7 @@ module.exports = {
                     `> **Owner:** ${ClientApplication.owner}`
                 ].join('\n'))
 
-                button.update({
-                    embeds: [BotStatsEmbed]
-                });
+                button.update({ embeds: [BotStatsEmbed] });
             });
         });
     },

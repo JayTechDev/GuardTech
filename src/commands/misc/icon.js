@@ -17,8 +17,6 @@ module.exports = {
         .setAuthor({ name: `${guild.name}'s Icon`, iconURL: `${guild.iconURL()}` })
         .setImage(`${guild.iconURL({ size: 512, extension: 'png' })}`)
 
-        interaction.reply({ 
-            embeds: [IconEmbed],
-        });
+        interaction.reply({ embeds: [IconEmbed] });
     },
 };

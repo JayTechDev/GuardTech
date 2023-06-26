@@ -7,17 +7,8 @@ module.exports = {
     .setDescription('Lock a channel.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .setDMPermission(false)
-    .addChannelOption(option => option
-            .setName('channel')
-            .setDescription('Channel to lock.')
-            .addChannelTypes(ChannelType.GuildText)
-    )
-    .addStringOption(option => option
-            .setName('reason')
-            .setDescription('Reason for locking the channel.')
-            .setMaxLength(1000)
-            .setMinLength(1)
-    ),
+    .addChannelOption(option => option.setName('channel').setDescription('Channel to lock.').addChannelTypes(ChannelType.GuildText))
+    .addStringOption(option => option.setName('reason').setDescription('Reason for locking the channel.').setMaxLength(1000).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -34,16 +25,10 @@ module.exports = {
         .setFields({ name: 'Reason', value: `${LockReason}` })
         .setTimestamp()
 
-        if (LockChannel.permissionsFor(guildId).has('SendMessages') === false) return interaction.reply({ 
-            content: `${Emojis.Error_Emoji} Channel is already locked.`,
-            ephemeral: true
-        });
+        if (LockChannel.permissionsFor(guildId).has('SendMessages') === false) return interaction.reply({ content: `${Emojis.Error_Emoji} Channel is already locked.`,ephemeral: true });
 
         LockChannel.permissionOverwrites.edit(guildId, { SendMessages: false }).then(() => {
-            interaction.reply({ 
-                content: `${Emojis.Success_Emoji} Channel has been locked.`,
-                ephemeral: true
-            });
+            interaction.reply({ content: `${Emojis.Success_Emoji} Channel has been locked.`,ephemeral: true });
             LockChannel.send({ embeds: [LockedEmbed] });
         });
     },

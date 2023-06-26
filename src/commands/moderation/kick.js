@@ -1,8 +1,8 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
-const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,17 +10,8 @@ module.exports = {
     .setDescription('Kick a user from the server.')
     .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('User to kick.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('reason')
-            .setDescription('The kick reason.')
-            .setMaxLength(1000)
-            .setMinLength(1)
-    ),
+    .addUserOption(option => option.setName('target').setDescription('User to kick.').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('The kick reason.').setMaxLength(1000).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -35,48 +26,32 @@ module.exports = {
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
 
-        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
-        if (!TargetMember.kickable) return interaction.reply({
-            embeds: [CannotDoActionEmbed]
-        });
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} I cannot kick this user.`)
+        if (!TargetMember.kickable) return interaction.reply({ embeds: [CannotDoActionEmbed] });
 
         interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
         .setColor('Grey')
         .setDescription(`You have received a kick in **${guild.name}**`)
-        .setFields(
-            { name: 'Reason', value: `${inlineCode(KickReason)}` },
-        )
+        .setFields({ name: 'Reason', value: `${inlineCode(KickReason)}` })
 
-        await TargetUser.send({
-            embeds: [DirectMessageEmbed]
-        }).catch(console.error);
+        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(console.error);
 
         await TargetMember.kick(KickReason).then(async () => {
-            const kick = await database.create({
+            await database.create({
                 Type: PunishmentTypes.Kick,
                 CaseID: CaseId,
                 GuildID: guildId,
                 UserID: TargetUser.id,
                 UserTag: TargetUser.username,
-                Content: [
-                    {
-                        Moderator: user.username,
-                        PunishmentDate: KickDate,
-                        Reason: KickReason,
-                    }
-                ],
+                Content: [{ Moderator: user.username, PunishmentDate: KickDate, Reason: KickReason }]
             });
-
-            kick.save();
         });
 
         await wait(1000);
         const KickSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been kicked | ${inlineCode(CaseId)}`)
-        interaction.editReply({ 
-            embeds: [KickSuccessEmbed]
-        });
+        interaction.editReply({ embeds: [KickSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Red')

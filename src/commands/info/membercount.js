@@ -11,8 +11,6 @@ module.exports = {
     async execute(interaction, client) {
         const { guild } = interaction;
 
-        interaction.reply({
-            content: `Current members: ${inlineCode(guild.memberCount)}`
-        });
+        interaction.reply({ content: `Current members: ${inlineCode(guild.memberCount)}` });
     },
 };

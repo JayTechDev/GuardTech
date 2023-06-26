@@ -7,23 +7,8 @@ module.exports = {
     .setDescription('Change the bot\'s status.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('text')
-            .setDescription('Status text.')
-            .setRequired(true)
-            .setMaxLength(32)
-            .setMinLength(1)
-    )
-    .addStringOption(option => option
-            .setName('type')
-            .setDescription('Activity type.')
-            .setRequired(true)
-            .addChoices(
-                { name: 'Watching', value: 'watching' },
-                { name: 'Listening', value: 'listening' },
-                { name: 'Playing', value: 'playing' }
-            )
-    ),
+    .addStringOption(option => option.setName('text').setDescription('Status text.').setRequired(true).setMaxLength(32).setMinLength(1))
+    .addStringOption(option => option.setName('type').setDescription('Activity type.').setRequired(true).addChoices({ name: 'Watching', value: 'watching' }, { name: 'Listening', value: 'listening' }, { name: 'Playing', value: 'playing' })),
     /**
      * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
@@ -51,8 +36,6 @@ module.exports = {
         client.user.setActivity({ name: `${StatusText}`, type: ChosenType });
 
         const StatusChangedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Status changed to **${StatusText}** with type **${ChosenType}**`)
-        interaction.reply({ 
-            embeds: [StatusChangedEmbed]
-        });
+        interaction.reply({ embeds: [StatusChangedEmbed] });
     },
 };

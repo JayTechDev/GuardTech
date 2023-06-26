@@ -7,11 +7,7 @@ module.exports = {
     .setName('cases')
     .setDescription('List a user\'s cases.')
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('Target to show cases for.')
-            .setRequired(true)
-    ),
+    .addUserOption(option => option.setName('target').setDescription('Target to show cases for.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -19,13 +15,10 @@ module.exports = {
         const { options } = interaction;
 
         const Target = options.getUser('target');
-
         const data = await database.find({ UserID: Target.id });
         
         const NoCasesEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} There are no cases for ${userMention(Target.id)}`)
-        if (data.length < 1) return interaction.reply({
-            embeds: [NoCasesEmbed]
-        });
+        if (data.length < 1) return interaction.reply({ embeds: [NoCasesEmbed] });
 
         const fields = [];
         data.forEach(c => fields.push({ 
@@ -38,8 +31,6 @@ module.exports = {
         .setAuthor({ name: `${Target.username}'s Cases`, iconURL: `${Target.displayAvatarURL()}` })
         .setFields(fields);
 
-        interaction.reply({
-            embeds: [CasesEmbed]
-        });
+        interaction.reply({ embeds: [CasesEmbed] });
     },
 };

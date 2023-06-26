@@ -7,12 +7,7 @@ module.exports = {
     .setDescription('Change or reset the bot\'s nickname.')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('nickname')
-            .setDescription('New nickname.')
-            .setMaxLength(32)
-            .setMinLength(1)
-    ),
+    .addStringOption(option => option.setName('nickname').setDescription('New nickname.').setMaxLength(32).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -26,20 +21,14 @@ module.exports = {
         const NickEmbed = new EmbedBuilder()
         if (!Nickname) {
             if (!bot.nickname) {
-                interaction.reply({
-                    embeds: [NickEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} No nickname to reset.`)]
-                });
+                interaction.reply({ embeds: [NickEmbed.setColor('Red').setDescription(`${Emojis.Error_Emoji} No nickname to reset.`)] });
             } else {
                 bot.setNickname('');
-                interaction.reply({
-                    embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been reset.`)]
-                });
+                interaction.reply({ embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been reset.`)] });
             };
         } else {
             bot.setNickname(Nickname);
-            interaction.reply({
-                embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been set to ${inlineCode(Nickname)}`)]
-            });
+            interaction.reply({ embeds: [NickEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname has been set to ${inlineCode(Nickname)}`)] });
         };
     },
 };

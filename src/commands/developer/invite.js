@@ -15,9 +15,6 @@ module.exports = {
             permissions: [PermissionFlagsBits.Administrator]
         });
 
-        interaction.reply({
-            content: `${invite}`,
-            ephemeral: true
-        });
+        interaction.reply({ content: `${invite}`, ephemeral: true });
     },
 };

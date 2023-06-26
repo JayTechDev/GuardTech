@@ -3,9 +3,9 @@ const { Colours } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('help')
-        .setDescription('Shows a list of commands.')
-        .setDMPermission(false),
+    .setName('help')
+    .setDescription('Shows a list of commands.')
+    .setDMPermission(false),
     /**
      * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
@@ -49,8 +49,6 @@ module.exports = {
             }
         )
 
-        interaction.reply({ 
-            embeds: [HelpEmbed],
-        });
+        interaction.reply({ embeds: [HelpEmbed] });
     },
 };

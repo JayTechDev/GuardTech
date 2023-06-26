@@ -8,16 +8,8 @@ module.exports = {
     .setDescription('Add or update a reason for a case.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('id')
-            .setDescription('The id of the case.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('reason')
-            .setDescription('The reason for the case.')
-            .setRequired(true)
-    ),
+    .addStringOption(option => option.setName('id').setDescription('The id of the case.').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('The reason for the case.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -30,15 +22,11 @@ module.exports = {
         const data = await database.findOne({ GuildID: guildId, CaseID: CaseId });
         
         const NoCaseEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a case with ID ${inlineCode(CaseId)}`)
-        if (!data) return interaction.reply({
-            embeds: [NoCaseEmbed]
-        });
+        if (!data) return interaction.reply({ embeds: [NoCaseEmbed] });
         
         await database.findOneAndUpdate({ GuildID: guildId, CaseID: CaseId }, { $set: { 'Content.0.Reason': NewReason } }).then(async () => {
             const CaseUpdatedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Case ${inlineCode(CaseId)} has been updated with reason ${inlineCode(NewReason)}`)
-            interaction.reply({ 
-                embeds: [CaseUpdatedEmbed]
-            });
+            interaction.reply({ embeds: [CaseUpdatedEmbed] });
         });
     },
 };

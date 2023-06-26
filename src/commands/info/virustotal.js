@@ -9,11 +9,7 @@ module.exports = {
     .setName('virustotal')
     .setDescription('Look up a URL with Virus Total.')
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('url')
-            .setDescription('Look up a URL.')
-            .setRequired(true)
-    ),
+    .addStringOption(option => option.setName('url').setDescription('Look up a URL.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -31,13 +27,9 @@ module.exports = {
                 `> **Scan ID:** ${response.scan_id}`,
                 `> ** Scanned On:** ${response.scan_date}`,
             ].join('\n'))
-            .setFields({
-                name: 'Results', value: `[View results](${response.permalink})`
-            })
+            .setFields({ name: 'Results', value: `[View results](${response.permalink})` })
 
-            interaction.reply({
-                embeds: [VirusTotalEmbed]
-            }); 
+            interaction.reply({ embeds: [VirusTotalEmbed] }); 
         });
     },
 };

@@ -7,17 +7,8 @@ module.exports = {
     .setDescription('Purge messages from a channel.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .setDMPermission(false)
-    .addNumberOption(option => option
-            .setName('amount')
-            .setDescription('Amount to purge.')
-            .setMaxValue(100)
-            .setMinValue(1)
-            .setRequired(true)
-    )
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('User to purge.')
-    ),
+    .addNumberOption(option => option.setName('amount').setDescription('Amount to purge.').setMaxValue(100).setMinValue(1).setRequired(true))
+    .addUserOption(option => option.setName('target').setDescription('User to purge.')),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -31,29 +22,23 @@ module.exports = {
 
         const PurgeEmbed = new EmbedBuilder()
 
-        if(Target) {
+        if (Target) {
             let i = 0;
-            const filtered = [];
+            const Filtered = [];
             Messages.filter((m) => {
-                if(m.author.id === Target.id && Amount > i){
-                    filtered.push(m);
+                if (m.author.id === Target.id && Amount > i){
+                    Filtered.push(m);
                     i++;
                 };
             });
 
-            await channel.bulkDelete(filtered, true).then(async messages => {
-                await interaction.reply({ 
-                    embeds: [PurgeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'} sent by ${userMention(Target.id)}`)],
-                    ephemeral: true
-                });
+            await channel.bulkDelete(Filtered, true).then(async messages => {
+                await interaction.reply({ embeds: [PurgeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'} sent by ${userMention(Target.id)}`)],ephemeral: true });
             });
         }
         else {
             await channel.bulkDelete(Amount, true).then(messages => {
-                interaction.reply({ 
-                    embeds: [PurgeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'}`)],
-                    ephemeral: true
-                });
+                interaction.reply({ embeds: [PurgeEmbed.setColor('Green').setDescription(`${Emojis.Success_Emoji} Purged ${messages.size} ${messages.size > 1 ? 'messages' : 'message'}`)], ephemeral: true });
             });
         };
     },

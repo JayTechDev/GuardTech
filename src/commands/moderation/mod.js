@@ -8,11 +8,7 @@ module.exports = {
     .setDescription('Moderate a user\'s name.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames)
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('User to moderate.')
-            .setRequired(true)
-    ),
+    .addUserOption(option => option.setName('target').setDescription('User to moderate.').setRequired(true)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -22,17 +18,13 @@ module.exports = {
         const TargetUser = options.getUser('target') || user;
         const TargetMember = await guild.members.fetch(TargetUser.id);
 
-        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
-        if (!TargetMember.manageable) return interaction.reply({
-            embeds: [CannotDoActionEmbed]
-        });
+        const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} I cannot moderate this user's nickname.`)
+        if (!TargetMember.manageable) return interaction.reply({ embeds: [CannotDoActionEmbed] });
 
         const ModeratedNickname_ID = randomstring.generate({ length: 5, charset: 'alphanumeric' });
         await TargetMember.setNickname(`Moderated Nickname - ${ModeratedNickname_ID}`);
 
         const ModSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Nickname moderated to ${inlineCode(`Moderated Nickname - ${ModeratedNickname_ID}`)}`)
-        interaction.reply({ 
-            embeds: [ModSuccessEmbed]
-        });
+        interaction.reply({ embeds: [ModSuccessEmbed] });
     },
 };

@@ -1,8 +1,8 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
-const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,17 +10,8 @@ module.exports = {
     .setDescription('Warns a user.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .setDMPermission(false)
-    .addUserOption(option => option
-            .setName('target')
-            .setDescription('User to warn.')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('reason')
-            .setDescription('The warn reason.')
-            .setMaxLength(1000)
-            .setMinLength(1)
-    ),
+    .addUserOption(option => option.setName('target').setDescription('User to warn.').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('The warn reason.').setMaxLength(1000).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -35,45 +26,29 @@ module.exports = {
         const CaseId = createCaseId();
         
         const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Unable to perform action.`)
-        if (TargetUser.id === user.id || TargetUser.id === guild.ownerId || TargetUser.bot) return interaction.reply({ 
-            embeds: [CannotDoActionEmbed]
-        });
+        if (TargetUser.id === user.id || TargetUser.id === guild.ownerId || TargetUser.bot) return interaction.reply({ embeds: [CannotDoActionEmbed] });
 
         interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
         .setColor('Grey')
         .setDescription(`You have received a warning in **${guild.name}**`)
-        .setFields(
-            { name: 'Reason', value: `${inlineCode(WarnReason)}` },
-        )
+        .setFields({ name: 'Reason', value: `${inlineCode(WarnReason)}` })
 
-        await TargetUser.send({
-            embeds: [DirectMessageEmbed]
-        }).catch(console.error);
+        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(console.error);
         
-        const warn = await database.create({
+        await database.create({
             Type: PunishmentTypes.Warn,
             CaseID: CaseId,
             GuildID: guildId,
             UserID: TargetUser.id,
             UserTag: TargetUser.username,
-            Content: [
-                {
-                    Moderator: user.username,
-                    PunishmentDate: WarnDate,
-                    Reason: WarnReason,
-                }
-            ],
+            Content: [{ Moderator: user.username,PunishmentDate: WarnDate,Reason: WarnReason }]
         });
-
-        warn.save();
 
         await wait(1000);
         const WarnSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been warned | ${inlineCode(CaseId)}`)
-        interaction.editReply({ 
-            embeds: [WarnSuccessEmbed]
-        });
+        interaction.editReply({ embeds: [WarnSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Orange')

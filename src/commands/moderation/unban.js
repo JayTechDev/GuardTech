@@ -1,8 +1,8 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, inlineCode, userMention } = require('discord.js');
 const { Emojis, PunishmentTypes, IDs } = require('../../config.json');
-const wait = require('node:timers/promises').setTimeout;
 const { createCaseId } = require('../../util/generateCaseId');
 const database = require('../../database/schemas/PunishmentSchema.js');
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,17 +10,8 @@ module.exports = {
     .setDescription('Unbans a user from the server.')
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .setDMPermission(false)
-    .addStringOption(option => option
-            .setName('target')
-            .setDescription('User to unban (ID).')
-            .setRequired(true)
-    )
-    .addStringOption(option => option
-            .setName('reason')
-            .setDescription('The unban reason.')
-            .setMaxLength(1000)
-            .setMinLength(1)
-    ),
+    .addStringOption(option => option.setName('target').setDescription('User to unban (ID).').setRequired(true))
+    .addStringOption(option => option.setName('reason').setDescription('The unban reason.').setMaxLength(1000).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -38,35 +29,23 @@ module.exports = {
         let bannedId = Bans.find(ban => ban.user.id == TargetID);
 
         const NoBanEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} Could not find a ban for this user, are you sure they are banned?`)
-        if (!bannedId) return interaction.reply({
-            embeds: [NoBanEmbed]
-        });
+        if (!bannedId) return interaction.reply({ embeds: [NoBanEmbed] });
 
         interaction.deferReply();
 
         await guild.bans.remove(TargetID, UnbanReason).then(async () => {
-            const unban = await database.create({
+            await database.create({
                 Type: PunishmentTypes.Unban,
                 CaseID: CaseId,
                 GuildID: guildId,
                 UserID: TargetID,
-                Content: [
-                    {
-                        Moderator: user.username,
-                        PunishmentDate: UnbanDate,
-                        Reason: UnbanReason
-                    }
-                ],
+                Content: [{ Moderator: user.username, PunishmentDate: UnbanDate, Reason: UnbanReason }]
             });
-
-            unban.save();
         });
 
         await wait(1000);
         const UnbanSuccessEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetID)} has been unbanned | ${inlineCode(CaseId)}`)
-        interaction.editReply({
-            embeds: [UnbanSuccessEmbed]
-        });
+        interaction.editReply({ embeds: [UnbanSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
         .setColor('Green')
