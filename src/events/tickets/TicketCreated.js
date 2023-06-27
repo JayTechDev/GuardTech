@@ -1,4 +1,4 @@
-const { StringSelectMenuInteraction, EmbedBuilder, ChannelType, ThreadAutoArchiveDuration, channelMention, roleMention } = require('discord.js');
+const { StringSelectMenuInteraction, ChannelType, ThreadAutoArchiveDuration, channelMention, roleMention } = require('discord.js');
 
 module.exports = {
     name: 'interactionCreate',
