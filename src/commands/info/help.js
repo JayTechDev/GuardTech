@@ -41,7 +41,7 @@ module.exports = {
             },
             {
                 name: 'Util',
-                value: codeBlock('badgecheck, bansearch, blacklist, botinfo, customrole, ping, status')
+                value: codeBlock('bansearch, blacklist, botinfo, customrole, ping, status')
             },
             {
                 name: 'Developer',
