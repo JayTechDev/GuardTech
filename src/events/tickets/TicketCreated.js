@@ -7,6 +7,7 @@ module.exports = {
      */
     async execute(interaction, client) {
         if (!interaction.isStringSelectMenu() || !interaction.customId === 'ticket-category') return;
+        if (interaction.member.roles.cache.has('1063862972415483955')) return;
 
         const { guild, user } = interaction;
 
