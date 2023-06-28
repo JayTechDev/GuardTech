@@ -37,6 +37,6 @@ module.exports = {
             `> - ${ServerFeatures}`,
         ].join('\n'))
 
-        interaction.reply({ embeds: [InfoEmbed] });
+        interaction.reply({ content: 'https://discord.gg/47fWbK5QYB', embeds: [InfoEmbed] });
     },
 };
