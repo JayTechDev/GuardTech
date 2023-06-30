@@ -1,5 +1,6 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { Colours } = require('../../config.json');
+const { getChannelName } = require('../../util/getChannelName');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,7 +21,7 @@ module.exports = {
         .setDescription([
             `**${Channel.name}**`,
             `> **ID:** ${Channel.id}`,
-            `> **Type:** ${Channel.type}`,
+            `> **Type:** ${getChannelName(Channel)}`,
             `> **Topic:** ${Channel.topic || 'None.'}`,
             `> **Position:** ${Channel.position}`,
             `> **Parent:** ${Channel.parent || 'None.'} (${Channel.parentId || 'No parent'})`,
