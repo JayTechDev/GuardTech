@@ -1,4 +1,4 @@
-const { ChannelType } = require("discord.js");
+const { ChannelType } = require('discord.js');
 
 /**
  * Gets a channel name instead of just showing the number type.
