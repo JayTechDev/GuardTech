@@ -7,7 +7,6 @@ module.exports = {
         .setName('kitty')
         .setDescription('Gets an image of a kitty.')
         .setDMPermission(false),
-
     async execute(interaction, client) {
         axios.get(API_URL).then(response => {
 
@@ -15,9 +14,7 @@ module.exports = {
             .setColor('Random')
             .setImage(`${response.data[0].url}`)
 
-            interaction.reply({
-                embeds: [KittyEmbed]
-            });
+            interaction.reply({ embeds: [KittyEmbed] });
         });
     },
 };
