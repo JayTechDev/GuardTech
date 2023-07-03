@@ -9,7 +9,7 @@ module.exports = {
     .setDMPermission(false)
     .addStringOption(option => option.setName('message').setDescription('Reminder message.').setRequired(true))
     .addStringOption(option => option.setName('time').setDescription('Time until you are reminded.').setRequired(true))
-    .addStringOption(option => option.setName('where').setDescription('Where you would like to be reminded.').setRequired(true).setChoices({ name: 'Channel', value: 'remind-channel' })),
+    .addStringOption(option => option.setName('where').setDescription('Where you would like to be reminded.').setRequired(true).setChoices({ name: 'Channel', value: 'remind-channel' }, { name: 'Direct Message', value: 'dm-channel' })),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -27,8 +27,16 @@ module.exports = {
 
         switch (WhereToRemind) {
             case 'remind-channel':
-                interaction.reply({ content: `Reminder has been set.` });
+                interaction.reply({ content: `Reminder has been set.`, ephemeral: true });
                 setTimeout(() => { channel.send({ content: `${userMention(user.id)}`, embeds: [ReminderEmbed] }) }, ms(ReminderTime));
+                break;
+            case 'dm-channel':
+                interaction.reply({ content: 'Reminder has been set (If you do not have DMs enabled.. you will not get anything).', ephemeral: true });
+                setTimeout(() => { 
+                    user.send({ embeds: [ReminderEmbed] }).catch(() => {
+                        channel.send({ content: `${userMention(user.id)}, I tried to send you your reminder but you had your DMs off.` });
+                    });
+                }, ms(ReminderTime));
                 break;
         };
     },
