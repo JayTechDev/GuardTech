@@ -36,10 +36,10 @@ module.exports = {
         const DirectMessageEmbed = new EmbedBuilder().setColor('Grey').setDescription(`You have received a ban in **${guild.name}**`)
         if (Appealable) {
             DirectMessageEmbed.setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` }, { name: 'Appeal', value: `${Links.Appeal_Link}` })
-            await TargetUser.send({ embeds: [DirectMessageEmbed]}).catch(console.error);
+            await TargetUser.send({ embeds: [DirectMessageEmbed]}).catch(() => {});
         } else {
             DirectMessageEmbed.setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` })
-            await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(console.error);
+            await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
         }
         
         await TargetMember.ban({ deleteMessageSeconds: 86400, reason: BanReason }).then(async () => {

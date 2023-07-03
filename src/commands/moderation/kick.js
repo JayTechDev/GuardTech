@@ -36,7 +36,7 @@ module.exports = {
         .setDescription(`You have received a kick in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(KickReason)}` })
 
-        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(console.error);
+        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
 
         await TargetMember.kick(KickReason).then(async () => {
             await database.create({

@@ -40,7 +40,7 @@ module.exports = {
         .setDescription(`You have received a mute in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(MuteReason)}` }, { name: 'Expiry', value: `${MuteExpiry}` }, { name: 'Appeal', value: `${Links.Appeal_Link}` })
 
-        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(console.error);
+        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
 
         await TargetMember.timeout(ms(MuteDuration), MuteReason).then(async () => {
             await database.create({

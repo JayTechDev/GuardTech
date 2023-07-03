@@ -36,7 +36,7 @@ module.exports = {
         .setDescription(`You have received a soft ban in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` })
 
-        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(console.error);
+        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
         
         await TargetMember.ban({ deleteMessageSeconds: 86400, reason: BanReason }).then(async () => {
             await database.create({

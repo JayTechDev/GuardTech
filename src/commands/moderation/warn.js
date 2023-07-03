@@ -35,7 +35,7 @@ module.exports = {
         .setDescription(`You have received a warning in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(WarnReason)}` })
 
-        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(console.error);
+        await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
         
         await database.create({
             Type: PunishmentTypes.Warn,
