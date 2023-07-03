@@ -36,7 +36,7 @@ module.exports = {
                 value: codeBlock('achievement, capybara, kitty')
             },
             {
-                name: 'Games',
+                name: 'Fun',
                 value: codeBlock('8ball')
             },
             {
