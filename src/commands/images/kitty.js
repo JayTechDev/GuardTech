@@ -12,8 +12,8 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction 
      */
     async execute(interaction, client) {
-        interaction.deferReply();
-
+        await interaction.deferReply();
+        
         await wait(1000);
         axios.get(API_URL).then(response => {
 
