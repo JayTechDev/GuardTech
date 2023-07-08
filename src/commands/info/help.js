@@ -33,7 +33,7 @@ module.exports = {
             },
             {
                 name: 'Images',
-                value: codeBlock('achievement, capybara, kitty')
+                value: codeBlock('achievement, capybara, kitty, neko')
             },
             {
                 name: 'Fun',
