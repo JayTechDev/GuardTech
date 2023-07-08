@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/JayCordDevelopment/Assistant"><img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1124443221473378315/f966de18a901bcd0cb8060868508e01a.jpg" alt="Power"></a>
+  <a href="https://github.com/JayCordDevelopment/Assistant"><img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1127298563525853214/782fb1b75a150f127b7ced7f0a0c0ec8.jpg" alt="Power"></a>
   <br>
   Power
   <br>
