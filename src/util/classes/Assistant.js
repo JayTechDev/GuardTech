@@ -23,16 +23,9 @@ class Assistant extends Client {
 
     startup(client) {
         console.clear();
-        console.log('------------------------------------------------------');
-
+        
         const HandlerFiles = readdirSync('./src/handlers/').filter(file => file.endsWith('.js'));
         for (const file of HandlerFiles) require(`../../handlers/${file}`)(client);
-
-        const SystemFolders = readdirSync('./src/systems');
-        for (const folder of SystemFolders) {
-            const SystemFiles = readdirSync(`./src/systems/${folder}`).filter(file => file.endsWith('.js'));
-            for (const file of SystemFiles) require(`../../systems/${folder}/${file}`)(client);
-        };
 
         client.handleCommands();
         client.handleEvents();
