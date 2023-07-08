@@ -5,7 +5,7 @@ module.exports = {
     /**
      * @param {ThreadChannel} thread
      */
-    async execute(member) {
+    async execute(thread) {
         await thread.join();
     },
 };
