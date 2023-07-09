@@ -1,4 +1,5 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, codeBlock } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, codeBlock } = require('discord.js');
+const { Colours } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,6 +18,11 @@ module.exports = {
         const EvaluatedCode = eval(CodeToEval);
 
         if (!user.id == '697541992770437130') return;
-        interaction.reply({ content: codeBlock(EvaluatedCode) });
+
+        const EvalEmbed = new EmbedBuilder()
+        .setColor(Colours.Default_Colour)
+        .setFields({ name: 'Input', value: `${codeBlock(CodeToEval)}`, inline: true }, { name: 'Output', value: `${codeBlock(EvaluatedCode)}`, inline: true }, { name: 'Type', value: `${codeBlock(typeof EvaluatedCode)}` })
+
+        interaction.reply({ embeds: [EvalEmbed] });
     },
 };

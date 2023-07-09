@@ -19,11 +19,9 @@ module.exports = {
             try {
                 await command.execute(interaction, client);
             } catch (error) {
-                console.log(error);
                 const ErrorEmbed = new EmbedBuilder()
                 .setColor('Red')
-                .setTitle('Error')
-                .setDescription(codeBlock(error))
+                .setFields({ name: 'Message', value: `${codeBlock(error.message)}` }, { name: 'Stack', value: `${codeBlock(error.stack)}` })
 
                 await interaction.reply({ embeds: [ErrorEmbed] });
             };
