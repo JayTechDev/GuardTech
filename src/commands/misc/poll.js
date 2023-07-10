@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, ThreadAutoArchiveDuration } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ThreadAutoArchiveDuration } = require('discord.js');
 const { Colours, Emojis } = require('../../config.json');
 
 module.exports = {
@@ -6,6 +6,7 @@ module.exports = {
     .setName('poll')
     .setDescription('Creates a new poll.')
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .addStringOption(option => option.setName('question').setDescription('The question to ask.').setRequired(true).setMaxLength(256).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
