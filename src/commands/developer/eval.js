@@ -16,7 +16,7 @@ module.exports = {
         const { options, user } = interaction;
 
         const CodeToEval = options.getString('code');
-        const EvaluatedCode = eval(CodeToEval);
+        const EvaluatedCode = await eval(CodeToEval);
         const EvaluatedCodeResult = util.inspect(EvaluatedCode, { depth: 0 });
 
         if (!user.id == '697541992770437130') return;
