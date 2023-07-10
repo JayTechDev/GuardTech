@@ -32,8 +32,8 @@ module.exports = {
             autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek
         });
 
-        ReportThread.join();
-        ReportThread.members.add(user.id);
+        await ReportThread.join();
+        await ReportThread.members.add(user.id);
             
         ReportThread.send({ content: roleMention('929382693916008478'), embeds: [ReportEmbed] });
         interaction.reply({ content: `Report submitted in ${channelMention(ReportThread.id)}`, ephemeral: true });
