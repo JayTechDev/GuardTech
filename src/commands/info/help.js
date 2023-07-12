@@ -45,7 +45,7 @@ module.exports = {
             },
             {
                 name: 'Developer',
-                value: codeBlock('botnick, eval, invite')
+                value: codeBlock('botavatar, botnick, eval, invite')
             }
         )
 
