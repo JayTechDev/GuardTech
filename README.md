@@ -19,5 +19,5 @@ Made with [discord.js](https://discordjs.dev)
 - [License](https://github.com/JayCordDevelopment/Assistant/blob/main/LICENSE)
 
 ## Authors
-- `Main Developer` [jaytsdev](https://github.com/jaytsdev)
+- `Main Developer` [nlghtleak](https://github.com/nlghtleak)
 - `Our Contributors` [Contributors](https://github.com/JayCordDevelopment/Assistant/graphs/contributors)
