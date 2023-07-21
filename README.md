@@ -16,9 +16,7 @@
 ## Overview
 Power is a private bot designed for [JayCord](https://discord.gg/47fWbK5QYB), mostly used for moderation / utility and overall server management and providing more features other bots don't normally have.
 
-Made and powered by [discord.js](https://discordjs.dev)
-
-## Modules
+Featuring modules such as:
 - Moderation
 - Utility
 - Images
@@ -26,6 +24,8 @@ Made and powered by [discord.js](https://discordjs.dev)
 - And a whole lot more to come!
 
 If you would like to suggest some more module / command ideas head over to our suggestions channel and post it there.
+
+Made and powered by [discord.js](https://discordjs.dev)
 
 ## Authors
 - `Main Developer` [nlghtleak](https://github.com/nlghtleak)
