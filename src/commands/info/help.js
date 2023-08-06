@@ -21,7 +21,7 @@ module.exports = {
         .setFields(
             {
                 name: 'Info',
-                value: codeBlock('help, membercount, channelinfo, roleinfo, serverinfo, userinfo, virustotal')
+                value: codeBlock('help, membercount, channelinfo, roleinfo, serverinfo, userinfo, faq, virustotal')
             },
             {
                 name: 'Moderation',
@@ -37,7 +37,7 @@ module.exports = {
             },
             {
                 name: 'Fun',
-                value: codeBlock('8ball')
+                value: codeBlock('8ball, gayrate')
             },
             {
                 name: 'Util',
