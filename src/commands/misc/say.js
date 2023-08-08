@@ -22,9 +22,13 @@ module.exports = {
         const Channel = options.getChannel('channel') || channel;
 
         await interaction.deferReply({ ephemeral: true });
+        await wait(1000);
         
         if (Reference) {
-            await Channel.messages.fetch(Reference).then(message => { message.reply({ content: `${Message}`, allowedMentions: { repliedUser: true } }) });
+            await Channel.messages.fetch(Reference).then(message => {
+                if (!message) return interaction.reply({ content: 'No message found.', ephemeral: true });
+                message.reply({ content: `${Message}`, allowedMentions: { repliedUser: true } })
+            });
         } else {
             Channel.send({ content: `${Message}`, allowedMentions: { parse: ['users'] } });
         };
