@@ -26,7 +26,7 @@ module.exports = {
         
         if (Reference) {
             await Channel.messages.fetch(Reference).then(message => {
-                if (!message) return interaction.reply({ content: 'No message found.', ephemeral: true });
+                if (!message) return interaction.editReply({ content: 'No message found.' });
                 message.reply({ content: `${Message}`, allowedMentions: { repliedUser: true } })
             });
         } else {
