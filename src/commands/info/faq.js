@@ -27,7 +27,7 @@ module.exports = {
             case 'what-jaycord':
                 interaction.reply({ content: '**What is JayCord?**\n> Our entire goal of JayCord is to bring users from all different platforms together for a place to hangout and socialise with eachother. We also offer different forums for different topics like showcasing, feedback on anything you make and a whole lot more.' });
                 break;
-            case 'reporting-someone':
+            case 'reporting-user':
                 interaction.reply({ content: '**I need to report someone**\n> If you need to report someone to us please open a report ticket and explain everything that happened and we will deal with it accordingly.\n- If it is a Discord issue please report the user to discord they will deal with it.' });
                 break;
             case 'appeal-punishment':
