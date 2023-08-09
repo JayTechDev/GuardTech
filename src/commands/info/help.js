@@ -37,7 +37,7 @@ module.exports = {
             },
             {
                 name: 'Fun',
-                value: codeBlock('8ball, gayrate')
+                value: codeBlock('8ball, gayrate, trollban')
             },
             {
                 name: 'Util',
