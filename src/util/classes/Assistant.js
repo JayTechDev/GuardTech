@@ -9,9 +9,7 @@ class Assistant extends Client {
             intents: [
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildModeration,
-                GatewayIntentBits.GuildMembers,
-                GatewayIntentBits.GuildMessages,
-                GatewayIntentBits.MessageContent
+                GatewayIntentBits.GuildMembers
             ],
             presence: {
                 status: 'dnd',
