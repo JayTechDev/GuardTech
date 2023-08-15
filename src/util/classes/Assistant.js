@@ -29,7 +29,7 @@ class Assistant extends Client {
 
         client.handleCommands();
         client.handleEvents();
-        client.login(process.env.BOT_TOKEN).then(() => { connect(process.env.DATABASE_URL).then(() => console.log('[Database Status]: Connected')) }).catch(console.error);
+        client.login(process.env.BOT_TOKEN).then(connect(process.env.DATABASE_URL)).then(console.log('[Database Status]: Connected')).catch(console.error);
     };
 };
 
