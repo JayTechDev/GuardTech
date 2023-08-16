@@ -8,7 +8,7 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .setDMPermission(false)
     .addUserOption(option => option.setName('target').setDescription('User to ban.').setRequired(true))
-    .addStringOption(option => option.setName('reason').setDescription('The ban reason.').setRequired(true)),
+    .addStringOption(option => option.setName('reason').setDescription('The ban reason.')),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
@@ -16,7 +16,7 @@ module.exports = {
         const { options } = interaction;
 
         const TargetUser = options.getUser('target');
-        const BanReason = options.getString('reason');
+        const BanReason = options.getString('reason') || 'No reason provided.';
 
         const BanSuccessEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been banned | ${inlineCode(BanReason)}`)
 
