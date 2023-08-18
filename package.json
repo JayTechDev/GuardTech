@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
-    "discord.js": "^14.12.1",
+    "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "mongoose": "^7.4.2",
     "ms": "^2.1.3",
