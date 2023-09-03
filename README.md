@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1128684984111206474/f966de18a901bcd0cb8060868508e01a.jpg" />
+  <img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1147894679707324416/IMG_4559.jpg" />
   <br>Power<br>
 </h1>
 
@@ -14,7 +14,7 @@
 </p>
 
 ## Overview
-Power is a private bot designed for [JayCord](https://discord.gg/47fWbK5QYB), mostly used for moderation / utility and overall server management and providing more features other bots don't normally have.
+Power is a private bot designed for [JayCord](https://discord.gg/47fWbK5QYB), mostly used for moderation / utility and overall server management.
 
 Featuring modules such as:
 - Moderation
