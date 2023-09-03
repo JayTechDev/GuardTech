@@ -11,7 +11,6 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .setDMPermission(false)
     .addUserOption(option => option.setName('target').setDescription('User to ban.').setRequired(true))
-    .addBooleanOption(option => option.setName('appeal').setDescription('Whether or not the user can appeal this ban.').setRequired(true))
     .addStringOption(option => option.setName('reason').setDescription('The ban reason.').setMaxLength(1000).setMinLength(1)),
     /**
      * @param {ChatInputCommandInteraction} interaction
@@ -21,7 +20,6 @@ module.exports = {
 
         const TargetUser = options.getUser('target');
         const TargetMember = await guild.members.fetch(TargetUser.id);
-        const Appealable = options.getBoolean('appeal');
         const BanReason = options.getString('reason') || 'No reason provided.';
 
         const BanDate = new Date(createdTimestamp).toDateString();
@@ -33,14 +31,12 @@ module.exports = {
 
         interaction.deferReply();
         
-        const DirectMessageEmbed = new EmbedBuilder().setColor('Grey').setDescription(`You have received a ban in **${guild.name}**`)
-        if (Appealable) {
-            DirectMessageEmbed.setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` }, { name: 'Appeal', value: `${Links.Appeal_Link}` })
-            await TargetUser.send({ embeds: [DirectMessageEmbed]}).catch(() => {});
-        } else {
-            DirectMessageEmbed.setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` })
-            await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
-        }
+        const DirectMessageEmbed = new EmbedBuilder()
+        .setColor('Grey')
+        .setDescription(`You have received a ban in **${guild.name}**`)
+        .setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` }, { name: 'Appeal', value: `${Links.Appeal_Link}` })
+        
+        await TargetUser.send({ embeds: [DirectMessageEmbed]}).catch(() => {});
         
         await TargetMember.ban({ deleteMessageSeconds: 86400, reason: BanReason }).then(async () => {
             await database.create({
