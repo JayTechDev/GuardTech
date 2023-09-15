@@ -13,7 +13,7 @@ module.exports = {
 
         const WelcomeEmbed = new EmbedBuilder()
         .setColor(Colours.Default_Colour)
-        .setTitle('👋 Welcome to JayCord!')
+        .setTitle(`👋 Welcome to ${guild.name}!`)
         .setDescription(`Welcome ${userMention(user.id)}, make sure to say hi to our welcomers and have a good stay!`)
 
         const Buttons = new ActionRowBuilder().addComponents(
