@@ -1,6 +1,6 @@
 <h1 align="center">
-  <img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1147894679707324416/IMG_4559.jpg" />
-  <br>Power<br>
+  <img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1150894968924282900/Logo.png" />
+  <br>GuardTech<br>
 </h1>
 
 <p align="center">
@@ -10,11 +10,11 @@
   •
   <a href="#authors">Authors</a>
   •
-  <a href="https://github.com/JayCordDevelopment/Assistant/blob/main/SECURITY.md">Security</a>
+  <a href="https://github.com/JayTechDevelopment/Assistant/blob/main/SECURITY.md">Security</a>
 </p>
 
 ## Overview
-Power is a private bot designed for [JayCord](https://discord.gg/47fWbK5QYB), mostly used for moderation / utility and overall server management.
+GuardTech is a private bot designed for [JayTech](https://discord.gg/47fWbK5QYB), mostly used for moderation / utility and overall server management.
 
 Featuring modules such as:
 - Moderation
