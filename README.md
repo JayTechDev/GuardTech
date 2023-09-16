@@ -1,20 +1,19 @@
 <h1 align="center">
   <img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1150894968924282900/Logo.png" />
-  <br>GuardTech<br>
+  <p>GuardTech</p>
 </h1>
 
-<p align="center">
-  <a href="#overview">Overview</a>
-  •
-  <a href="https://support.jayts.uk/power/overview">Documentation</a>
-  •
-  <a href="#authors">Authors</a>
-  •
-  <a href="https://github.com/JayTechDevelopment/Assistant/blob/main/SECURITY.md">Security</a>
-</p>
+## Table of Contents
+- [Overview](#overview)
+- [Contributing](https://github.com/JayTechDevelopment/Assistant/blob/main/SECURITY.md#contributing)
+- [Security](https://github.com/JayTechDevelopment/Assistant/blob/main/SECURITY.md)
+- [Authors](#authors)
 
 ## Overview
-GuardTech is a private bot designed for [JayTech](https://discord.gg/47fWbK5QYB), mostly used for moderation / utility and overall server management.
+GuardTech was designed for [JayTech](https://discord.gg/47fWbK5QYB) used primarily for moderation & overall management. 
+It can also be self-hosted as it is pretty easy to do and won't take too long for you to get up and running.
+
+Powered by [discord.js](https://github.com/discordjs/discord.js).
 
 Featuring modules such as:
 - Moderation
@@ -23,11 +22,11 @@ Featuring modules such as:
 - Entertainment
 - And a whole lot more to come!
 
-If you would like to suggest some more module / command ideas head over to our suggestions channel and post it there.
+We are always open for suggestions and encourage you to send any you have in our suggestions channel, you'll help make this bot a whole much better!
 
-Made and powered by [discord.js](https://discordjs.dev)
+`Research. Development. Security`
 
 ## Authors
 - `Main Developer` [nlghtleak](https://github.com/nlghtleak)
 - `Honourable Mention` [ItzCelyrian](https://github.com/ItzCelyrian)
-- `Our Contributors` [Contributors](https://github.com/JayCordDevelopment/Assistant/graphs/contributors)
+- `Our Contributors` [Contributors](https://github.com/JayTechDevelopment/Assistant/graphs/contributors)
