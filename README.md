@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1154548693287055504/peakpx_1_waifu2x_art_noise3_scale.png" />
+  <img width="200" src="https://cdn.discordapp.com/attachments/1103912751157485570/1150894968924282900/Logo.png" />
   <p>GuardTech</p>
 </h1>
 
