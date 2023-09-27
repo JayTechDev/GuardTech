@@ -29,7 +29,7 @@ module.exports = {
             },
             {
                 name: 'Misc',
-                value: codeBlock('avatar, banner, binary, icon, poll, profile, reminder, report, roles, say')
+                value: codeBlock('avatar, banner, binary, icon, poll, reminder, report, roles, say')
             },
             {
                 name: 'Images',
@@ -41,7 +41,7 @@ module.exports = {
             },
             {
                 name: 'Util',
-                value: codeBlock('bansearch, blacklist, botinfo, customrole, ping, status')
+                value: codeBlock('bansearch, blacklist, botinfo, certify, customrole, ping, status')
             },
             {
                 name: 'Developer',
