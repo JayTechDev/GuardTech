@@ -84,7 +84,7 @@ module.exports = {
                     `- **Node Version:** ${process.version}`,
                     `- **Platform:** ${process.platform ? 'Linux' : 'Windows' || 'Something Else'}`,
                     `**Bot**`,
-                    `> **Users:** ${ClientUserCount}`,
+                    `- **Users:** ${ClientUserCount}`,
                     `- **Ping:** ${ClientPing}`,
                     `- **CPU:** ${CpuModel}`,
                     `- **Memory Usage:** ${MemoryUsage}`,
