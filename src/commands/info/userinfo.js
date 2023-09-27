@@ -41,7 +41,7 @@ module.exports = {
             `- **Pending:** ${TargetMember.pending ? 'Yes' : 'No'}`,
             `- **Muted:** ${TargetMember.isCommunicationDisabled() ? 'Yes' : 'No'}`
         ].join('\n'))
-        .setFields({ name: 'Roles', value: `- ${UserRoles}` })
+        .setFields({ name: 'Roles', value: `${UserRoles}` })
         
         interaction.reply({ embeds: [InfoEmbed] });
     },
