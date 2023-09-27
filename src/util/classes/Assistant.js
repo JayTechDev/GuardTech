@@ -15,7 +15,7 @@ class Assistant extends Client {
             ],
             presence: {
                 status: 'dnd',
-                activities: [ { name: 'JayCord', type: ActivityType.Watching } ]  
+                activities: [ { name: 'JayTech', type: ActivityType.Watching } ]  
             },
             allowedMentions: { parse: ['users', 'roles'] },
         });

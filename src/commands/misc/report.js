@@ -1,4 +1,5 @@
 const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, ChannelType, roleMention } = require('discord.js');
+const { IDs } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -41,7 +42,7 @@ module.exports = {
                 response.createMessageComponentCollector({ componentType: ComponentType.Button }).on('collect', i => {
                     switch (i.customId) {
                         case 'confirm-report':
-                            guild.channels.cache.get('1120040396425285713').threads.create({
+                            guild.channels.cache.get(IDs.TicketChannel).threads.create({
                                 name: `Message Report - ${user.username}`,
                                 type: ChannelType.PrivateThread,
                                 invitable: false
