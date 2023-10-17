@@ -41,7 +41,11 @@ module.exports = {
         const LogEmbed = new EmbedBuilder()
         .setColor(Colours.Blacklisted_Colour)
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Blacklist\n**Reason**: ${BlacklistReason}`)
+        .setDescription([
+            `- User: ${userMention(TargetUser.id)} (${TargetUser.id})`,
+            `- Type: Blacklist`,
+            `- Reason: ${BlacklistReason}`,
+        ].join('\n'))
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
