@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, userMention } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, codeBlock } = require('discord.js');
 const { Emojis } = require('../../config.json');
 const database = require('../../database/schemas/PunishmentSchema.js');
 
@@ -24,42 +24,25 @@ module.exports = {
         const CaseEmbed = new EmbedBuilder()
         .setColor('Orange')
         .setTitle(`${data.Type} - Case #${data.CaseID}`)
+        .setDescription([
+            `- User: ${data.UserTag} (${data.UserID})`,
+            `- Moderator: ${data.Content[0].Moderator}`,
+            `- Date: ${data.Content[0].PunishmentDate}`,
+        ].join('\n'))
         .setFields(
-            { name: 'User', value: `${data.UserTag} (${userMention(data.UserID)})`, inline: true },
-            { name: 'Moderator', value: `${data.Content[0].Moderator}`, inline: true },
-            { name: `${data.Content[0].PunishmentDate}:`, value: `${data.Content[0].Reason}` }
+            { name: `Reason`, value: `${codeBlock(data.Content[0].Reason)}` }
         )
 
-        switch (data.Type) {
-            case 'Ban':
-                CaseEmbed.setColor('Red')
-                break;
-            case 'SoftBan':
-                CaseEmbed.setColor('Red')
-                break;
-            case 'Kick':
-                CaseEmbed.setColor('Red')
-                break;
-            case 'Mute':
-                CaseEmbed.setColor('Yellow')
-                break;
-            case 'Warn':
-                CaseEmbed.setColor('Orange')
-                break;
-            case 'Unmute':
-                CaseEmbed.setColor('Green')
-                break;
-            case 'Unban':
-                CaseEmbed.setColor('Green')
-                break;
-        };
-
         if (data.Content[0].Duration) {
-            CaseEmbed.setFields(
-                { name: 'User', value: `${data.UserTag} (<@${data.UserID}>)`, inline: true },
-                { name: 'Moderator', value: `${data.Content[0].Moderator}`, inline: true },
-                { name: 'Duration', value: `${data.Content[0].Duration}`, inline: true },
-                { name: `${data.Content[0].PunishmentDate}:`, value: `${data.Content[0].Reason}` }
+            CaseEmbed
+            .setDescription([
+                `- User: ${data.UserTag} (${data.UserID})`,
+                `- Moderator: ${data.Content[0].Moderator}`,
+                `- Date: ${data.Content[0].PunishmentDate}`,
+                `- Duration: ${data.Content[0].Duration}`,
+            ].join('\n'))
+            .setFields(
+                { name: `Reason`, value: `${codeBlock(data.Content[0].Reason)}` }
             )
         };
 
