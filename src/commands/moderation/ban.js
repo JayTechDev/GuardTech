@@ -32,7 +32,7 @@ module.exports = {
         interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
-        .setColor('Grey')
+        .setColor('#2b2d31')
         .setDescription(`You have received a ban in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` }, { name: 'Appeal', value: `${Links.Appeal_Link}` })
         
@@ -54,9 +54,13 @@ module.exports = {
         interaction.editReply({ embeds: [BanSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
-        .setColor('Red')
+        .setColor('#2b2d31')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Ban\n**Reason**: ${BanReason}`)
+        .setDescription([
+            `- User: ${userMention(TargetUser.id)} (${TargetUser.id})`,
+            `- Type: Ban`,
+            `- Reason: ${BanReason}`,
+        ].join('\n'))
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
