@@ -13,7 +13,11 @@ module.exports = {
         const { options } = interaction;
 
         const TargetUser = options.getUser('target');
-        const GayRating = Math.round(Math.random() * 100) + 1;
+        let GayRating = Math.round(Math.random() * 100) + 1;
+
+	if (TargetUser.id == "1064964046568296610") {
+		GayRating = 100;
+	}
 
         const GayEmbed = new EmbedBuilder()
         .setColor('Random')
