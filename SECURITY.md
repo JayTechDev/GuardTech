@@ -1,15 +1,15 @@
 # Security Guidelines
 
-Thank you for your interest in Power, a private moderation and utility bot for JayCord. This document outlines important security guidelines to ensure the safe and secure usage of the bot within the JayCord server. Please read and adhere to these guidelines to prevent any potential issues or vulnerabilities.
+Thank you for your interest in GuardTech, a private moderation and utility bot for JayTech. This document outlines important security guidelines to ensure the safe and secure usage of the bot within the JayTech server. Please read and adhere to these guidelines to prevent any potential issues or vulnerabilities.
 
 ## Disclaimer
-Power is designed specifically for JayCord and may not work correctly in other servers. Using the bot in other servers may result in unintended behavior or potential breaking of features. However, you are allowed to create your own version of the bot by following the contribution guide mentioned below. Adapt the bot to your needs with the necessary steps.
+GuardTech is designed specifically for JayTech and may not work correctly in other servers. Using the bot in other servers may result in unintended behavior or potential breaking of features. However, you are allowed to create your own version of the bot by following the contribution guide mentioned below. Adapt the bot to your needs with the necessary steps.
 
 ## Contributing
-If you would like to contribute to Power or create your own version of the bot, please follow the steps outlined in the contribution guide. This guide will provide you with the necessary instructions and best practices for modifying the bot's codebase.
+If you would like to contribute to GuardTech or create your own version of the bot, please follow the steps outlined in the contribution guide. This guide will provide you with the necessary instructions and best practices for modifying the bot's codebase.
 
 ## Bot Permissions
-To ensure the proper functioning and security of Power, please ensure that the bot is granted the following permissions within the JayCord server:
+To ensure the proper functioning and security of GuardTech, please ensure that the bot is granted the following permissions within the JayTech server:
 - Read Messages
 - Send Messages
 - Embed Links
@@ -20,11 +20,11 @@ To ensure the proper functioning and security of Power, please ensure that the b
 - Manage Channels
 
 ## Server Configuration
-To maximize the security of Power, implement the following server configuration best practices:
-1. Role Hierarchy: Ensure that Power's role is positioned higher in the role hierarchy than the roles it moderates.
-2. Restricted Channels: Limit Power's access to sensitive channels.
-3. Channel Audit Logs: Enable Discord's channel audit logs to monitor Power's actions.
-4. Regular Updates: Keep Power and its dependencies up to date.
+To maximize the security of GuardTech, implement the following server configuration best practices:
+1. Role Hierarchy: Ensure that GuardTech's role is positioned higher in the role hierarchy than the roles it moderates.
+2. Restricted Channels: Limit GuardTech's access to sensitive channels.
+3. Channel Audit Logs: Enable Discord's channel audit logs to monitor GuardTech's actions.
+4. Regular Updates: Keep GuardTech and its dependencies up to date.
 
 ## Data Handling
 When handling data, follow these guidelines:
@@ -36,4 +36,4 @@ When handling data, follow these guidelines:
 ## Third-Party Libraries
 When using third-party libraries, follow these guidelines:
 1. Library Selection: Use reputable libraries from trusted sources.
-2. Version Management: Keep libraries used by Power up to date.
+2. Version Management: Keep libraries used by GuardTech up to date.
