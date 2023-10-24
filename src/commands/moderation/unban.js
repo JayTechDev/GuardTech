@@ -48,9 +48,13 @@ module.exports = {
         interaction.editReply({ embeds: [UnbanSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
-        .setColor('Green')
+        .setColor('#2b2d31')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: ${userMention(TargetID)} | \`${TargetID}\`\n**Type**: Unban\n**Reason**: ${UnbanReason}`)
+        .setDescription([
+            `- User: ${userMention(TargetID)} (${TargetID})`,
+            `- Type: Unban`,
+            `- Reason: ${UnbanReason}`,
+        ].join('\n'))
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

@@ -8,13 +8,14 @@ module.exports = (client) => {
 
         const commandFolders = readdirSync('./src/commands');
         for (const folder of commandFolders) {
-            const commandFiles = readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js')).filter(file => !file.includes('builder'));
+            const commandFiles = readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js'));
             for (const file of commandFiles) {
                 const command = require(`../commands/${folder}/${file}`)
                 client.commands.set(command.data.name, command);
                 client.commandsArray.push(command.data.toJSON());
             };
         };
+        
         const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
         try {

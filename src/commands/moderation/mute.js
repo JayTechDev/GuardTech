@@ -24,11 +24,11 @@ module.exports = {
         const TargetMember = await guild.members.fetch(TargetUser.id);
         const MuteDuration = options.getString('duration');
         const MuteReason = options.getString('reason') || 'No reason provided.';
+        const MuteExpiry = ms(ms(MuteDuration), { long: true });
 
         const MuteDate = new Date(createdTimestamp).toDateString();
         const LogChannel = guild.channels.cache.get(IDs.ModerationLogs);
         const CaseId = createCaseId();
-        const MuteExpiry = ms(ms(MuteDuration), { long: true });
         
         const CannotDoActionEmbed = new EmbedBuilder().setColor('Red').setDescription(`${Emojis.Error_Emoji} I cannot mute this user OR they are already muted.`)
         if (!TargetMember.moderatable || !TargetMember.isCommunicationDisabled() == false) return interaction.reply({ embeds: [CannotDoActionEmbed] });
@@ -36,9 +36,9 @@ module.exports = {
         interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
-        .setColor('Grey')
+        .setColor('#2b2d31')
         .setDescription(`You have received a mute in **${guild.name}**`)
-        .setFields({ name: 'Reason', value: `${inlineCode(MuteReason)}` }, { name: 'Expiry', value: `${MuteExpiry}` }, { name: 'Appeal', value: `${Links.Appeal_Link}` })
+        .setFields({ name: 'Reason', value: `${inlineCode(MuteReason)}` }, { name: 'Appeal', value: `${Links.Appeal_Link}` })
 
         await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
 
@@ -54,13 +54,18 @@ module.exports = {
         });
 
         await wait(1000);
-        const MuteSuccessEmbed = new EmbedBuilder().setColor('Yellow').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been muted for **${MuteExpiry}** | ${inlineCode(CaseId)}`)
+        const MuteSuccessEmbed = new EmbedBuilder().setColor('Yellow').setDescription(`${Emojis.Success_Emoji} ${userMention(TargetUser.id)} has been muted | ${inlineCode(CaseId)}`)
         await interaction.editReply({ embeds: [MuteSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
-        .setColor('Yellow')
+        .setColor('#2b2d31')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Mute\n**Expires**: ${MuteExpiry}\n**Reason**: ${MuteReason}`)
+        .setDescription([
+            `- User: ${userMention(TargetUser.id)} (${TargetUser.id})`,
+            `- Type: Mute`,
+            `- Reason: ${MuteReason}`,
+            `- Expiry: ${MuteExpiry}`,
+        ].join('\n'))
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

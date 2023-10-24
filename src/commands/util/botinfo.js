@@ -78,23 +78,23 @@ module.exports = {
                 .setThumbnail(`${client.user.displayAvatarURL()}`)
                 .setDescription([
                     `**Status**`,
-                    `> **Discord Status:** ${client.isReady() ? 'Connected' : 'Disconnected'}`,
-                    `> **Database Status:** ${mongoose.connection.readyState ? 'Connected' : 'Disconnected' || 'Connecting' }`,
-                    `> **Process ID:** ${process.pid}`,
-                    `> **Node Version:** ${process.version}`,
-                    `> **Platform:** ${process.platform ? 'Linux' : 'Windows' || 'Something Else'}`,
+                    `- **Discord Status:** ${client.isReady() ? 'Connected' : 'Disconnected'}`,
+                    `- **Database Status:** ${mongoose.connection.readyState ? 'Connected' : 'Disconnected' || 'Connecting' }`,
+                    `- **Process ID:** ${process.pid}`,
+                    `- **Node Version:** ${process.version}`,
+                    `- **Platform:** ${process.platform ? 'Linux' : 'Windows' || 'Something Else'}`,
                     `**Bot**`,
-                    `> **Users:** ${ClientUserCount}`,
-                    `> **Ping:** ${ClientPing}`,
-                    `> **CPU:** ${CpuModel}`,
-                    `> **Memory Usage:** ${MemoryUsage}`,
-                    `> **Uptime:** ${ClientUptime}`,
+                    `- **Users:** ${ClientUserCount}`,
+                    `- **Ping:** ${ClientPing}`,
+                    `- **CPU:** ${CpuModel}`,
+                    `- **Memory Usage:** ${MemoryUsage}`,
+                    `- **Uptime:** ${ClientUptime}`,
                     `**Application Details**`,
-                    `> **ID:** ${ClientApplication.id}`,
-                    `> **Name:** ${ClientApplication.name}`,
-                    `> **Description:** ${ClientApplication.description}`,
-                    `> **Created:** <t:${parseInt(ClientApplication.createdTimestamp/ 1000)}:R>`,
-                    `> **Owner:** ${ClientApplication.owner}`
+                    `- **ID:** ${ClientApplication.id}`,
+                    `- **Name:** ${ClientApplication.name}`,
+                    `- **Description:** ${ClientApplication.description}`,
+                    `- **Created:** <t:${parseInt(ClientApplication.createdTimestamp/ 1000)}:R>`,
+                    `- **Owner:** ${ClientApplication.owner}`
                 ].join('\n'))
 
                 button.update({ embeds: [BotStatsEmbed] });

@@ -32,8 +32,8 @@ module.exports = {
         interaction.deferReply();
 
         const DirectMessageEmbed = new EmbedBuilder()
-        .setColor('Grey')
-        .setDescription(`You have received a soft ban in **${guild.name}**`)
+        .setColor('#2b2d31')
+        .setDescription(`You have received a softban in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(BanReason)}` })
 
         await TargetUser.send({ embeds: [DirectMessageEmbed] }).catch(() => {});
@@ -62,9 +62,13 @@ module.exports = {
         interaction.editReply({ embeds: [SoftBanSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
-        .setColor('Red')
+        .setColor('#2b2d31')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Softban\n**Reason**: ${BanReason}`)
+        .setDescription([
+            `- User: ${userMention(TargetUser.id)} (${TargetUser.id})`,
+            `- Type: Softban`,
+            `- Reason: ${BanReason}`,
+        ].join('\n'))
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

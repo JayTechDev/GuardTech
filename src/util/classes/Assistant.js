@@ -10,10 +10,12 @@ class Assistant extends Client {
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildModeration,
                 GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.GuildMessages,
+                GatewayIntentBits.MessageContent
             ],
             presence: {
                 status: 'dnd',
-                activities: [ { name: 'JayCord', type: ActivityType.Watching } ]  
+                activities: [ { name: 'JayTech', type: ActivityType.Watching } ]  
             },
             allowedMentions: { parse: ['users', 'roles'] },
         });
@@ -29,7 +31,7 @@ class Assistant extends Client {
 
         client.handleCommands();
         client.handleEvents();
-        client.login(process.env.BOT_TOKEN).then(() => { connect(process.env.DATABASE_URL).then(() => console.log('[Database Status]: Connected')) }).catch(console.error);
+        client.login(process.env.BOT_TOKEN).then(connect(process.env.DATABASE_URL)).then(console.log('[Database Status]: Connected')).catch(console.error);
     };
 };
 

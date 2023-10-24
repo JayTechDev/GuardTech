@@ -31,7 +31,7 @@ module.exports = {
         interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
-        .setColor('Grey')
+        .setColor('#2b2d31')
         .setDescription(`You have received a warning in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(WarnReason)}` })
 
@@ -51,9 +51,13 @@ module.exports = {
         interaction.editReply({ embeds: [WarnSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
-        .setColor('Orange')
+        .setColor('#2b2d31')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Warn\n**Reason**: ${WarnReason}`)
+        .setDescription([
+            `- User: ${userMention(TargetUser.id)} (${TargetUser.id})`,
+            `- Type: Warn`,
+            `- Reason: ${WarnReason}`,
+        ].join('\n'))
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 

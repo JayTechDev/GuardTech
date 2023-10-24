@@ -7,8 +7,9 @@ module.exports = {
     .setDescription('Change the bot\'s status.')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
     .setDMPermission(false)
-    .addStringOption(option => option.setName('text').setDescription('Status text.').setRequired(true).setMaxLength(32).setMinLength(1))
-    .addStringOption(option => option.setName('type').setDescription('Activity type.').setRequired(true).addChoices({ name: 'Watching', value: 'watching' }, { name: 'Listening', value: 'listening' }, { name: 'Playing', value: 'playing' })),
+    .addStringOption(option => option.setName('type').setDescription('The type of the activity.').setRequired(true).addChoices({ name: 'Custom', value: 'custom' }, { name: 'Watching', value: 'watching' }, { name: 'Listening', value: 'listening' }, { name: 'Playing', value: 'playing' }))
+    .addStringOption(option => option.setName('name').setDescription('The name to use.'))
+    .addStringOption(option => option.setName('state').setDescription('The status text (ONLY IF CUSTOM IS USED).')),
     /**
      * @param {ChatInputCommandInteraction} interaction
      * @param {Client} client
@@ -16,9 +17,8 @@ module.exports = {
     async execute(interaction, client) {
         const { options } = interaction;
         
-        const StatusText = options.getString('text');
+        const StatusName = options.getString('name');
         const StatusType = options.getString('type');
-
         let ChosenType = '';
 
         switch (StatusType) {
@@ -33,9 +33,14 @@ module.exports = {
                 break;
         };
 
-        client.user.setActivity({ name: `${StatusText}`, type: ChosenType });
+        if (StatusType == 'custom') {
+            const StateText = options.getString('state');
+            client.user.setActivity({ type: ActivityType.Custom, name: 'custom', state: StateText });
+        } else {
+            client.user.setActivity({ name: `${StatusName}`, type: ChosenType });
+        };
 
-        const StatusChangedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Status changed to **${StatusText}** with type **${ChosenType}**`)
+        const StatusChangedEmbed = new EmbedBuilder().setColor('Green').setDescription(`${Emojis.Success_Emoji} Status has been changed.`)
         interaction.reply({ embeds: [StatusChangedEmbed] });
     },
 };

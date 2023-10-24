@@ -13,7 +13,7 @@ module.exports = {
         const { guild, guildId } = interaction;
 
         const ServerBanner = guild.bannerURL({ size: 2048 }) || null;
-        const ServerFeatures = guild.features.join('\n> - ') || 'None';
+        const ServerFeatures = guild.features.join('\n- ') || 'None';
 
         const InfoEmbed = new EmbedBuilder()
         .setColor(Colours.Default_Colour)
@@ -22,19 +22,19 @@ module.exports = {
         .setImage(ServerBanner)
         .setDescription([
             `**${guild.name}**`,
-            `> **Description:** ${guild.description}`,
-            `> **ID:** ${guildId}`,
-            `> **Creation:** <t:${parseInt(guild.createdTimestamp / 1000)}:R>`,
+            `- **Description:** ${guild.description || 'None'}`,
+            `- **ID:** ${guildId}`,
+            `- **Creation:** <t:${parseInt(guild.createdTimestamp / 1000)}:R>`,
             `**Statistics**`,
-            `> **Members:** ${guild.memberCount}`,
-            `> **Boost Level:** ${guild.premiumTier}`,
-            `> **Moderation Level:** ${guild.verificationLevel}`,
+            `- **Members:** ${guild.memberCount}`,
+            `- **Boost Level:** ${guild.premiumTier}`,
+            `- **Moderation Level:** ${guild.verificationLevel}`,
             `**Counts**`,
-            `> **Roles:** ${guild.roles.cache.size}`,
-            `> **Channels:** ${guild.channels.cache.size}`,
-            `> **Emojis:** ${guild.emojis.cache.size}`,
+            `- **Roles:** ${guild.roles.cache.size}`,
+            `- **Channels:** ${guild.channels.cache.size}`,
+            `- **Emojis:** ${guild.emojis.cache.size}`,
             `**Features**`,
-            `> - ${ServerFeatures}`,
+            `- ${ServerFeatures}`,
         ].join('\n'))
 
         interaction.reply({ content: 'https://discord.gg/47fWbK5QYB', embeds: [InfoEmbed] });

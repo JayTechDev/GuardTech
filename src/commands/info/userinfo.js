@@ -29,15 +29,17 @@ module.exports = {
         .setImage(UserBanner)
         .setDescription([
             `**User Information**`,
-            `> **Username:** ${TargetUser.username}`,
-            `> **ID:** ${TargetUser.id}`,
-            `> **Creation:** <t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`,
-            `> **Type:** ${TargetUser.bot ? 'Bot' : 'User'}`,
-            `> **Flags:** ${UserFlags}`,
+            `- **Global Name:** ${TargetUser.globalName}`,
+            `- **Display Name:** ${TargetUser.displayName || 'None'}`,
+            `- **ID:** ${TargetUser.id}`,
+            `- **Creation:** <t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`,
+            `- **Type:** ${TargetUser.bot ? 'Bot' : 'User'}`,
+            `- **Flags:** ${UserFlags}`,
             `**Member Information**`,
-            `> **Joined:** <t:${parseInt(TargetMember.joinedTimestamp / 1000)}:R>`,
-            `> **Nickname:** ${TargetMember.nickname || 'None'}`,
-            `> **Pending:** ${TargetMember.pending ? 'Yes' : 'No'}`,
+            `- **Joined:** <t:${parseInt(TargetMember.joinedTimestamp / 1000)}:R>`,
+            `- **Nickname:** ${TargetMember.nickname || 'None'}`,
+            `- **Pending:** ${TargetMember.pending ? 'Yes' : 'No'}`,
+            `- **Muted:** ${TargetMember.isCommunicationDisabled() ? 'Yes' : 'No'}`
         ].join('\n'))
         .setFields({ name: 'Roles', value: `${UserRoles}` })
         

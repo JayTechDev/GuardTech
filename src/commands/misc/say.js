@@ -22,7 +22,7 @@ module.exports = {
         const Channel = options.getChannel('channel') || channel;
 
         await interaction.deferReply({ ephemeral: true });
-        
+                
         if (Reference) {
             await Channel.messages.fetch(Reference).then(message => { message.reply({ content: `${Message}`, allowedMentions: { repliedUser: true } }) });
         } else {

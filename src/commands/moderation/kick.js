@@ -32,7 +32,7 @@ module.exports = {
         interaction.deferReply();
         
         const DirectMessageEmbed = new EmbedBuilder()
-        .setColor('Grey')
+        .setColor('#2b2d31')
         .setDescription(`You have received a kick in **${guild.name}**`)
         .setFields({ name: 'Reason', value: `${inlineCode(KickReason)}` })
 
@@ -54,9 +54,13 @@ module.exports = {
         interaction.editReply({ embeds: [KickSuccessEmbed] });
 
         const LogEmbed = new EmbedBuilder()
-        .setColor('Red')
+        .setColor('#2b2d31')
         .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
-        .setDescription(`**Member**: ${userMention(TargetUser.id)} | \`${TargetUser.id}\`\n**Type**: Kick\n**Reason**: ${KickReason}`)
+        .setDescription([
+            `- User: ${userMention(TargetUser.id)} (${TargetUser.id})`,
+            `- Type: Kick`,
+            `- Reason: ${KickReason}`,
+        ].join('\n'))
         .setFooter({ text: `Punishment ID: ${CaseId}` })
         .setTimestamp()
 
