@@ -1,67 +1,50 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, ChannelType, roleMention } = require('discord.js');
-const { IDs } = require('../../config.json');
+const { ChatInputCommandInteraction, SlashCommandBuilder } = require('discord.js');
+const { reportUser, reportMessage } = require('../../util/reportingContent');
 
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('report')
-    .setDescription('Report a message.')
+    .setDescription('Report content.')
     .setDMPermission(false)
-    .addStringOption(option => option.setName('message_id').setDescription('The message id (Must have Developer Mode enabled for this).').setRequired(true))
-    .addStringOption(option => option.setName('reason').setDescription('The reason for reporting.').setRequired(true)),
+    .addSubcommand(subcmd => subcmd
+        .setName('user')
+        .setDescription('Report a user.')
+        .addUserOption(option => option.setName('user').setDescription('The user you want to report.').setRequired(true))
+        .addStringOption(option => option.setName('reason').setDescription('The reason for reporting.').setRequired(true))
+    )
+    .addSubcommand(subcmd => subcmd
+        .setName('message')
+        .setDescription('Report a message.')
+        .addStringOption(option => option.setName('message_id').setDescription('The message id (Must have Developer Mode enabled for this).').setRequired(true))
+        .addStringOption(option => option.setName('reason').setDescription('The reason for reporting.').setRequired(true))
+    ),
     /**
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
         const { guild, options, user, channel } = interaction;
 
-        const ReportedMessage = options.getString('message_id');
-        const ReportReason = options.getString('reason');
+        switch (options.getSubcommand()) {
+            case 'user':
+                const ReportedUser = options.getUser('user');
+                const ReportUserReason = options.getString('reason');
 
-        const Buttons = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setCustomId('confirm-report').setLabel('Report').setStyle(ButtonStyle.Danger),
-            new ButtonBuilder().setCustomId('cancel-report').setLabel('Cancel').setStyle(ButtonStyle.Primary),
-        )
+                reportUser({ guild: guild, reporter: user, user: ReportedUser, reason: ReportUserReason })
+                interaction.reply({ content: 'This user has been reported and we will look into it, thanks!', ephemeral: true });
+                break;
 
-        await channel.messages.fetch(ReportedMessage).then(message => {
-            const { author, content, attachments, channel } = message;
+            case 'message':
+                const ReportedMessage = options.getString('message_id');
+                const ReportMessageReason = options.getString('reason');
 
-            const PreviewEmbed = new EmbedBuilder()
-            .setColor('Aqua')
-            .setAuthor({ name: `${author.username} (${author.id})`, iconURL: `${author.displayAvatarURL()}` })
-            .setDescription(content || attachments.first().url)
-            .setFooter({ text: `${channel.name}`})
-            .setTimestamp()
-
-            interaction.reply({ 
-                content: `You are reporting [this message](${message.url}) are you sure?\n**Reason:** ${ReportReason}`, 
-                embeds: [PreviewEmbed],
-                components: [Buttons],
-                ephemeral: true,
-                fetchReply: true
-            }).then((response) => {
-                response.createMessageComponentCollector({ componentType: ComponentType.Button }).on('collect', i => {
-                    switch (i.customId) {
-                        case 'confirm-report':
-                            guild.channels.cache.get(IDs.TicketChannel).threads.create({
-                                name: `Message Report - ${user.username}`,
-                                type: ChannelType.PrivateThread,
-                                invitable: false
-                            }).then(thread => thread.send({
-                                content: [
-                                    `${roleMention('1119581695415427082')} ${user.username} (${user.id}) has reported a [message](${message.url}).`,
-                                    `**Reason:** ${ReportReason}`
-                                ].join('\n'),
-                                embeds: [PreviewEmbed]
-                            }));
-
-                            i.update({ content: 'Report has been submitted.', embeds: [], components: [] });
-                            break;
-                        case 'cancel-report':
-                            i.update({ content: 'Cancelled report.', embeds: [], components: [] });
-                            break;
-                    };
+                reportMessage({ id: ReportedMessage, reporter: user, channel: channel, reason: ReportMessageReason })
+                .then(() => {
+                    interaction.reply({ content: 'This message has been reported and we will look into it, thanks!', ephemeral: true });
+                })
+                .catch(() => {
+                    interaction.reply({ content: 'Hmm.. something went wrong apparently, are you sure the message id is correct and it exists?', ephemeral: true });
                 });
-            });
-        }).catch(() => interaction.reply({ content: 'The message id you provided doesn\'t seem to exist.', ephemeral: true }))
+                break;
+        };
     },
 };
