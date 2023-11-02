@@ -29,7 +29,7 @@ module.exports = {
         .setImage(UserBanner)
         .setDescription([
             `**User Information**`,
-            `- **Global Name:** ${TargetUser.globalName}`,
+            `- **Username:** ${TargetUser.username}`,
             `- **Display Name:** ${TargetUser.displayName || 'None'}`,
             `- **ID:** ${TargetUser.id}`,
             `- **Creation:** <t:${parseInt(TargetUser.createdTimestamp / 1000)}:R>`,
